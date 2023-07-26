@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - 'candidate/**'
+      - '.github/workflows/api-candidate.yml'
   workflow_dispatch:
 
 env:
