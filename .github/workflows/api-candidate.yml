@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate/'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate'
   JAVA_VERSION: '11'
 
 jobs:
@@ -27,9 +27,7 @@ jobs:
           distribution: 'adopt'
 
       - name: 'Build Java App with Maven'
-        run: |
-          cd $AZURE_FUNCTIONAPP_PACKAGE_PATH
-          mvn clean package
+        run: mvn clean package
         working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
       - name: 'Run Azure Functions Action'
