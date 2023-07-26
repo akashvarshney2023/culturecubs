@@ -9,7 +9,7 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate'
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate/'
   JAVA_VERSION: '11'
 
 jobs:
