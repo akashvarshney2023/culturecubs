@@ -1,37 +1,37 @@
-trigger:
-  branches:
-    include:
-      - main # Change this to the branch you want to trigger the CI/CD pipeline
+name: API-build & deploy
+on:
+  push:
+    branches:      
+      - main
+    paths:
+      - 'candidate/**'
+  workflow_dispatch:
 
-pool:
-  vmImage: 'ubuntu-latest'
+env:
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate/api'
+  JAVA_VERSION: '11'
 
-variables:
-  functionName: 'api-candidate-dev-001'
-  artifactName: 'candidate-api'
-  publishProfileSecret: ${{secret.API_CANDIDATE_PUBLISH_PROFILE}} # Name of the secret containing the .publishsettings content
+jobs:
+  build-and-deploy-dev:
+    runs-on: ubuntu-latest
+    environment: Development
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v2.4.3
 
-steps:
-- task: JavaToolInstaller@0
-  inputs:
-    versionSpec: '11'
-    jdkArchitecture: 'x64'
+      - name: 'Set up Java ${{ env.JAVA_VERSION }}'
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(System.DefaultWorkingDirectory)'
-    Contents: '**/*.jar'
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+      - name: 'Build Java App'
+        run: |
+          cd $AZURE_FUNCTIONAPP_PACKAGE_PATH
+          ./gradlew build
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-    ArtifactName: '$(artifactName)'
-
-- task: AzureFunctionApp@1
-  inputs:
-    azureSubscription: 'your-subscription-id' # This field is required, but its value doesn't matter when using Publish Profile.
-    appType: 'functionApp'
-    appName: 'your-function-app-name' # This field is required, but its value doesn't matter when using Publish Profile.
-    package: '$(Build.ArtifactStagingDirectory)/$(artifactName)'
-    publishProfile: '$(publishProfileSecret)' # Use the secret containing .publishsettings content
+      - name: 'Run Azure Functions Action'
+        uses: azure/functions-action@v1
+        with:
+          app-name: 'api-candidate-dev-001' # Replace with your Azure Function App name
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/build/libs'
+          publish-profile: ${{ secrets.API_PUBLISH_PROFILE }} # Replace with the name of your secret containing the .publishsettings content
