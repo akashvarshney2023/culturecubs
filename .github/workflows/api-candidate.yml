@@ -18,7 +18,7 @@ jobs:
     environment: Development
     steps:
       - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v2.4.3
+        uses: actions/checkout@v3.5.3
 
       - name: 'Set up Java ${{ env.JAVA_VERSION }}'
         uses: actions/setup-java@v2
