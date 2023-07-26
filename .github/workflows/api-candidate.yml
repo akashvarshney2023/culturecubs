@@ -35,4 +35,4 @@ jobs:
         with:
           app-name: 'api-candidate-dev-001' # Replace with your Azure Function App name
           package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/target'
-          publish-profile: ${{ secrets.API_PUBLISH_PROFILE }} # Replace with the name of your secret containing the .publishsettings content
+          publish-profile: ${{ secrets.API_CANDIDATE_PUBLISH_PROFILE }} # Replace with the name of your secret containing the .publishsettings content
