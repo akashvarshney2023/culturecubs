@@ -34,5 +34,5 @@ jobs:
         uses: azure/functions-action@v1
         with:
           app-name: 'api-candidate-dev-001' # Replace with your Azure Function App name
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/target/candidate.jar' # Update with the correct path to the JAR file
+          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/target'
           publish-profile: ${{ secrets.API_PUBLISH_PROFILE }} # Replace with the name of your secret containing the .publishsettings content
