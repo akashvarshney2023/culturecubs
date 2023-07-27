@@ -1,7 +1,7 @@
 name: API-build & deploy
 on:
   push:
-    branches:      
+    branches:
       - main
     paths:
       - 'candidate/**'
@@ -9,8 +9,9 @@ on:
   workflow_dispatch:
 
 env:
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate'
+  AZURE_WEBAPP_PACKAGE_PATH: './candidate/target'
   JAVA_VERSION: '11'
+  AZURE_WEBAPP_NAME: 'api-candidate-dev-002' # Replace with your Azure Web App name
 
 jobs:
   build-and-deploy-dev:
@@ -28,11 +29,11 @@ jobs:
 
       - name: 'Build Java App with Maven'
         run: mvn clean package
-        working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
 
-      - name: 'Run Azure Functions Action'
-        uses: azure/functions-action@v1
+      - name: 'Deploy to Azure Web App'
+        uses: azure/webapps-deploy@v2
         with:
-          app-name: 'api-candidate-dev-001' # Replace with your Azure Function App name
-          package: '${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/target'
-          publish-profile: ${{ secrets.API_CANDIDATE_PUBLISH_PROFILE }} # Replace with the name of your secret containing the .publishsettings content
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/*.jar # Use appropriate file extension (e.g., .jar or .war) based on your build
+          publish-profile: ${{ secrets.API_CANDIDATE_PUBLISH_PROFILE }} # Use the name of the secret that holds the Azure publish profile
