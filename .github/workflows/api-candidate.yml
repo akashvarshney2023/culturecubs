@@ -36,5 +36,5 @@ jobs:
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/*.jar # Use appropriate file extension (e.g., .jar or .war) based on your build
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} # Use appropriate file extension (e.g., .jar or .war) based on your build
           publish-profile: ${{ secrets.API_CANDIDATE_PUBLISH_PROFILE }} # Use the name of the secret that holds the Azure publish profile
