@@ -12,6 +12,7 @@ env:
   AZURE_WEBAPP_PACKAGE_PATH: './candidate/target'
   JAVA_VERSION: '11'
   AZURE_WEBAPP_NAME: 'api-candidate-dev-002' # Replace with your Azure Web App name
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate'
 
 jobs:
   build-and-deploy-dev:
@@ -29,7 +30,7 @@ jobs:
 
       - name: 'Build Java App with Maven'
         run: mvn clean package
-        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v2
