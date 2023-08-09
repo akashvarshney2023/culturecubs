@@ -3,6 +3,6 @@ server:
 spring:
   data:
     mongodb:
-      host: localhost
-      port: 27017
-      database: texhibit
+      uri: ${COSMOS_DB_CONNECTION_STRING}
+      database: your-database-name
+

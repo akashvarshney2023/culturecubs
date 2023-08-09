@@ -4,37 +4,55 @@ on:
     branches:
       - main
     paths:
-      - 'candidate/**'
-      - '.github/workflows/api-candidate.yml'
+      - "candidate/**"
+      - ".github/workflows/api-candidate.yml"
   workflow_dispatch:
 
 env:
-  AZURE_WEBAPP_PACKAGE_PATH: './candidate/target'
-  JAVA_VERSION: '11'
-  AZURE_WEBAPP_NAME: 'api-candidate-dev-002' # Replace with your Azure Web App name
-  AZURE_FUNCTIONAPP_PACKAGE_PATH: './candidate'
+  AZURE_WEBAPP_PACKAGE_PATH: "./src/apis/candidate/target"
+  JAVA_VERSION: "11"
+  AZURE_WEBAPP_NAME: "api-candidate-dev-002"
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/apis/candidate"
 
 jobs:
-  build-and-deploy-dev:
+  buid:
     runs-on: ubuntu-latest
-    environment: Development
     steps:
-      - name: 'Checkout GitHub Action'
+      - name: "Checkout GitHub Action"
         uses: actions/checkout@v3.5.3
 
-      - name: 'Set up Java ${{ env.JAVA_VERSION }}'
-        uses: actions/setup-java@v2
+      - name: "Set up Java ${{ env.JAVA_VERSION }}"
+        uses: actions/setup-java@v1
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          distribution: 'adopt'
 
-      - name: 'Build Java App with Maven'
+      - name: "Build Java App with Maven"
         run: mvn clean package
         working-directory: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: java-app
+          path: "${{ github.workspace }}/target/*.jar"
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: "Production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: java-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }} # Use appropriate file extension (e.g., .jar or .war) based on your build
-          publish-profile: ${{ secrets.API_CANDIDATE_PUBLISH_PROFILE }} # Use the name of the secret that holds the Azure publish profile
+          slot-name: "Production"
+          publish-profile: ${{ secrets.API_CANDIDATE_PUBLISH_PROFILE }}
+          package: "*.jar"
