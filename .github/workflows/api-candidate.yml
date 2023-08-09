@@ -15,7 +15,7 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/apis/candidate"
 
 jobs:
-  buid:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout GitHub Action"
