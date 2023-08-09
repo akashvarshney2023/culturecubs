@@ -34,7 +34,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: java-app
-          path: "${{ github.workspace }}/target/*.jar"
+          path: "${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}/target/*.jar"
   deploy:
     runs-on: ubuntu-latest
     needs: build
