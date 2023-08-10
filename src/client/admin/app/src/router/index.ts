@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import HomeView from '@/views/main/HomeView.vue'
-import LoginView from '@/views/LoginView.vue'
+import LoginView from '../views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import AboutView from '../views/main/AboutView.vue'
-import BlogView from '../views/main/BlogView.vue'
-import ContactUsView from '../views/main/ContactUsView.vue'
-import ServicesView from '../views/main/ServicesView.vue'
-import TeamView from '../views/main/TeamView.vue'
 import NewContest from '../views/contest/NewContest.vue'
 import ContestView from '../views/contest/ContestView.vue'
 import ParticipantsView from '../views/participants/ParticipantsView.vue'
+import HomeView from '@/views/footer/HomeView.vue'
+import AboutView from '../views/footer/AboutView.vue'
+import BlogView from '../views/footer/BlogView.vue'
+import ContactUsView from '../views/footer/ContactUsView.vue'
+import ServicesView from '../views/footer/ServicesView.vue'
+import TeamView from '../views/footer/TeamView.vue'
 import Settings from '../views/settings/ContentView.vue'
-
+import CandidateView from '@/views/candidate/CandidateView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -80,6 +80,12 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
+      meta: { auth: true }
+    },
+    {
+      path: '/candidate',
+      name: 'candidate',
+      component: CandidateView,
       meta: { auth: true }
     },
     {

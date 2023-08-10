@@ -52,22 +52,18 @@
         <v-tab value="home" @click="navigate('home')">Home</v-tab>
         <v-tab value="contest" @click="navigate('contest')">Contest</v-tab>
         <v-tab value="participants" @click="navigate('participants')">Participants</v-tab>
-        <v-tab value="jobs">Jobs</v-tab>
         <v-tab value="candiate" @click="navigate('candidate')">Candidate</v-tab>
-        <v-tab value="assessment">Assessment</v-tab>
-        <v-tab value="report">Report</v-tab>
-
       </v-tabs>
     </v-app-bar>
   </header>
 
- 
-    <v-dialog v-model="dialog" width="auto">
-      <v-card>
-        <!-- //new COmponet  -->
-        <Settings></Settings>
-      </v-card>
-    </v-dialog>
+
+  <v-dialog v-model="dialog" width="auto">
+    <v-card>
+      <!-- //new COmponet  -->
+      <Settings></Settings>
+    </v-card>
+  </v-dialog>
 
 
   <v-footer class="bg-green-lighten-1" style="position: fixed; bottom: 0; width: 100%;">
@@ -125,14 +121,10 @@ watch(() => route.name, () => {
     activetab.value = "home";
   } else if (route.name == 'participant') {
     activetab.value = "participant";
-  } else if (route.name == 'jobs') {
-    activetab.value = "jobs";
   } else if (route.name == 'candidate') {
     activetab.value = "candidate";
-  } else if (route.name == 'assessment') {
-    activetab.value = "assessment";
   } else {
-    activetab.value = "report";
+    activetab.value = "home";
   }
 }, { immediate: true });
 
