@@ -24,8 +24,8 @@ public class CandidateService {
     }
 
     public Candidate addCandidate(Candidate candidate) throws IOException {
-        String parseResume =  Parser.parse(candidate.getResumePath());
-        candidate.setResumeOrCV(parseResume);
+        // String parseResume =  Parser.parse(candidate.getResumePath());
+        // candidate.setResumeOrCV(parseResume);
         Candidate temp = candidateRepository.save(candidate);
 
         return temp;
