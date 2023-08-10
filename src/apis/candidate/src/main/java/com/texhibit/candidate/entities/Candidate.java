@@ -36,6 +36,7 @@ public class Candidate{
     private String preferences;
     private Integer activeApps;
     private Integer totalApps;
+    private boolean isParticipant;
 }
 
 

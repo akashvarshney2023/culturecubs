@@ -1,6 +1,5 @@
 package com.texhibit.candidate.controllers;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.texhibit.candidate.dtos.CandidateDto;
 import com.texhibit.candidate.entities.Candidate;
@@ -61,4 +60,11 @@ public class CandidateController {
         return candidateService.getCount();
     }
 
+    @GetMapping(value="/participants")
+    @CrossOrigin
+    public List<CandidateDto> getAllParticipants(){
+
+        List<CandidateDto> candidates = candidateService.getAllParticipants();
+        return candidates;
+    }
 }
