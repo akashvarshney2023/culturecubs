@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "candidate/**"
+    paths:     
       - ".github/workflows/api-candidate.yml"
   workflow_dispatch:
 
