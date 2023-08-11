@@ -3,13 +3,14 @@ info:
   title: OpenAPI definition
   version: v0
 servers:
-- url: http://localhost:12445/
+- url: http://localhost:12445
   description: Generated server url
 paths:
   /api/candidate/{id}:
     get:
       tags:
       - candidate-controller
+      summary: Get candidate by id
       operationId: getCandidate
       parameters:
       - name: id
@@ -27,6 +28,7 @@ paths:
     put:
       tags:
       - candidate-controller
+      summary: Update existing Candidate
       operationId: updateCandidate
       parameters:
       - name: id
@@ -50,6 +52,7 @@ paths:
     delete:
       tags:
       - candidate-controller
+      summary: Delete candidate by id
       operationId: deleteCandidate
       parameters:
       - name: id
@@ -86,6 +89,7 @@ paths:
     post:
       tags:
       - candidate-controller
+      summary: Add new Candidate
       operationId: addProduct
       requestBody:
         content:
@@ -104,6 +108,7 @@ paths:
     get:
       tags:
       - candidate-controller
+      summary: Get participants
       operationId: getAllParticipants
       responses:
         "200":
@@ -118,6 +123,7 @@ paths:
     get:
       tags:
       - candidate-controller
+      summary: Get all canidates
       operationId: getAll
       responses:
         "200":
@@ -132,6 +138,7 @@ paths:
     get:
       tags:
       - candidate-controller
+      summary: Get candidate count
       operationId: getCount
       responses:
         "200":
