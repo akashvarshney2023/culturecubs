@@ -4,21 +4,27 @@
             <v-card-title>Participants</v-card-title>
             <v-card>
                 <v-card-title>
-                    <v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line
+                    <v-text-field v-model="candidates.search" append-icon="mdi-magnify" label="Search" single-line
                         hide-details></v-text-field>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="participants" :search="search" show-select
-                    :dense="dense"></v-data-table>
+                <v-data-table :headers="candidates.headers" :items="candidates.participants" :search="candidates.search" show-select
+                    :dense="candidates.dense"></v-data-table>
             </v-card>
             <v-spacer></v-spacer>
             <v-btn color="primary">Edit</v-btn>
         </v-card>
     </v-main>
 </template>
-<script lang="ts">
-export default {
-    data() {
-        return {
+<script lang="ts" setup>
+import { onMounted, ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
+
+const router = useRouter()
+const route = useRoute()
+
+
+
+const candidates = ref({
             dense: "true",
             search: '',
             headers: [
@@ -127,10 +133,10 @@ export default {
                     Company: "XYZ Corp.",
                     Location: "Portland, OR"
                 }
-
-
             ],
-        }
-    },
-}
+        });
 </script>
+
+
+
+
