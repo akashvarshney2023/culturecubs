@@ -36,7 +36,7 @@ public class CandidateController {
 
     @PostMapping("/candidate")
     @Operation(summary = "Add new Candidate")
-    public Candidate addProduct(@RequestBody Candidate candidate) throws IOException {
+    public Candidate addCandidate(@RequestBody Candidate candidate) throws IOException {
 
         Candidate returnValue = candidateService.addCandidate(candidate);
         return returnValue;
