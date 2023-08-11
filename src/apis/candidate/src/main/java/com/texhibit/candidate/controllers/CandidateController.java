@@ -27,6 +27,7 @@ public class CandidateController {
 
     @GetMapping(value="/candidates")
     @CrossOrigin
+    @Operation(summary = "Get all canidates")
     public List<CandidateDto> getAll(){
 
         List<CandidateDto> candidates = candidateService.getAll();
