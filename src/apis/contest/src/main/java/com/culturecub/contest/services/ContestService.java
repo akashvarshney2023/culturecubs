@@ -47,9 +47,12 @@ public class ContestService {
         return Math.toIntExact(contestRepository.count());
     }
 
-    public void activate(String id, Contest contest) {
-
+    public Contest activate(String id, Contest contest) {
+        if (!contestRepository.existsById(id)) {
+            return null;
+        }
         contest.setActive(true);
-        contestRepository.save(contest);
+        Contest savedContest = contestRepository.save(contest);
+        return  savedContest;
     }
 }

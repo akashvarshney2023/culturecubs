@@ -21,22 +21,26 @@ public class ContestController {
     }
 
     @GetMapping
+    @Operation(summary = "Get all contest")
     public List<Contest> getAllContests() {
         return contestService.findAll();
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "Get contest byu Id")
     public ResponseEntity<Contest> getContestById(@PathVariable String id) {
         Optional<Contest> contest = contestService.findById(id);
         return contest.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
+    @Operation(summary = "Create contest")
     public Contest createContest(@RequestBody Contest contest) {
         return contestService.save(contest);
     }
 
     @PutMapping("/{id}")
+    @Operation(summary = "Update contest")
     public ResponseEntity<Contest> updateContest(@PathVariable String id, @RequestBody Contest updatedContest) {
         Contest savedContest = contestService.updateContest(id, updatedContest);
         if (savedContest == null) {
@@ -59,7 +63,7 @@ public class ContestController {
     }
 
     @PutMapping("/activate/{id}")
-    public  void activate(@PathVariable String id, @RequestBody Contest updatedContest){
-        contestService.activate(id, updatedContest);
+    public  Contest activate(@PathVariable String id, @RequestBody Contest updatedContest){
+       return contestService.activate(id, updatedContest);
     }
 }
