@@ -25,7 +25,7 @@ import {
     CandidateDtoToJSON,
 } from '../models';
 
-export interface AddProductRequest {
+export interface AddCandidateRequest {
     candidate: Candidate;
 }
 
@@ -57,12 +57,12 @@ export interface CandidateControllerApiInterface {
      * @throws {RequiredError}
      * @memberof CandidateControllerApiInterface
      */
-    addProductRaw(requestParameters: AddProductRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Candidate>>;
+    addCandidateRaw(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Candidate>>;
 
     /**
      * Add new Candidate
      */
-    addProduct(requestParameters: AddProductRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Candidate>;
+    addCandidate(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Candidate>;
 
     /**
      * 
@@ -162,9 +162,9 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     /**
      * Add new Candidate
      */
-    async addProductRaw(requestParameters: AddProductRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Candidate>> {
+    async addCandidateRaw(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Candidate>> {
         if (requestParameters.candidate === null || requestParameters.candidate === undefined) {
-            throw new runtime.RequiredError('candidate','Required parameter requestParameters.candidate was null or undefined when calling addProduct.');
+            throw new runtime.RequiredError('candidate','Required parameter requestParameters.candidate was null or undefined when calling addCandidate.');
         }
 
         const queryParameters: any = {};
@@ -187,8 +187,8 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     /**
      * Add new Candidate
      */
-    async addProduct(requestParameters: AddProductRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Candidate> {
-        const response = await this.addProductRaw(requestParameters, initOverrides);
+    async addCandidate(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Candidate> {
+        const response = await this.addCandidateRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
