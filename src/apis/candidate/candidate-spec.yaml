@@ -1,0 +1,303 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:12445
+  description: Generated server url
+paths:
+  /api/candidate/{id}:
+    get:
+      tags:
+      - candidate-controller
+      summary: Get candidate by id
+      operationId: getCandidate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Candidate'
+    put:
+      tags:
+      - candidate-controller
+      summary: Update existing Candidate
+      operationId: updateCandidate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Candidate'
+    delete:
+      tags:
+      - candidate-controller
+      summary: Delete candidate by id
+      operationId: deleteCandidate
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: string
+  /api/parse/{path}:
+    post:
+      tags:
+      - extract-controller
+      operationId: parse
+      parameters:
+      - name: path
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: boolean
+  /api/candidate:
+    post:
+      tags:
+      - candidate-controller
+      summary: Add new Candidate
+      operationId: addProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Candidate'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/Candidate'
+  /api/participants:
+    get:
+      tags:
+      - candidate-controller
+      summary: Get participants
+      operationId: getAllParticipants
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CandidateDto'
+  /api/candidates:
+    get:
+      tags:
+      - candidate-controller
+      summary: Get all canidates
+      operationId: getAll
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CandidateDto'
+  /api/candidates/count:
+    get:
+      tags:
+      - candidate-controller
+      summary: Get candidate count
+      operationId: getCount
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: integer
+                format: int32
+components:
+  schemas:
+    Candidate:
+      type: object
+      properties:
+        id:
+          type: string
+        personalInformation:
+          $ref: '#/components/schemas/PersonalInformation'
+        workExperience:
+          type: array
+          items:
+            $ref: '#/components/schemas/WorkExperience'
+        education:
+          type: array
+          items:
+            $ref: '#/components/schemas/Education'
+        skills:
+          type: array
+          items:
+            type: string
+        certificationsAndLicenses:
+          type: array
+          items:
+            $ref: '#/components/schemas/CertificationsAndLicense'
+        references:
+          type: array
+          items:
+            $ref: '#/components/schemas/Reference'
+        resumeOrCV:
+          type: string
+        resumePath:
+          type: string
+        currentCtc:
+          type: number
+          format: double
+        expectedCtc:
+          type: number
+          format: double
+        currentCompany:
+          type: string
+        noticePeriod:
+          type: integer
+          format: int32
+        techStack:
+          type: string
+        flag:
+          type: string
+        activeStatus:
+          type: string
+        preferences:
+          type: string
+        activeApps:
+          type: integer
+          format: int32
+        totalApps:
+          type: integer
+          format: int32
+        participant:
+          type: boolean
+    CertificationsAndLicense:
+      type: object
+      properties:
+        name:
+          type: string
+        issuedBy:
+          type: string
+        issueDate:
+          type: string
+    ContactInformation:
+      type: object
+      properties:
+        email:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: string
+        nationality:
+          type: string
+        workAuthorizationStatus:
+          type: string
+        gender:
+          type: string
+        dateOfBirth:
+          type: string
+    Education:
+      type: object
+      properties:
+        schoolName:
+          type: string
+        degreeType:
+          type: string
+        major:
+          type: string
+        graduationDate:
+          type: string
+        gpa:
+          type: string
+    PersonalInformation:
+      type: object
+      properties:
+        name:
+          type: string
+        contactInformation:
+          $ref: '#/components/schemas/ContactInformation'
+    Reference:
+      type: object
+      properties:
+        name:
+          type: string
+        jobTitle:
+          type: string
+        companyName:
+          type: string
+        email:
+          type: string
+        phoneNumber:
+          type: string
+    WorkExperience:
+      type: object
+      properties:
+        companyName:
+          type: string
+        jobTitle:
+          type: string
+        employmentDates:
+          type: string
+        jobDescription:
+          type: string
+        accomplishments:
+          type: string
+        experienceFrom:
+          type: number
+          format: double
+        experienceTo:
+          type: number
+          format: double
+    CandidateDto:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        gender:
+          type: string
+        dob:
+          type: string
