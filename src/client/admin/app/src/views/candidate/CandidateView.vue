@@ -1,7 +1,7 @@
 <template>
     <v-main>
       <v-card flat>
-        <v-card-title>Participants</v-card-title>
+        <v-card-title>Candidates</v-card-title>
         <v-card v-if="candidates.listItems.length">
           <v-card-title>
             <v-text-field v-model="candidates.search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
