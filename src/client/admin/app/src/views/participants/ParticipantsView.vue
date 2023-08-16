@@ -25,7 +25,7 @@ const participants = ref({
     { align: 'start', key: 'name', sortable: false, title: 'Name' },
     { key: 'email', title: 'Email' },
     { key: 'phone', title: 'Phone' },
-    { key: 'gender', title: 'Company' },
+    { key: 'gender', title: 'Gender' },
     { key: 'dob', title: 'DOB' },
   ],
   listItems: canidateDetails

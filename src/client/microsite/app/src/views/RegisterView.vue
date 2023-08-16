@@ -46,6 +46,8 @@ import { useRouter } from 'vue-router';
 import { CandidateApi } from '../openapi/apis';
 import type { CandidateregistrationRequest } from '../openapi/apis/CandidateApi';
 import type { CandidateRegistration } from '../openapi/models';
+import type { AddCandidateRequest } from '@/api/apis/CandidateControllerApi';
+import type { PersonalInformation,  Candidate } from '@/api/models';
 const accountName: any = process.env.VUE_APP_STRG_ACCOUNT_NAME;
 const containerName: any = process.env.VUE_APP_STRG_CONTAINER_NAME;
 const accountKey: any = process.env.VUE_APP_STRG_ACCOUNT_KEY; // Keep this secure, don't expose it in frontend code (used for demonstration purposes only)
@@ -72,6 +74,13 @@ export default defineComponent({
 
       }
 
+
+      //Create a new candidate regsitration details 
+      const canidateDetails: Candidate  = {
+        personalInformation : {}      
+
+      }
+
       // Create a new candidate registration object
       const candidateRegistration: CandidateRegistration = {
         company: company.value,
@@ -84,7 +93,7 @@ export default defineComponent({
       };
 
       // Create the request body
-      const request: CandidateregistrationRequest = {
+      const request: AddCandidateRequest = {
         body: candidateRegistration,
       };
 
