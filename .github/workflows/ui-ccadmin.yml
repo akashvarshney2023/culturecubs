@@ -9,9 +9,9 @@ on:
       - '.github/workflows/ui-ccadmin.yml'
 
 env:
-  APP_BASE_DIR: '.src/client/admin/app'
+  APP_BASE_DIR: 'src/client/admin/app'  
   NODE_VERSION: '16'
-  APP_OUTPUT_DIR: '/app/dist'
+  APP_OUTPUT_DIR: 'app/dist'  
 
 jobs:
   build-dev:
@@ -22,10 +22,10 @@ jobs:
       VITE_APP_HOST: ''
     steps:
       - name: 'Checkout GitHub Action'
-        uses: actions/checkout@v3.1.0
+        uses: actions/checkout@v2 
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v2 
         with:
           node-version: ${{ env.NODE_VERSION }}
 
