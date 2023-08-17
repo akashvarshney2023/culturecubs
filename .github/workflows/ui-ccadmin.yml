@@ -11,7 +11,7 @@ on:
 env:
   APP_BASE_DIR: 'src/client/admin/app'  
   NODE_VERSION: '16'
-  APP_OUTPUT_DIR: '/app/dist'  
+  APP_OUTPUT_DIR: 'src/client/admin/app/dist'  
 
 jobs:
   build-dev:
