@@ -41,11 +41,11 @@
 <script lang="ts">
 import { defineComponent, ref, type Ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { CandidateApi } from '../openapi/apis';
-import type { CandidateregistrationRequest } from '../openapi/apis/CandidateApi';
-import type { CandidateRegistration } from '../openapi/models';
-import type { AddCandidateRequest } from '@/api/apis/CandidateControllerApi';
-import type { PersonalInformation,  Candidate } from '@/api/models';
+import { CandidateApi } from '@/apis/microsite/apis';
+import type { CandidateregistrationRequest } from '@/apis/microsite/apis';
+import type { CandidateRegistration } from '@/apis/microsite/models';
+import type { AddCandidateRequest } from '@/apis/candidate/apis';
+import type { PersonalInformation,  Candidate } from '@/apis/candidate/models';
 
 export default defineComponent({
   setup() {
