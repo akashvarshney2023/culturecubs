@@ -6,8 +6,8 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as labsComponents from 'vuetify/labs/components'
-import type { ThemeConfiguration } from '@/api/microsite/models'
-import { ThemeApi } from '@/api/microsite/apis'
+import type { ThemeConfiguration } from '@/openapi/models'
+import { ThemeApi } from '@/openapi'
 import { useRoute, useRouter } from 'vue-router'
 var themApi = new ThemeApi();
 

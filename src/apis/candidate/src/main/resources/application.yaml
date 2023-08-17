@@ -1,0 +1,8 @@
+server:
+  port: 12445
+spring:
+  data:
+    mongodb:
+      uri: ${COSMOS_DB_CONNECTION_STRING}
+      database: texhibit
+
