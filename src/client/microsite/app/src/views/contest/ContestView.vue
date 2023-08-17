@@ -57,8 +57,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ContestApi } from '../../openapi/apis/ContestApi'
-import type { Contest, ContestTab } from '../../openapi/models'
+import { ContestApi } from '@/api/microsite/apis/ContestApi'
+import type { Contest } from '@/api/microsite/models/Contest'
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
