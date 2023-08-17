@@ -15,7 +15,7 @@ env:
   AZURE_APP_WORKING_DIR: './src/apis/users/'
 
 jobs:
-  api-benchmbeta-dev:
+  api-usermgt-dev:
     if: github.ref == 'refs/heads/main'
     runs-on: windows-latest
     environment: Development
