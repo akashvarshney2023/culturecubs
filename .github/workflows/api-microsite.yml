@@ -1,0 +1,47 @@
+name: microsite-api-build and deploy
+on:
+  push:
+    branches:
+      - main
+    paths:
+    - 'src/apis/microsite/**'
+    - '.github/workflows/api-microsite.yml'
+  workflow_dispatch:
+  
+
+env:
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/apis/microsite/' 
+  DOTNET_VERSION: '6.0.x'
+  AZURE_APP_WORKING_DIR: './src/apis/microsite/' 
+
+jobs:
+  api-benchmbeta-dev:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: window-latest
+    environment: Development
+    steps:
+      - name: 'Checkout GitHub Action'
+        uses: actions/checkout@v3.1.0
+
+      - name: Setup DotNet ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: 'Build Using Dotnet'
+        shell: pwsh
+        run: |
+          dotnet publish -c Release --output ./output -r win-x86 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: Test with the dotnet CLI
+        run: dotnet test
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: 'Run Azure Functions Action'
+        uses: Azure/functions-action@v1
+        id: fa
+        with:
+          app-name: 'func-benchm-dev-001'
+          package: '${{ env.AZURE_APP_WORKING_DIR }}output'
+          publish-profile: ${{ secrets.API_MICROSITE_PUBLISH_PROFILE }}

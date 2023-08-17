@@ -25,3 +25,5 @@ src/apis/users/obj/project.nuget.cache
 /src/apis/microsite/Culturecubs.Microsite.Functions/obj
 /src/apis/users/.vs
 /src/apis/users/obj/Release/net6.0
+/src/apis/microsite/.vs/Culturecubs.Microsite.Functions/FileContentIndex/read.lock
+src/apis/microsite/.vs/Culturecubs.Microsite.Functions/v17/.suo
