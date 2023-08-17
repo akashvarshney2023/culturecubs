@@ -5,11 +5,11 @@ on:
     branches:
       - main
     paths:
-      - 'src/app/**'
+      - 'src/client/admin/app/**'
       - '.github/workflows/ui-ccadmin.yml'
 
 env:
-  APP_BASE_DIR: '.src/app'
+  APP_BASE_DIR: '.src/client/admin/app'
   NODE_VERSION: '16'
   APP_OUTPUT_DIR: '/app/dist'
 
