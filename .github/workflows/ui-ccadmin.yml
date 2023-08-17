@@ -6,7 +6,7 @@ on:
       - main
     paths:
       - 'src/app/**'
-      - '.github/workflows/cc-web-ui.yml'
+      - '.github/workflows/ui-ccadmin.yml'
 
 env:
   APP_BASE_DIR: '.src/app'
