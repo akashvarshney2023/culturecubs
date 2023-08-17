@@ -17,3 +17,11 @@ src/apis/users/obj/project.assets.json
 src/apis/users/obj/project.nuget.cache
 *.vsidx
 *.v2
+/.vs
+/src/apis/microsite/Culturecubs.Microsite.DataAccess/bin/Debug/net6.0
+/src/apis/microsite/Culturecubs.Microsite.DataAccess/obj
+/src/apis/microsite/Culturecubs.Microsite.Functions/.vs
+/src/apis/microsite/Culturecubs.Microsite.Functions/bin/Debug/net6.0
+/src/apis/microsite/Culturecubs.Microsite.Functions/obj
+/src/apis/users/.vs
+/src/apis/users/obj/Release/net6.0
