@@ -16,7 +16,7 @@
   </template>
   
   <script lang="ts" setup>
-  import { CandidateControllerApi, type CandidateDto } from '@/api';
+  import { CandidateControllerApi, type CandidateDto } from '@/api/candidate';
   import { onMounted, ref } from 'vue'
   import { useRouter } from 'vue-router'
   const canidateDetails = ref<CandidateDto[]>([]);
