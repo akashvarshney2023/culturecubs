@@ -12,6 +12,8 @@ namespace Culturecubs.Microsite.DataAccess.DataContext
         public virtual DbSet<ThemeConfiguration> ThemeConfigurations { get; set; } = null!;
         public virtual DbSet<ContestTab> ContestTabs { get; set; } = null!;
         public virtual DbSet<CandidateRegistration> CandidateRegistration { get; set; } = null!;
+        public virtual DbSet<Tenant> Tenants { get; set; } = null!;
+        public virtual DbSet<User> Users { get; set; } = null!;
 
     }
 }
