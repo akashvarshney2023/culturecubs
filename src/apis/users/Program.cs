@@ -4,8 +4,11 @@ using CCubAPI.Data;
 using CCubAPI.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
+var authority = builder.Configuration.GetSection("Authority").Value;
+
 builder.Services.AddDbContext<CCubAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CCubAPIContext") ?? throw new InvalidOperationException("Connection string 'CCubAPIContext' not found.")));
 builder.Services.AddIdentityServer()
@@ -19,7 +22,7 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = "https://localhost:7208";
+                options.Authority = authority;
                 options.Audience = "myApi";
                 options.RequireHttpsMetadata = false;
                 // options.Audience = "myApi";
