@@ -11,7 +11,8 @@
     "format": "prettier --write src/",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit",
-    "candidate-fetch":"openapi-generator-cli generate -i https://api-candidate-dev-002.azurewebsites.net/v3/api-docs -g typescript-fetch -o ./src/api --additional-properties=ngVersion=supportsES6=true,withInterfaces=true"
+    "candidate-fetch":"openapi-generator-cli generate -i https://api-candidate-dev-002.azurewebsites.net/v3/api-docs -g typescript-fetch -o ./src/api/candidate --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
+    "user-fetch":"openapi-generator-cli generate -i https://localhost:7208/swagger/v1/swagger.json -g typescript-fetch -o ./src/api/user --additional-properties=ngVersion=supportsES6=true,withInterfaces=true"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
