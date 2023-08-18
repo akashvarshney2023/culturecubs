@@ -5,10 +5,11 @@ using CCubAPI.Configuration;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Configuration;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-var authority = builder.Configuration.GetSection("Authority").Value;
-
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var tokenKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]));
 builder.Services.AddDbContext<CCubAPIContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CCubAPIContext") ?? throw new InvalidOperationException("Connection string 'CCubAPIContext' not found.")));
 builder.Services.AddIdentityServer()
@@ -22,24 +23,25 @@ builder.Services.AddIdentityServer()
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>
             {
-                options.Authority = authority;
-                options.Audience = "myApi";
+                options.Authority = jwtSettings["Issuer"];
+                options.Audience = jwtSettings["Audience"];
                 options.RequireHttpsMetadata = false;
-                // options.Audience = "myApi";
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ////////////////////////////////////////////////////////
-                    // The following made the difference.  
-                    ////////////////////////////////////////////////////////
-                    ValidateAudience = false,
+                    ValidateIssuerSigningKey = true,
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidIssuer = jwtSettings["Issuer"],
+                    ValidAudience = jwtSettings["Audience"],
+                    IssuerSigningKey = tokenKey
                 };
             });
 
+builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -13,7 +13,7 @@ namespace CCubAPI.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Configure default schema
-            modelBuilder.HasDefaultSchema("Admin");
+           // modelBuilder.HasDefaultSchema("Admin");
         }
         public DbSet<CCubAPI.Tenants.Tenant> Tenant { get; set; } = default!;
         public DbSet<CCubAPI.Tenants.User> User { get; set; } = default!;

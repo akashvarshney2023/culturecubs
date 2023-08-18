@@ -4,7 +4,7 @@ using CCubAPI.Tenants;
 namespace CCubAPI.Tenants
 {
     
-    [Table("User", Schema = "Admin")]
+    [Table("user")]
     public class User
     {
         public int UserId { get; set; }

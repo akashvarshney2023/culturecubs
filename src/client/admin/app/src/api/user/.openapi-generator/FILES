@@ -1,0 +1,10 @@
+.openapi-generator-ignore
+apis/TenantsApi.ts
+apis/UserApi.ts
+apis/index.ts
+index.ts
+models/Tenant.ts
+models/User.ts
+models/Userlogin.ts
+models/index.ts
+runtime.ts
