@@ -12,35 +12,17 @@ using Microsoft.Extensions.Configuration;
 namespace CultureCubs.TenantAndUser.Functions
 {
     public class Startup : FunctionsStartup
-    {
-        public override void ConfigureAppConfiguration(IFunctionsConfigurationBuilder builder)
-        {
-            builder.ConfigurationBuilder
-                .SetBasePath(Environment.CurrentDirectory)
-                .AddJsonFile("local.settings.json", optional: true, reloadOnChange: true)
-                .AddEnvironmentVariables();
-        }
+    {      
         public override void Configure(IFunctionsHostBuilder builder)
         {
             string connectionString = Environment.GetEnvironmentVariable("ConnectionString", EnvironmentVariableTarget.Process);
-            IConfiguration configuration = builder.GetContext().Configuration;
             builder.Services.AddDbContext<ApplicationDbContext>(x =>
             {
                 x.UseSqlServer(connectionString, options => options.EnableRetryOnFailure());
 
             });
-
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<ITokenService, TokenService>();
-
-
-
         }
-    }
-    public class JwtSettings
-    {
-        public string Issuer { get; set; }
-        public string Audience { get; set; }
-        public string SecretKey { get; set; }
-    }
+    }  
 }
