@@ -39,3 +39,5 @@ src/apis/microsite/.vs/Culturecubs.Microsite.Functions/v17/.suo
 /src/apis/tenant_user/Culturecubs.TenantAndUser.DataAccess/bin/Debug/net6.0
 /src/apis/tenant_user/Culturecubs.TenantAndUser.DataAccess/obj
 /src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/CultureCubs.TenantAndUser.Functions
+src/apis/tenant_user/.vs/CultureCubs.TenantAndUser.Functions/v17/.suo
+src/apis/tenant_user/.vs/CultureCubs.TenantAndUser.Functions/FileContentIndex/read.lock

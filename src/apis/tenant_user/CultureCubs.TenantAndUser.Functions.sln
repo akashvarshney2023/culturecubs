@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33530.505
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Culturecubs.TenantAndUser.DataAccess", "Culturecubs.TenantAndUser.DataAccess\Culturecubs.TenantAndUser.DataAccess.csproj", "{C9643733-7B54-4547-803C-C8FE483EDAAC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CultureCubs.TenantAndUser.Functions", "CultureCubs.TenantAndUser.Functions\CultureCubs.TenantAndUser.Functions\CultureCubs.TenantAndUser.Functions.csproj", "{1D1F2B87-A65C-43CC-BC0D-D4ED05753B17}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C9643733-7B54-4547-803C-C8FE483EDAAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9643733-7B54-4547-803C-C8FE483EDAAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9643733-7B54-4547-803C-C8FE483EDAAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9643733-7B54-4547-803C-C8FE483EDAAC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D1F2B87-A65C-43CC-BC0D-D4ED05753B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D1F2B87-A65C-43CC-BC0D-D4ED05753B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D1F2B87-A65C-43CC-BC0D-D4ED05753B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D1F2B87-A65C-43CC-BC0D-D4ED05753B17}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2220646F-7DC0-4DDE-BDC4-094F9E9427EA}
+	EndGlobalSection
+EndGlobal
