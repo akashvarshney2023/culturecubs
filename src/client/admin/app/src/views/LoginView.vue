@@ -1,7 +1,7 @@
 <template>
     <v-main>
         <v-container fluid>
-            <v-row class="d-flex justify-center align-center" style="height: 100vh;">
+            <v-row class="d-flex justify-center align-center" style="height: 50vh;">
                 <v-col cols="6">
                     <v-card>
                         <v-card-title class="text-center">Login</v-card-title>
@@ -29,7 +29,7 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import authPlugin from '@/plugins/auth';
-import { UserApi,type LoginRequest } from '@/api/tenant/apis';
+import { UserApi, type LoginRequest } from '@/api/tenant/apis';
 const router = useRouter();
 
 const userApi = new UserApi();
@@ -45,10 +45,19 @@ const login = async () => {
                 password: password.value
             }
         };
-         // Use await to handle the asynchronous response
-    const response = await userApi.login(request);
+        // Use await to handle the asynchronous response
+        const response = await userApi.loginRaw(request);
+        const token  =  await response.value();
+        console.log(response)
+        console.log(token)
+        if (token) {
+            localStorage.setItem('token', token);
+            // Redirect to a protected route after successful login
+            router.push('/');
+        } else {
+            console.error('Token missing or login failed');
+        }
 
-       
 
     } catch (error) {
         console.error('Login error:', error);

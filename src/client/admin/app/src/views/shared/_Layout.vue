@@ -5,9 +5,9 @@
       <v-app-bar-title>
         <v-img src="../../assets/images/logo.png" style="width:350px;height:54px;"></v-img>
       </v-app-bar-title>
-      <template v-slot:append>
+      <template v-slot:append  v-if="isAuthenticated">
         <span class="pr-5" style="font-size:large;">Akash Varshney</span>
-        <v-menu v-model="menu" :close-on-content-click="false" location="end">
+        <v-menu v-model="menu" :close-on-content-click="false" location="end" v-if="isAuthenticated">
           <template v-slot:activator="{ props }">
             <v-btn color="indigo" v-bind="props" variant="text">
               <v-avatar color="green">
@@ -47,7 +47,7 @@
       </template>
     </v-app-bar>
 
-    <v-app-bar density="default" style="padding:0px 10% !important;" class="bg-white">
+    <v-app-bar density="default" style="padding:0px 10% !important;" class="bg-white"  v-if="isAuthenticated">
       <v-tabs color="primary" v-model="activetab">
         <v-tab value="home" @click="navigate('home')">Home</v-tab>
         <v-tab value="contest" @click="navigate('contest')">Contest</v-tab>
@@ -58,7 +58,7 @@
   </header>
 
 
-  <v-dialog v-model="dialog" width="auto">
+  <v-dialog v-model="dialog" width="auto"  v-if="isAuthenticated">
     <v-card>
       <!-- //new COmponet  -->
       <Settings></Settings>
@@ -66,7 +66,7 @@
   </v-dialog>
 
 
-  <v-footer class="bg-green-lighten-1" style="position: fixed; bottom: 0; width: 100%;">
+  <v-footer class="bg-green-lighten-1" style="position: fixed; bottom: 0; width: 100%;"  v-if="isAuthenticated">
     <v-row justify="center" no-gutters>
       <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('home')">Home</v-btn>
       <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('about')">About Us</v-btn>
@@ -107,6 +107,7 @@ const navigate = (name: string) => {
   });
 };
 
+const isAuthenticated = localStorage.getItem('token');
 
 var activetab = ref('');
 
