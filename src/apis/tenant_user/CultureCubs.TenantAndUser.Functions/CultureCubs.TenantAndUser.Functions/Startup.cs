@@ -33,9 +33,6 @@ namespace CultureCubs.TenantAndUser.Functions
             builder.Services.AddTransient<IUserRepository, UserRepository>();
             builder.Services.AddTransient<ITokenService, TokenService>();
 
-            // Configure JWT settings
-            var jwtSettings = configuration.GetSection("Jwt").Get<JwtSettings>();
-            builder.Services.AddSingleton(jwtSettings);
 
 
         }
