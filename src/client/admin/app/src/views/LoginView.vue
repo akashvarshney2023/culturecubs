@@ -28,7 +28,6 @@
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import authPlugin from '@/plugins/auth';
 import { UserApi, type LoginRequest } from '@/api/tenant/apis';
 const router = useRouter();
 

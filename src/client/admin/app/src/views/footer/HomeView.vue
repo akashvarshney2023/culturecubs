@@ -46,19 +46,9 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'; // Import the router
 import { ref, onMounted } from 'vue'; // Import necessary Vue features
-import auth from '@/plugins/auth';
 const router = useRouter();
 
-// Perform authentication check on component mount
-onMounted(() => {
-  // Access the isAuthenticated method from $auth
-  const isAuthenticated = ref(auth.install(this).isAuthenticated());
 
-  // If not authenticated, redirect to the login page
-  if (!isAuthenticated.value) {
-    router.push('/login'); // Change to your actual login route
-  }
-});
 </script>
   
 <style scoped> .v-container {

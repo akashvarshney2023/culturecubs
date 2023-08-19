@@ -13,6 +13,7 @@ import TeamView from '../views/footer/TeamView.vue'
 import Settings from '../views/settings/ContentView.vue'
 import CandidateView from '@/views/candidate/CandidateView.vue'
 import Layout from '@/views/shared/_Layout.vue'
+import { ref } from 'vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -81,15 +82,15 @@ const router = createRouter({
           name: 'candidate',
           component: CandidateView,
           meta: { requiresAuth: true }
-        },
+        },        
         {
-          path: '/',
+          path: '/home',
           name: 'home',
           component: HomeView,
           meta: { requiresAuth: true }
         },
         {
-          path: '/home',
+          path: '/',
           name: 'home',
           component: HomeView,
           meta: { requiresAuth: true }
@@ -106,16 +107,14 @@ const router = createRouter({
 
 });
 
-// Navigation guard
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = localStorage.getItem('token'); // Check if token is available
+  const isTokenAvailable = !!localStorage.getItem('token'); // Convert token presence to a boolean
+  const isAuthenticated = isTokenAvailable && to.meta.requiresAuth;
 
-  // Check if the route requires authentication
-  if (to.meta.requiresAuth && !isAuthenticated) {
-    // Redirect to the login page if not authenticated
+  if ((to.path=="/" && !isAuthenticated)|| (to.meta.requiresAuth && !isAuthenticated)) {
     next('/login');
   } else {
-    next(); // Proceed to the requested route
+    next();
   }
 });
 export default router
