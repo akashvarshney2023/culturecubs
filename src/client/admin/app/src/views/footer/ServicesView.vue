@@ -5,7 +5,7 @@
       <v-row>
         <v-col cols="12" sm="6" md="4">
           <v-card class="service-card">
-            <v-card-media :src="require('@/assets/images/service1.jpg')" height="200px"></v-card-media>
+            <v-card-media :src="'@/assets/images/service1.jpg'" height="200px"></v-card-media>
             <v-card-title>Service 1</v-card-title>
             <v-card-text>
               Welcome to our website! We are a team of dedicated professionals who are committed to providing top-notch
@@ -20,7 +20,7 @@
         </v-col>
         <v-col cols="12" sm="6" md="4">
           <v-card class="service-card">
-            <v-card-media :src="require('@/assets/images/service2.jpg')" height="200px"></v-card-media>
+            <v-card-media :src="'@/assets/images/service2.jpg'" height="200px"></v-card-media>
             <v-card-title>Service 2</v-card-title>
             <v-card-text>
               We have been in the industry for several years and have built a solid reputation for our expertise,
@@ -35,7 +35,7 @@
         </v-col>
         <v-col cols="12" sm="6" md="4">
           <v-card class="service-card">
-            <v-card-media :src="require('@/assets/images/service3.jpg')" height="200px"></v-card-media>
+            <v-card-media :src="'@/assets/images/service3.jpg'" height="200px"></v-card-media>
             <v-card-title>Service 3</v-card-title>
             <v-card-text>
 

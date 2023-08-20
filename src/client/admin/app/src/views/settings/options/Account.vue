@@ -54,9 +54,8 @@
   </template>
   
   
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Sketch } from 'vue-color';
 
 const tenantName = ref('');
 const tenantCode = ref('');
