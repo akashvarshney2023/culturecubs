@@ -19,7 +19,7 @@
         </v-navigation-drawer>
         <v-main>
           <!-- Conditionally render components based on the active component -->
-          <MicositeView v-if="activeComponent === 'account'" />
+          <Account v-if="activeComponent === 'account'" />
           <CandidateView v-if="activeComponent === 'users'" />
           <ContentView v-if="activeComponent === 'participants'" />
         </v-main>
@@ -30,7 +30,7 @@
   <script lang="ts" setup>
   import { ref } from 'vue';
   import CandidateView from '@/views/settings/options/CandidateView.vue';
-  import MicositeView from '@/views/settings/options/MicrositeView.vue';
+  import Account from '@/views/settings/options/Account.vue';
   import ContentView from '@/views/settings/options/ContentView.vue';
   
   const drawer = ref(true);
