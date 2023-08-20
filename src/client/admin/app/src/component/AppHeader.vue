@@ -15,6 +15,7 @@
                 <v-tab value="contest" @click="navigate('contest')">Contest</v-tab>
                 <v-tab value="participants" @click="navigate('participants')">Participants</v-tab>
                 <v-tab value="candiate" @click="navigate('candidate')">Candidate</v-tab>
+                <v-tab value="settings" @click="navigate('settings')">Settings</v-tab>
             </v-tabs>
         </v-app-bar>
     </header>    
@@ -45,6 +46,8 @@ watch(() => route.name, () => {
     activetab.value = "participant";
   } else if (route.name == 'candidate') {
     activetab.value = "candidate";
+  } else if (route.name == 'settings') {
+    activetab.value = "settings";
   } else {
     activetab.value = "home";
   }
