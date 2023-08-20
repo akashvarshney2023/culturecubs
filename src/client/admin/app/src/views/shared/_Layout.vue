@@ -1,7 +1,7 @@
 <template>
   <AppHeader v-if="showHeader"/>
   <router-view/>
-  <AppFooter/>
+  <AppFooter v-if="showHeader" />
 </template>
 <script lang='ts' setup>
 import { onMounted, ref, watch } from 'vue'

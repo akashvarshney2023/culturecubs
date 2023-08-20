@@ -17,8 +17,7 @@
                 <v-tab value="candiate" @click="navigate('candidate')">Candidate</v-tab>
             </v-tabs>
         </v-app-bar>
-    </header>
-    
+    </header>    
 </template>
 
 
