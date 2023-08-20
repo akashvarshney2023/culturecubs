@@ -1,8 +1,9 @@
 <template>
-    <h4>This is candidate settings page</h4>
+    <v-select label="Select" :items="['Name', 'Email', 'Phone', 'Gender', 'Experience', 'City']" multiple
+        variant="outlined"></v-select>
 </template>
-<script lang="ts" setup>
+  
+<script setup lang="ts">
 
-</script>
-<style>
-</style>
+  </script>
+  
