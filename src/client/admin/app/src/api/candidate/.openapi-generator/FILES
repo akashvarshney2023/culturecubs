@@ -1,0 +1,15 @@
+.openapi-generator-ignore
+apis/CandidateControllerApi.ts
+apis/ExtractControllerApi.ts
+apis/index.ts
+index.ts
+models/Candidate.ts
+models/CandidateDto.ts
+models/CertificationsAndLicense.ts
+models/ContactInformation.ts
+models/Education.ts
+models/PersonalInformation.ts
+models/Reference.ts
+models/WorkExperience.ts
+models/index.ts
+runtime.ts

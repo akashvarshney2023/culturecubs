@@ -23,6 +23,12 @@ const router = createRouter({
       component: RegistrationView,
       meta: { auth: true }
     },
+    {
+      path: '/',
+      name: 'home',
+      component: HomeView,
+      meta: { auth: true }
+    },
 
   ]
 })

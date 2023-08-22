@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CCubAPI.Tenants
 {
-    [Table("Tenant", Schema = "Admin")]
+    [Table("tenant")]
     public class Tenant
     {
         public long Id { get; set; }

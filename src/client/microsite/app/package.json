@@ -11,7 +11,8 @@
     "format": "prettier --write src/",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit",
-    "codegen-fetch": "openapi-generator-cli generate -i http://localhost:7143/api/swagger.json -g typescript-fetch -o ./src/openapi --additional-properties=ngVersion=supportsES6=true,withInterfaces=true"
+    "candidate-fetch":"openapi-generator-cli generate -i https://api-candidate-dev-002.azurewebsites.net/v3/api-docs -g typescript-fetch -o ./src/apis/candidate --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
+    "microsite-fetch":"openapi-generator-cli generate -i https://api-ccmicrosite-dev-001.azurewebsites.net/api/swagger.json -g typescript-fetch -o ./src/apis/microsite --additional-properties=ngVersion=supportsES6=true,withInterfaces=true" 
   },
   "dependencies": {
     "@azure/storage-blob": "^12.15.0",

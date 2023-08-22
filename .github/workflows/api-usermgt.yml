@@ -1,0 +1,41 @@
+name: usermgt-api-build and deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/apis/users/**'
+      - '.github/workflows/api-usermgt.yml'
+  workflow_dispatch:
+
+env:
+  AZURE_APP_PACKAGE_PATH: './src/apis/users/'  # Adjusted variable name
+  DOTNET_VERSION: '6.0.x'
+  AZURE_APP_WORKING_DIR: './src/apis/users/'
+
+jobs:
+  api-usermgt-dev:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest
+    environment: Development
+
+    steps:
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v2
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build Using .NET
+        run: dotnet publish -c Release --output ./output
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2  
+        with:
+          app-name: 'api-usermgt-dev-001'  
+          package: ${{ env.AZURE_APP_WORKING_DIR }}output
+          publish-profile: ${{ secrets.API_USERMGT_PUBLISH_PROFILE }}

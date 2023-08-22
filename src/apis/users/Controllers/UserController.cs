@@ -11,10 +11,12 @@ using System.Collections.Generic;
 [Route("api/[controller]")]
 public class UserController : ControllerBase
 {   
-    private readonly CCubAPIContext _dbContext;   
-    public UserController( CCubAPIContext dbContext)
+    private readonly CCubAPIContext _dbContext;
+    private readonly ITokenService _tokenService;
+    public UserController( CCubAPIContext dbContext, ITokenService tokenService)
     {       
         _dbContext = dbContext;
+        _tokenService = tokenService;
     } 
 
     [HttpGet("user")]
@@ -61,10 +63,16 @@ public class UserController : ControllerBase
     public async Task<IActionResult> Login(Userlogin userLogin)
     {
         if (string.IsNullOrEmpty(userLogin.UserName) || string.IsNullOrEmpty(userLogin.Password))
-            return Content("UserName Or Password cannot be empty");
+            return Content("UserName or Password cannot be empty");
+
         var user = await GetUsersByUserName(userLogin.UserName);
-       var verify =  Helper.VerifyUserPassword(userLogin.Password, user?.Password);
-        return Ok(user);
+        if (user == null || !Helper.VerifyUserPassword(userLogin.Password, user.Password))
+            return Unauthorized();
+        var token = _tokenService.GenerateToken(user.UserName); 
+        return Ok(new
+        {
+            token
+        });
     }
 
 }

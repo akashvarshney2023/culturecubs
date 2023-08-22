@@ -1,0 +1,46 @@
+name: tenant-api-build and deploy
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'src/apis/tenant_user/**'
+      - '.github/workflows/api-tenant.yml'
+  workflow_dispatch:
+
+env:
+  AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/apis/tenant_user/'
+  DOTNET_VERSION: '6.0.x'
+  AZURE_APP_WORKING_DIR: './src/apis/tenant_user/'
+
+jobs:
+  api-tenant-dev:
+    if: github.ref == 'refs/heads/main'
+    runs-on: windows-latest  
+    environment: Development
+
+    steps:
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v2  
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v2  
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build Using .NET
+        run: dotnet publish -c Release --output ./output -r win-x86 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: Test with the dotnet CLI
+        run: dotnet test
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: Run Azure Functions Action
+        id: fa
+        uses: Azure/functions-action@v1
+        with:
+          app-name: 'api-tenant-dev-001'
+          package: ${{ env.AZURE_APP_WORKING_DIR }}output
+          publish-profile: ${{ secrets.API_TENANT_PUBLISH_PROFILE }}

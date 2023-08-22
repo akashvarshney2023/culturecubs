@@ -1,0 +1,12 @@
+.openapi-generator-ignore
+apis/CandidateApi.ts
+apis/ContestApi.ts
+apis/ThemeApi.ts
+apis/index.ts
+index.ts
+models/CandidateRegistration.ts
+models/Contest.ts
+models/ContestTab.ts
+models/ThemeConfiguration.ts
+models/index.ts
+runtime.ts
