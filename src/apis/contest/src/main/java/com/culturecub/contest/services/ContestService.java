@@ -17,12 +17,12 @@ public class ContestService {
         this.contestRepository = contestRepository;
     }
 
-    public List<Contest> findAll() {
-        return contestRepository.findAll();
+    public List<Contest> findAll(String tenantId) {
+        return contestRepository.findAll(tenantId);
     }
 
-    public Optional<Contest> findById(String id) {
-        Optional<Contest> contest = contestRepository.findById(id);
+    public Optional<Contest> findById(String id,String tenantId) {
+        Optional<Contest> contest = contestRepository.findById(id,tenantId);
         return contest;
     }
 
@@ -43,8 +43,8 @@ public class ContestService {
         return savedContest;
     }
 
-    public Integer getCount() {
-        return Math.toIntExact(contestRepository.count());
+    public Integer getCount(String tenantId) {
+        return Math.toIntExact(contestRepository.count(tenantId));
     }
 
     public Contest activate(String id, Contest contest) {
