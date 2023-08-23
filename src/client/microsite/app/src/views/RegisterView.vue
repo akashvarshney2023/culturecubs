@@ -17,7 +17,7 @@
                 <v-text-field label="User" type="text" v-model="user" prepend-icon="mdi-account" required></v-text-field>
                 <v-text-field label="Email" type="email" v-model="email" prepend-icon="mdi-email" required></v-text-field>
                 <v-text-field label="Phone" type="tel" v-model="phone" prepend-icon="mdi-phone" required></v-text-field>
-                <v-text-field label="URL" type="url" v-model="url" prepend-icon="mdi-link" required></v-text-field>           
+                <v-text-field label="URL" type="url" v-model="url" prepend-icon="mdi-link" required></v-text-field>
                 <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
                   v-model="agree"></v-checkbox>
                 <v-row class="d-flex justify-center">
@@ -30,6 +30,7 @@
                   </v-col>
                 </v-row>
               </v-form>
+              <button @click="loginWithGoogle">Login with Google</button>
             </v-card-text>
           </v-card>
         </v-col>
@@ -45,8 +46,8 @@ import { CandidateApi } from '@/apis/microsite/apis';
 import type { CandidateregistrationRequest } from '@/apis/microsite/apis';
 import type { CandidateRegistration } from '@/apis/microsite/models';
 import type { AddCandidateRequest } from '@/apis/candidate/apis';
-import type { PersonalInformation,  Candidate } from '@/apis/candidate/models';
-
+import type { PersonalInformation, Candidate } from '@/apis/candidate/models';
+import { Auth } from 'vue3-google-oauth2';
 export default defineComponent({
   setup() {
     const router = useRouter();
@@ -69,10 +70,21 @@ export default defineComponent({
 
       }
 
+      const loginwithGoogle = async () => {
+        const { signIn } = Auth();
+        try {
+          await signIn();
+        } catch (error) {
+          console.error('Google login error:', error);
+        }
+      }
 
+      const registerUser = async()=>{
+
+      }
       //Create a new candidate regsitration details 
-      const canidateDetails: Candidate  = {
-        personalInformation : {}      
+      const canidateDetails: Candidate = {
+        personalInformation: {}
 
       }
 
@@ -85,12 +97,12 @@ export default defineComponent({
         url: url.value
       };
 
-   
+
       try {
         // Call the API to save the candidate registration
-   
-        
-        
+
+
+
       } catch (error) {
         console.error('Save Failed:', error);
       }
@@ -110,6 +122,8 @@ export default defineComponent({
       agree,
       handleAttachment,
       submitForm,
+      loginWithGoogle,
+      
     };
   },
 });

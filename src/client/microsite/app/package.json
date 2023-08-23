@@ -11,8 +11,8 @@
     "format": "prettier --write src/",
     "preview": "vite preview",
     "type-check": "vue-tsc --noEmit",
-    "candidate-fetch":"openapi-generator-cli generate -i https://api-candidate-dev-002.azurewebsites.net/v3/api-docs -g typescript-fetch -o ./src/apis/candidate --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
-    "microsite-fetch":"openapi-generator-cli generate -i https://api-ccmicrosite-dev-001.azurewebsites.net/api/swagger.json -g typescript-fetch -o ./src/apis/microsite --additional-properties=ngVersion=supportsES6=true,withInterfaces=true" 
+    "candidate-fetch": "openapi-generator-cli generate -i https://api-candidate-dev-002.azurewebsites.net/v3/api-docs -g typescript-fetch -o ./src/apis/candidate --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
+    "microsite-fetch": "openapi-generator-cli generate -i https://api-ccmicrosite-dev-001.azurewebsites.net/api/swagger.json -g typescript-fetch -o ./src/apis/microsite --additional-properties=ngVersion=supportsES6=true,withInterfaces=true"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.15.0",
@@ -43,6 +43,7 @@
     "vite": "^4.1.4",
     "vite-plugin-vuetify": "^1.0.0-alpha.12",
     "vue-cli-plugin-vuetify": "~2.5.8",
-    "vue-tsc": "^1.2.0"
+    "vue-tsc": "^1.2.0",
+    "vue3-google-oauth2": "^1.0.7"
   }
 }

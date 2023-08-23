@@ -41,3 +41,9 @@ src/apis/microsite/.vs/Culturecubs.Microsite.Functions/v17/.suo
 /src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/CultureCubs.TenantAndUser.Functions
 src/apis/tenant_user/.vs/CultureCubs.TenantAndUser.Functions/v17/.suo
 src/apis/tenant_user/.vs/CultureCubs.TenantAndUser.Functions/FileContentIndex/read.lock
+src/client/microsite/app/__azurite_db_queue__.json
+src/client/microsite/app/__azurite_db_queue_extent__.json
+src/apis/tenant_user/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.metadata.v6.1
+src/apis/tenant_user/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.projects.v6.1
+src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.metadata.v6.1
+src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.projects.v6.1
