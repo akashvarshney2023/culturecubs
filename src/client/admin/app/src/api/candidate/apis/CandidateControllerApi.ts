@@ -288,7 +288,7 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
 
         const response = await this.request({
             path: `/api/candidate/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
