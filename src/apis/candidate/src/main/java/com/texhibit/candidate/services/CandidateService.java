@@ -8,25 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CandidateService {
     @Autowired
     private CandidateRepository candidateRepository;
 
-    private EntityManager entityManager;
 
-    public List<CandidateDto> getAll() {
-        List<Candidate> candidates = candidateRepository.findAll();
+    public List<CandidateDto> getAll(String tenantId) {
+        List<Candidate> candidates = candidateRepository.findAllCandidates(tenantId);
         List<CandidateDto> candidateDtos = ConvertToCandidateDto.convert(candidates);
         return candidateDtos;
     }
@@ -34,34 +26,36 @@ public class CandidateService {
     public Candidate addCandidate(Candidate candidate) throws IOException {
         // String parseResume =  Parser.parse(candidate.getResumePath());
         // candidate.setResumeOrCV(parseResume);
+
         Candidate temp = candidateRepository.save(candidate);
 
         return temp;
     }
 
-    public Candidate updateCandidate(String id, Candidate candidate) {
+    public Candidate updateCandidate(String id, Candidate candidate,String tenantId) {
         candidate.setId(id);
+        candidate.setTenantId(tenantId);
         return candidateRepository.save(candidate);
     }
 
-    public String deleteCandidate(String id) {
+    public String deleteCandidate(String id,String tenantId) {
         candidateRepository.deleteById(id);
         return "Candidate with id "+ id +" deleted successfully..";
     }
 
-    public Optional<Candidate> getCandidate(String id) {
-        Optional<Candidate> candidate = candidateRepository.findById(id);
+    public Candidate getCandidate(String id,String tenantId) {
+        Candidate candidate = candidateRepository.findCandidateById(id,tenantId);
         return  candidate;
     }
 
-    public Integer getCount() {
-        return Math.toIntExact(candidateRepository.count());
+    public Integer getCount(String tenantId) {
+        return Math.toIntExact(candidateRepository.count(tenantId));
     }
 
 
-    public List<CandidateDto> getAllParticipants() {
+    public List<CandidateDto> getAllParticipants(String tenantId) {
 
-        List<Candidate> publishedCandidates = candidateRepository.findAllParticipants();
+        List<Candidate> publishedCandidates = candidateRepository.findAllParticipants(true,tenantId);
         List<CandidateDto> candidateDtos = ConvertToCandidateDto.convert(publishedCandidates);
         return candidateDtos;
 

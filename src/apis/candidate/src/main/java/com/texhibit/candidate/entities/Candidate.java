@@ -37,6 +37,7 @@ public class Candidate{
     private Integer activeApps;
     private Integer totalApps;
     private boolean isParticipant;
+    private String tenantId;
 }
 
 

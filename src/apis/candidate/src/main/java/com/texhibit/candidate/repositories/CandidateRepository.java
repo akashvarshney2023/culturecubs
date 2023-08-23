@@ -11,6 +11,16 @@ import java.util.List;
 @Repository
 public interface CandidateRepository extends MongoRepository<Candidate,String> {
 
-    @Query("{'isParticipant':true}")
-    List<Candidate> findAllParticipants();
+
+//    List<Candidate> findAllParticipants();
+
+    @Query("{id: ?0,tenantId: ?1}")
+    Candidate findCandidateById(String id, String tenantId);
+
+    @Query("{tenantId: ?0}")
+    List<Candidate> findAllCandidates(String tenantId);
+    @Query("{tenantId: ?0}")
+    Integer count(String tenantId);
+    @Query("{isParticipant: true, tenantId: ?1}")
+    List<Candidate> findAllParticipants(boolean isParticipant,String tenantId);
 }
