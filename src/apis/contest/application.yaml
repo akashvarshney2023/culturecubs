@@ -3,6 +3,6 @@ server:
 spring:
   data:
     mongodb:
-      uri: mongodb://culturecubs:gNw0A44FL5pzJw6sx6CNT6b7pp2lldHNnxhCJRLdQMaLAIlm0oCsspD5OboVoVV8LHDfck0dTzvFACDbQivLAA==@culturecubs.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@culturecubs@
+      uri: mongodb://db-candidate:K2ONohm8EKzseKslzknPZOAfaBp14PrNXkYJzRUA4FOrOFzdzrDFTOst3ws2VXFOH5HC3qP2DKiWACDbQphVaw==@db-candidate.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@db-candidate@
       database: texhibit
 

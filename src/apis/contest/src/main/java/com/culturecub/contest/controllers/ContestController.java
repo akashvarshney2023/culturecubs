@@ -22,20 +22,21 @@ public class ContestController {
 
     @GetMapping
     @Operation(summary = "Get all contest")
-    public List<Contest> getAllContests() {
-        return contestService.findAll();
+    public List<Contest> getAllContests(@RequestHeader(value = "tenantId") String tenantId) {
+        return contestService.findAll(tenantId);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get contest byu Id")
-    public ResponseEntity<Contest> getContestById(@PathVariable String id) {
-        Optional<Contest> contest = contestService.findById(id);
+    public ResponseEntity<Contest> getContestById(@PathVariable String id,@RequestHeader(value = "tenantId") String tenantId) {
+        Optional<Contest> contest = contestService.findById(id,tenantId);
         return contest.map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
     @Operation(summary = "Create contest")
-    public Contest createContest(@RequestBody Contest contest) {
+    public Contest createContest(@RequestBody Contest contest,@RequestHeader(value = "tenantId") String tenantId) {
+        contest.setTenantId(tenantId);
         return contestService.save(contest);
     }
 
@@ -58,8 +59,8 @@ public class ContestController {
 
     @GetMapping("/count")
     @Operation(summary = "Get contest count")
-    public Integer getCount(){
-        return contestService.getCount();
+    public Integer getCount(@RequestHeader(value = "tenantId") String tenantId){
+        return contestService.getCount(tenantId);
     }
 
     @PutMapping("/activate/{id}")

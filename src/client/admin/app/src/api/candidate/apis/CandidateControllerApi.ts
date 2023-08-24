@@ -169,7 +169,7 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
 
         headerParameters['Content-Type'] = 'application/json';
 
@@ -202,7 +202,7 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
 
         const response = await this.request({
             path: `/api/candidate/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
@@ -232,7 +232,7 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     async getAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>> {
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
 
         const response = await this.request({
             path: `/api/candidates`,
@@ -258,7 +258,7 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     async getAllParticipantsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>> {
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
 
         const response = await this.request({
             path: `/api/participants`,
@@ -288,7 +288,7 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {};
+        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
 
         const response = await this.request({
             path: `/api/candidate/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
