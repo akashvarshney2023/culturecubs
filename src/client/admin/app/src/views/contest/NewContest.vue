@@ -6,11 +6,23 @@
           Add New Contest
         </h1>
       </v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="6">
+            <v-text-field v-model="contestName" label="Contest Name" outlined></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field v-model="endDate" label="End Date" outlined type="date"></v-text-field>
+          </v-col>
+        </v-row>
+        <v-textarea v-model="contestDescription" label="Contest Description" outlined rows="1"></v-textarea>
+      </v-card-text>
 
       <v-tabs v-model="tab" bg-color="transparent" color="primary" align-tabs="center">
-        <v-tab v-for="item in items" :key="item" :value="item">
-          {{ item }}
+        <v-tab v-for="(item, index) in items" :key="item.value" :value="index">
+          {{ item.key }}
         </v-tab>
+        <v-btn @click="addNewTab">+</v-btn> <!-- Add button for adding tabs -->
       </v-tabs>
 
       <v-window v-model="tab">
@@ -41,10 +53,21 @@ export default {
   components: {
     QuillEditor,
   },
+  methods: {
+      // ...existing methods...
+      addNewTab() {
+        this.items.push({ key: 'New Tab', value: 'new-tab' });
+        this.tab = this.items.length - 1; // Switch to the newly added tab
+      }
+    },
   data() {
     return {
-      tab: 'Problem Statement',
-      items: ['Problem Statement', 'Eligibility Criteria', 'Submission Process', 'FAQ', 'Timelines'],
+      tab: 0,
+      items: [
+        { key: 'Problem Statement', value: 'problem' },
+        { key: 'Eligibility Criteria', value: 'eligibility' },
+        // ...existing items...
+      ],
       editorContent: '',
       editorOptions: {
         placeholder: 'Start typing here...',
@@ -59,7 +82,10 @@ export default {
           ],
         },
       },
-    }
+      contestName: '',           // Add contest name property
+      contestDescription: '',    // Add contest description property
+      endDate: '',               // Add end date property
+    }     
   },
 }
 </script>
