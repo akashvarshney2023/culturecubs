@@ -23,7 +23,7 @@
           <!-- Conditionally render components based on the active component -->
           <Account v-if="activeComponent === 'account'" />
           <CandidateView v-if="activeComponent === 'candidates'" />
-          <ContentView v-if="activeComponent === 'participants'" />
+          <Participant v-if="activeComponent === 'participants'" />
           <ContestView v-if="activeComponent === 'contests'" />
         </v-main>
       </v-layout>
@@ -34,7 +34,7 @@
   import { ref } from 'vue';
   import CandidateView from '@/views/settings/options/CandidateView.vue';
   import Account from '@/views/settings/options/Account.vue';
-  import ContentView from '@/views/settings/options/ContentView.vue';
+  import Participant from '@/views/settings/options/Participants.vue';
   import ContestView from '@/views/settings/options/ContestView.vue';
   
   const drawer = ref(true);
