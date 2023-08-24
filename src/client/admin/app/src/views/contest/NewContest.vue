@@ -2,7 +2,7 @@
   <v-main>
     <v-card max-width="1200" class="mx-auto mt-8 rounded-lg" elevation="12" height="650" width="100%">
       <v-row>
-        <v-col cols="12" md="10" >
+        <v-col cols="12" md="10">
           <v-card-title class="text-center justify-center py-6">
             <h1 class="font-weight-bold text-h4 " style="padding-left: 215px;">
               Add New Contest
@@ -46,9 +46,9 @@
             </div>
           </v-card>
         </v-window-item>
-      </v-window>   
+      </v-window>
     </v-card>
-    
+
     <v-dialog v-model="showAddTabDialog" max-width="300">
       <v-card>
         <v-card-title>Add New Tab</v-card-title>

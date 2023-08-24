@@ -1,6 +1,6 @@
 <template>
-    <v-main>
-      <v-card max-width="1200" class="mx-auto mt-8 rounded-lg" elevation="12" height="650" width="100%">
+    <v-layout>
+      <v-card max-width="1400" class="mx-auto mt-8 rounded-lg" elevation="12" height="700" width="100%">
         <v-card-title class="text-center justify-center py-6">
           <h1 class="font-weight-bold text-h4 ">
             Add Content
@@ -30,7 +30,7 @@
         <v-btn color="primary"> Save </v-btn>
         <v-btn> Cancel </v-btn>
       </v-card>
-    </v-main>
+    </v-layout>
   </template>
   
   <script lang="ts">
