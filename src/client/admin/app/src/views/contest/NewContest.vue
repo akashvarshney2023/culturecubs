@@ -1,11 +1,18 @@
 <template>
   <v-main>
     <v-card max-width="1200" class="mx-auto mt-8 rounded-lg" elevation="12" height="650" width="100%">
-      <v-card-title class="text-center justify-center py-6">
-        <h1 class="font-weight-bold text-h4 ">
-          Add New Contest
-        </h1>
-      </v-card-title>
+      <v-row>
+        <v-col cols="12" md="10" >
+          <v-card-title class="text-center justify-center py-6">
+            <h1 class="font-weight-bold text-h4 " style="padding-left: 215px;">
+              Add New Contest
+            </h1>
+          </v-card-title>
+        </v-col>
+        <v-col cols="12" md="2" class="text-center justify-center py-10">
+          <v-btn color="primary">Save</v-btn>
+        </v-col>
+      </v-row>
       <v-card-text>
         <v-row>
           <v-col cols="12" md="6">
@@ -21,27 +28,39 @@
       <v-tabs v-model="tab" bg-color="transparent" color="primary" align-tabs="center">
         <v-tab v-for="(item, index) in items" :key="item.value" :value="index">
           {{ item.key }}
+          <v-icon v-if="item.editingTitle" @click.stop="endTitleEditing(index)">mdi-check</v-icon>
+          <v-icon v-else @click.stop="startTitleEditing(index)">mdi-pencil</v-icon>
+          <v-icon v-if="item.editable" @click.stop="removeTab(index)">mdi-close</v-icon>
         </v-tab>
-        <v-btn @click="addNewTab">+</v-btn> <!-- Add button for adding tabs -->
+        <v-icon color="primary" @click="openAddTabDialog">mdi-plus</v-icon>
       </v-tabs>
-
       <v-window v-model="tab">
-        <v-window-item v-for="item in items" :key="item" :value="item">
+        <v-window-item v-for="(item, index) in items" :key="item.value" :value="index">
           <v-card flat min-height="500">
             <div style="padding-top: 10px;">
               <v-row>
                 <v-col cols="12" md="10" offset-md="1">
-                  <QuillEditor ref="quillEditor" :options="editorOptions" v-model="editorContent"
-                    @image-added="handleImageAdded" />
+                  <QuillEditor :options="editorOptions" v-model="items[index].content" />
                 </v-col>
               </v-row>
             </div>
           </v-card>
         </v-window-item>
-      </v-window>
-      <v-btn color="primary"> Save </v-btn>
-      <v-btn> Cancel </v-btn>
+      </v-window>   
     </v-card>
+    
+    <v-dialog v-model="showAddTabDialog" max-width="300">
+      <v-card>
+        <v-card-title>Add New Tab</v-card-title>
+        <v-card-text>
+          <v-text-field v-model="newTabName" label="Tab Name"></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="cancelAddTab">Cancel</v-btn>
+          <v-btn color="primary" @click="confirmAddTab">Add</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-main>
 </template>
 
@@ -54,21 +73,45 @@ export default {
     QuillEditor,
   },
   methods: {
-      // ...existing methods...
-      addNewTab() {
-        this.items.push({ key: 'New Tab', value: 'new-tab' });
-        this.tab = this.items.length - 1; // Switch to the newly added tab
+    startTitleEditing(index) {
+      this.items[index].editingTitle = true;
+    },
+    endTitleEditing(index) {
+      this.items[index].editingTitle = false;
+    },
+    openAddTabDialog() {
+      this.showAddTabDialog = true;
+    },
+    cancelAddTab() {
+      this.showAddTabDialog = false;
+      this.newTabName = '';
+    },
+    confirmAddTab() {
+      if (this.newTabName.trim() !== '') {
+        this.items.push({ key: this.newTabName, value: this.newTabName.toLowerCase().replace(/\s/g, '-'), content: '', editingTitle: false });
+        this.tab = this.items.length - 1;
+        this.showAddTabDialog = false;
+        this.newTabName = '';
       }
     },
+    updateEditorContent(index, content) {
+      this.items[index].content = content;
+    },
+    removeTab(index) {
+      this.items.splice(index, 1);
+      if (this.tab >= this.items.length) {
+        this.tab = this.items.length - 1;
+      }
+    },
+  },
   data() {
     return {
       tab: 0,
       items: [
-        { key: 'Problem Statement', value: 'problem' },
-        { key: 'Eligibility Criteria', value: 'eligibility' },
+        { key: 'Problem Statement', value: 'problem', content: '', editingTitle: false, editable: false },
+        { key: 'Eligibility Criteria', value: 'eligibility', content: '', editingTitle: false, editable: false },
         // ...existing items...
       ],
-      editorContent: '',
       editorOptions: {
         placeholder: 'Start typing here...',
         modules: {
@@ -82,10 +125,12 @@ export default {
           ],
         },
       },
-      contestName: '',           // Add contest name property
-      contestDescription: '',    // Add contest description property
-      endDate: '',               // Add end date property
-    }     
+      contestName: '',
+      contestDescription: '',
+      endDate: '',
+      showAddTabDialog: false,
+      newTabName: '',
+    };
   },
 }
 </script>
