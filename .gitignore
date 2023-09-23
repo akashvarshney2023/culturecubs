@@ -47,3 +47,7 @@ src/apis/tenant_user/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.m
 src/apis/tenant_user/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.projects.v6.1
 src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.metadata.v6.1
 src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.projects.v6.1
+/src/apis/ContentManagement/.vs/ContentManagement
+/src/apis/ContentManagement/bin/Debug/net6.0
+/src/apis/ContentManagement/obj
+/src/apis/ContentManagement/ContentManagement.csproj.user
