@@ -29,8 +29,7 @@
                     <v-btn color="secondary" block>Cancel</v-btn>
                   </v-col>
                 </v-row>
-              </v-form>
-              <button @click="loginWithGoogle">Login with Google</button>
+              </v-form>             
             </v-card-text>
           </v-card>
         </v-col>
@@ -47,7 +46,7 @@ import type { CandidateregistrationRequest } from '@/apis/microsite/apis';
 import type { CandidateRegistration } from '@/apis/microsite/models';
 import type { AddCandidateRequest } from '@/apis/candidate/apis';
 import type { PersonalInformation, Candidate } from '@/apis/candidate/models';
-import { Auth } from 'vue3-google-oauth2';
+
 export default defineComponent({
   setup() {
     const router = useRouter();
@@ -69,16 +68,6 @@ export default defineComponent({
       if (attachment.value) {
 
       }
-
-      const loginwithGoogle = async () => {
-        const { signIn } = Auth();
-        try {
-          await signIn();
-        } catch (error) {
-          console.error('Google login error:', error);
-        }
-      }
-
       const registerUser = async()=>{
 
       }
@@ -122,7 +111,6 @@ export default defineComponent({
       agree,
       handleAttachment,
       submitForm,
-      loginWithGoogle,
       
     };
   },

@@ -1,7 +1,7 @@
 <template>
   <header class="sticky-top custom-navbar">
-    <v-app-bar color="secondary" density="default" :elevation="1"
-      style="border-bottom:0px solid #e0e0e0;padding:0px 10% !important;">
+    <v-app-bar class="bg-white" density="default" :elevation="0"
+      style="border-bottom:1px solid #e0e0e0;padding:0px 10% !important;">
       <v-app-bar-title>
         <v-img :src="logo.tenantIcon" style="width:350px;height:54px;"></v-img>
       </v-app-bar-title>
@@ -9,14 +9,14 @@
         <v-tab value="home" @click="navigate('home')">Home</v-tab>
         <v-tab value="contest" @click="navigate('contest')">Contests</v-tab>
       </v-tabs>
-    </v-app-bar>
+    </v-app-bar>     
   </header>
 
-  <v-footer color="secondary" style="position: fixed; bottom: 0; width: 100%;">
+  <v-footer class="bg-green-lighten-1" style="position: fixed; bottom: 0; width: 100%;" >
     <v-row justify="center" no-gutters>
-      <v-btn color="primary" variant="text" class="mx-3 rounded-xl" @click="navigate('home')">Home</v-btn>
-      <v-btn color="primary" variant="text" class="mx-3 rounded-xl" @click="navigate('about')">About Us</v-btn>
-      <v-btn color="primary" variant="text" class="mx-3 rounded-xl" @click="navigate('contactus')">Contact Us</v-btn>
+      <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('home')">Home</v-btn>
+      <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('about')">About Us</v-btn>
+      <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('contactus')">Contact Us</v-btn>
       <v-col class="text-center mt-4" cols="12">
         {{ new Date().getFullYear() }} — <strong> Powered By- Cultre Cubs</strong>
       </v-col>
