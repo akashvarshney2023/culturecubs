@@ -91,11 +91,11 @@ const formatDate = (date:any) => {
 }
 const contestList = ref<Contest[]>([]);
 onMounted(() => {
-  if (route.params.id !== undefined) {
-    var tenantId = route.params.id.toString();
+  if (true) {
+    var tenantId = 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
     contestApi.getcontestsbytenantid({ guid: tenantId })
       .then((response) => {
-        contestList.value = response as Contest[]; // Type assertion to assign the response data
+        contestList.value = response as Contest[]; 
         console.log(contestList.value);
       })
       .catch(error => {
