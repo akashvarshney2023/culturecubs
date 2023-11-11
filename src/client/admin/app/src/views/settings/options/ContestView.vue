@@ -37,6 +37,11 @@
                 </v-tab>
                 <v-icon color="primary" @click="openAddTabDialog">mdi-plus</v-icon>
             </v-tabs>
+            <v-card flat min-height="500" v-if="items.length === 0">
+                <div class="empty-card">
+                    No Tabs Available, Please Click on "+" Sign to create a new contest
+                </div>
+            </v-card>
             <v-window v-model="tab">
                 <v-window-item v-for="(item, index) in items" :key="item.value" :value="index">
                     <v-card flat min-height="500">
@@ -44,7 +49,7 @@
                             <v-row>
                                 <v-col cols="12" md="10" offset-md="1">
                                     <QuillEditor :options="editorOptions" v-model="items[index].content"
-                                      style="height: 350px; border: 1px solid #d1d5db;" />
+                                        style="height: 350px; border: 1px solid #d1d5db;" />
                                 </v-col>
                             </v-row>
                         </div>
@@ -79,6 +84,7 @@ export default {
     methods: {
         startTitleEditing(index) {
             this.items[index].editingTitle = true;
+            this.showAddTabDialog = true;
         },
         endTitleEditing(index) {
             this.items[index].editingTitle = false;
@@ -112,8 +118,8 @@ export default {
         return {
             tab: 0,
             items: [
-                { key: 'Problem Statement', value: 'problem', content: '', editingTitle: false, editable: false },
-                { key: 'Eligibility Criteria', value: 'eligibility', content: '', editingTitle: false, editable: false },
+                // { key: 'Problem Statement', value: 'problem', content: '', editingTitle: false, editable: false },
+                // { key: 'Eligibility Criteria', value: 'eligibility', content: '', editingTitle: false, editable: false },
                 // ...existing items...
             ],
             editorOptions: {
@@ -149,6 +155,21 @@ export default {
 }
 
 .ql-editor {
-    height: 100px !important;  
-}</style>
+    height: 100px !important;
+}
+
+
+.empty-card {
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  height: 350px;
+  border: 1px solid #d1d5db;
+  font-size: 24px; /* Adjust the font size as needed */
+  text-align: center; /* Center the text */
+  opacity: 0.5; /* Adjust the opacity for the watermark effect */
+  color: #000; /* Set the text color */
+}
+
+</style>
   

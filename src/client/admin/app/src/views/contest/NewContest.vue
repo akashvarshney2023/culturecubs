@@ -108,8 +108,8 @@ export default {
     return {
       tab: 0,
       items: [
-        { key: 'Problem Statement', value: 'problem', content: '', editingTitle: false, editable: false },
-        { key: 'Eligibility Criteria', value: 'eligibility', content: '', editingTitle: false, editable: false },
+        // { key: 'Problem Statement', value: 'problem', content: '', editingTitle: false, editable: false },
+        // { key: 'Eligibility Criteria', value: 'eligibility', content: '', editingTitle: false, editable: false },
         // ...existing items...
       ],
       editorOptions: {
