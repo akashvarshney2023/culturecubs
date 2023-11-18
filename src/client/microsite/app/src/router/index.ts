@@ -12,7 +12,7 @@ const router = createRouter({
       meta: { auth: true }
     },
     {
-      path: '/registration',
+      path: '/:contestId/registration',
       name: 'Registration',
       component: RegistrationView,
       meta: { auth: true }

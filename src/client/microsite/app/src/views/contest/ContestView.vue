@@ -67,18 +67,32 @@ const route = useRoute();
 var contestApi = new ContestApi();
 const pageLoading = ref(true);
 const selectedContest = ref({
+  id:'',
   title: '',
   tabs: {},
 })
-const registerForContest = () => {
-  router.push({ name: 'Registration' });
+const registerForContest = (selectedContest: any) => {
+  const contestId = selectedContest.id; // Replace with the actual property holding contestId in selectedContest
+
+  // Perform validation to ensure contestId is a valid value (you can add more specific validation as needed)
+  if (!isValidContestId(contestId)) {
+    router.push({ name: 'Registration', params: { contestId } });
+  } else {
+    console.error('Invalid contestId:', contestId);
+    // Handle the error or provide feedback to the user
+  }
+};
+
+const isValidContestId = (contestId: any): boolean => {
+  // Check if the contestId is in the validContestIds array
+  const contestArray = contestList.value;
+  return contestArray.includes(contestId);
 };
 const activeTab = ref('')
 
 const showContestPopup = ref(false)
 const openContestPopup = (contest:any) => {
   selectedContest.value = contest
-  console.log(selectedContest.value);
   showContestPopup.value = true
 }
 
