@@ -18,8 +18,8 @@
                 <v-text-field label="Phone" type="tel" v-model="phone" prepend-icon="mdi-phone" required></v-text-field>
                 <v-text-field label="Company" type="text" v-model="company" prepend-icon="mdi-domain"
                   required></v-text-field>
-                <v-file-input label="Resume Attachment (docx, pdf)" v-model="attachment" accept=".docx, .pdf"
-                  @change="handleAttachment"></v-file-input>
+                <FileUpload />
+               
                 <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
                   v-model="agree"></v-checkbox>
                 <v-row class="d-flex justify-center">
@@ -48,7 +48,7 @@ import type { CandidateregistrationRequest } from '@/apis/microsite/apis';
 import type { CandidateRegistration } from '@/apis/microsite/models';
 import type { AddCandidateRequest } from '@/apis/candidate/apis';
 import type { Candidate } from '@/apis/candidate/models';
-
+import FileUpload from "@/component/FileUpload.vue";
 
 const router = useRouter();
 const candidateApi = new CandidateApi();
@@ -69,7 +69,7 @@ const handleAttachment = (file: File) => {
 
 const submitForm = async () => {
   if (attachment.value) {
-   
+
   }
 
   // Create a new candidate registration object
@@ -78,7 +78,7 @@ const submitForm = async () => {
     user: user.value,
     email: email.value,
     phone: phone.value,
-  }; 
+  };
 };
 
 const navigate = (name: string) => {
@@ -99,4 +99,5 @@ const navigate = (name: string) => {
 
 .width-50 {
   width: 100%;
-}</style>
+}
+</style>
