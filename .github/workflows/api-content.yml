@@ -28,8 +28,9 @@ jobs:
 
       - name: Build and Publish
         run: |
-          dotnet publish -c Release --output ./output -r win-x86 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
+          dotnet publish -c Release -o ./output -r win-x86 --self-contained -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
         working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
 
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2
