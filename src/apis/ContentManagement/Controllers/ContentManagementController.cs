@@ -10,8 +10,8 @@ namespace ContentManagement.Controllers
     [Route("api/[controller]")]
     public class ContentManagementController : ControllerBase
     {
-        private readonly ContentManagementDataContext _dbContext;
-        public ContentManagementController(ContentManagementDataContext dbContext)
+        private readonly ApplicationDbContext _dbContext;
+        public ContentManagementController(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
