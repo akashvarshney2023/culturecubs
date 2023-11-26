@@ -40,6 +40,6 @@ jobs:
       - name: Deploy to Azure App Service
         uses: azure/webapps-deploy@v2  
         with:
-          app-name: 'api-content-dev-001'  
+          app-name: 'api-contentmgt-dev-001'  
           package: ${{ env.AZURE_APP_WORKING_DIR }}output
           publish-profile: ${{ secrets.API_CONTENTMGT_PUBLISH_PROFILE }}
