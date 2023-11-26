@@ -24,7 +24,7 @@ namespace ContentManagement.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-2JBM5V2\\SQLEXPRESS;Database=CCubAPI;User Id =admin;Password=admin@123;Trusted_Connection=True;MultipleActiveResultSets=true");
+                optionsBuilder.UseSqlServer("Server = tcp:sql - cctexibhit - dev - 001.database.windows.net, 1433; Initial Catalog = sqldb - cctexibhit - dev - 001; Persist Security Info = False; User ID = ccadmin; Password = culturecubs@123; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;");
             }           
            
         }
