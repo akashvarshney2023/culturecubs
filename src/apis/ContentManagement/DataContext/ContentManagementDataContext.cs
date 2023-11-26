@@ -24,7 +24,7 @@ namespace ContentManagement.DataContext
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server = tcp:sql - cctexibhit - dev - 001.database.windows.net, 1433; Initial Catalog = sqldb - cctexibhit - dev - 001; Persist Security Info = False; User ID = ccadmin; Password = culturecubs@123; MultipleActiveResultSets = False; Encrypt = True; TrustServerCertificate = False; Connection Timeout = 30;");
+                optionsBuilder.UseSqlServer("Server=tcp:sql-cctexibhit-dev-001.database.windows.net,1433;Initial Catalog=sqldb-cctexibhit-dev-001;Persist Security Info=False;User ID=ccadmin;Password=culturecubs@123;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
             }           
            
         }
