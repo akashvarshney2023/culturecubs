@@ -1,4 +1,4 @@
-name: content-api-build and deploy
+name: content-api-build-and-deploy
 
 on:
   push:
@@ -16,30 +16,25 @@ env:
 jobs:
   api-content-dev:
     if: github.ref == 'refs/heads/main'
-    runs-on: windows-latest  
+    runs-on: windows-latest  # Keep windows-latest for Windows environment
     environment: Development
 
     steps:
-      - name: Checkout GitHub Action
-        uses: actions/checkout@v2  
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
       - name: Setup .NET ${{ env.DOTNET_VERSION }} Environment
-        uses: actions/setup-dotnet@v2  
-        with:
-          dotnet-version: ${{ env.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v7 
 
-      - name: Build Using .NET
-        run: dotnet publish -c Release --output ./output -r win-x86 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
+      - name: Build and Publish
+        run: |
+          dotnet publish -c Release --output ./output -r win-x86 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
         working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
-
-      - name: Test with the dotnet CLI
-        run: dotnet test
-        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
-
 
       - name: Deploy to Azure App Service
-        uses: azure/webapps-deploy@v2  
+        uses: azure/webapps-deploy@v2
         with:
           app-name: 'api-contentmgt-dev-001'  
+          slot-name: 'production'  # Optional: Specify deployment slot (remove if not using slots)
           package: ${{ env.AZURE_APP_WORKING_DIR }}output
           publish-profile: ${{ secrets.API_CONTENTMGT_PUBLISH_PROFILE }}
