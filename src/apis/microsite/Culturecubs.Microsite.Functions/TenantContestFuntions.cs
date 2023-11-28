@@ -50,6 +50,7 @@ namespace Culturecubs.Microsite.Functions
 
         [FunctionName("CreateOrUpdateContest")]
         [OpenApiOperation(operationId: "createorupdatecontest", tags: new[] { "Contest" })]
+        [OpenApiParameter(name: "guid", In = ParameterLocation.Path, Required = true, Type = typeof(Guid), Description = "TenantId.")]
         [OpenApiRequestBody(contentType: "application/json", bodyType: typeof(Contest), Required = true, Description = "Contest object to create or update.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.OK, contentType: "application/json", bodyType: typeof(Contest), Description = "Returns the created or updated contest.")]
         [OpenApiResponseWithBody(statusCode: HttpStatusCode.BadRequest, contentType: "application/json", bodyType: typeof(string), Description = "Returns an error message if the request is invalid.")]
