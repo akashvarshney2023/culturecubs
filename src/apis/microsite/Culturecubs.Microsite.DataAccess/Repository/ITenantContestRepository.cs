@@ -10,5 +10,9 @@ namespace Culturecubs.Microsite.DataAccess.Repository
     public interface ITenantContestRepository
     {
         Task<List<Contest>> GetContestsByTenantId(Guid tenantId);
+
+        Task<Contest> CreateOrUpdateContest(Contest contest);
+
+
     }
 }
