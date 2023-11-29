@@ -57,3 +57,11 @@ src/apis/tenant_user/CultureCubs.TenantAndUser.Functions/.vs/ProjectEvaluation/c
 /src/apis/ContentManagement/.vs/ProjectEvaluation
 /src/apis/ContentManagement/appsettings.Development.json
 /src/apis/ContentManagement/appsettings.json
+/.github/workflows/api-contentmgt-dev-0011.yml
+*.user
+src/apis/ContentManagement/Properties/serviceDependencies.api-contentmgt-dev-001.json
+src/apis/ContentManagement/Properties/serviceDependencies.api-contentmgt-dev-0011.json
+src/apis/ContentManagement/Properties/serviceDependencies.json
+src/apis/ContentManagement/Properties/ServiceDependencies/api-contentmgt-dev-001/apis1.arm.json
+src/apis/ContentManagement/Properties/ServiceDependencies/api-contentmgt-dev-0011/apis1.arm.json
+src/client/microsite/.vscode/launch.json

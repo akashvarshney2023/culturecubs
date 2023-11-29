@@ -39,15 +39,15 @@ namespace Culturecubs.Microsite.DataAccess.Repository
                     }
                 }
 
-                // Remove ContestTab entries that were deleted by the user
-                var tabsToDelete = await _ctx.ContestTabs
-                    .Where(existingTab => existingTab.ContestId == contest.Id && !contest.Tabs.Any(newTab => newTab.Id == existingTab.Id))
-                    .ToListAsync();
+                //TODO: Remove ContestTab entries that were deleted by the user
+                //var tabsToDelete = await _ctx.ContestTabs
+                //    .Where(existingTab => existingTab.ContestId == contest.Id && !contest.Tabs.Any(newTab => newTab.Id == existingTab.Id))
+                //    .ToListAsync();
 
-                foreach (var tabToDelete in tabsToDelete)
-                {
-                    _ctx.ContestTabs.Remove(tabToDelete);
-                }
+                //foreach (var tabToDelete in tabsToDelete)
+                //{
+                //    _ctx.ContestTabs.Remove(tabToDelete);
+                //}
             }
 
             await _ctx.SaveChangesAsync();

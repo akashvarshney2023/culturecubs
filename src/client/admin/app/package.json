@@ -13,7 +13,8 @@
     "type-check": "vue-tsc --noEmit",
     "candidate-fetch": "openapi-generator-cli generate -i https://api-candidate-dev-002.azurewebsites.net/v3/api-docs -g typescript-fetch -o ./src/api/candidate --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
     "user-fetch": "openapi-generator-cli generate -i https://localhost:7208/swagger/v1/swagger.json -g typescript-fetch -o ./src/api/user --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
-    "tenant-fetch": "openapi-generator-cli generate -i https://api-tenant-dev-001.azurewebsites.net/api/swagger.json -g typescript-fetch -o ./src/api/tenant --additional-properties=ngVersion=supportsES6=true,withInterfaces=true"
+    "tenant-fetch": "openapi-generator-cli generate -i https://api-tenant-dev-001.azurewebsites.net/api/swagger.json -g typescript-fetch -o ./src/api/tenant --additional-properties=ngVersion=supportsES6=true,withInterfaces=true",
+    "microsite-fetch": "openapi-generator-cli generate -i https://api-ccmicrosite-dev-001.azurewebsites.net/api/swagger.json -g typescript-fetch -o ./src/api/microsite --additional-properties=ngVersion=supportsES6=true,withInterfaces=true"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
