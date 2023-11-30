@@ -166,6 +166,18 @@ export interface Candidate {
     totalApps?: number;
     /**
      * 
+     * @type {string}
+     * @memberof Candidate
+     */
+    tenantId?: string;
+    /**
+     * 
+     * @type {number}
+     * @memberof Candidate
+     */
+    contestId?: number;
+    /**
+     * 
      * @type {boolean}
      * @memberof Candidate
      */
@@ -210,6 +222,8 @@ export function CandidateFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'preferences': !exists(json, 'preferences') ? undefined : json['preferences'],
         'activeApps': !exists(json, 'activeApps') ? undefined : json['activeApps'],
         'totalApps': !exists(json, 'totalApps') ? undefined : json['totalApps'],
+        'tenantId': !exists(json, 'tenantId') ? undefined : json['tenantId'],
+        'contestId': !exists(json, 'contestId') ? undefined : json['contestId'],
         'participant': !exists(json, 'participant') ? undefined : json['participant'],
     };
 }
@@ -242,6 +256,8 @@ export function CandidateToJSON(value?: Candidate | null): any {
         'preferences': value.preferences,
         'activeApps': value.activeApps,
         'totalApps': value.totalApps,
+        'tenantId': value.tenantId,
+        'contestId': value.contestId,
         'participant': value.participant,
     };
 }

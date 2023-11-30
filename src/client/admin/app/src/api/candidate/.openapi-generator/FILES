@@ -1,4 +1,3 @@
-.openapi-generator-ignore
 apis/CandidateControllerApi.ts
 apis/ExtractControllerApi.ts
 apis/index.ts

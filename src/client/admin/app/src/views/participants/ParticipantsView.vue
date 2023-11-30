@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts" setup>
-import { CandidateControllerApi, type CandidateDto } from '@/api/candidate';
+import { CandidateControllerApi, type CandidateDto, type GetAllParticipantsRequest } from '@/api/candidate';
 import { onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 const canidateDetails = ref<CandidateDto[]>([]);
@@ -33,8 +33,10 @@ const participants = ref({
 
 const getAllparticipantsByTenantId = async () => {
   try {
-    const data: CandidateDto[] = await candidateApi.getAllParticipants();
-    console.log(data)
+    const request : GetAllParticipantsRequest ={
+      tenantId:'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
+    }
+    const data: CandidateDto[] = await candidateApi.getAllParticipants(request);
     canidateDetails.value = data
   } catch (error) {
     console.log(error);

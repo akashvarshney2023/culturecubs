@@ -26,19 +26,35 @@ import {
 } from '../models';
 
 export interface AddCandidateRequest {
+    tenantId: string;
     candidate: Candidate;
 }
 
 export interface DeleteCandidateRequest {
     id: string;
+    tenantId: string;
+}
+
+export interface GetAllRequest {
+    tenantId: string;
+}
+
+export interface GetAllParticipantsRequest {
+    tenantId: string;
 }
 
 export interface GetCandidateRequest {
     id: string;
+    tenantId: string;
+}
+
+export interface GetCountRequest {
+    tenantId: string;
 }
 
 export interface UpdateCandidateRequest {
     id: string;
+    tenantId: string;
     candidate: Candidate;
 }
 
@@ -52,6 +68,7 @@ export interface CandidateControllerApiInterface {
     /**
      * 
      * @summary Add new Candidate
+     * @param {string} tenantId 
      * @param {Candidate} candidate 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -68,6 +85,7 @@ export interface CandidateControllerApiInterface {
      * 
      * @summary Delete candidate by id
      * @param {string} id 
+     * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CandidateControllerApiInterface
@@ -81,36 +99,39 @@ export interface CandidateControllerApiInterface {
 
     /**
      * 
-     * @summary Get all canidates
+     * @summary Get all candidates
+     * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CandidateControllerApiInterface
      */
-    getAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>>;
+    getAllRaw(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>>;
 
     /**
-     * Get all canidates
+     * Get all candidates
      */
-    getAll(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>>;
+    getAll(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>>;
 
     /**
      * 
      * @summary Get participants
+     * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CandidateControllerApiInterface
      */
-    getAllParticipantsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>>;
+    getAllParticipantsRaw(requestParameters: GetAllParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>>;
 
     /**
      * Get participants
      */
-    getAllParticipants(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>>;
+    getAllParticipants(requestParameters: GetAllParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>>;
 
     /**
      * 
      * @summary Get candidate by id
      * @param {string} id 
+     * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CandidateControllerApiInterface
@@ -125,21 +146,23 @@ export interface CandidateControllerApiInterface {
     /**
      * 
      * @summary Get candidate count
+     * @param {string} tenantId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof CandidateControllerApiInterface
      */
-    getCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>>;
+    getCountRaw(requestParameters: GetCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>>;
 
     /**
      * Get candidate count
      */
-    getCount(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<number>;
+    getCount(requestParameters: GetCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<number>;
 
     /**
      * 
      * @summary Update existing Candidate
      * @param {string} id 
+     * @param {string} tenantId 
      * @param {Candidate} candidate 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -163,15 +186,23 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
      * Add new Candidate
      */
     async addCandidateRaw(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Candidate>> {
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling addCandidate.');
+        }
+
         if (requestParameters.candidate === null || requestParameters.candidate === undefined) {
             throw new runtime.RequiredError('candidate','Required parameter requestParameters.candidate was null or undefined when calling addCandidate.');
         }
 
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
+        const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/candidate`,
@@ -200,9 +231,17 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling deleteCandidate.');
         }
 
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling deleteCandidate.');
+        }
+
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/candidate/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
@@ -227,12 +266,20 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     }
 
     /**
-     * Get all canidates
+     * Get all candidates
      */
-    async getAllRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>> {
+    async getAllRaw(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>> {
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling getAll.');
+        }
+
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/candidates`,
@@ -245,20 +292,28 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     }
 
     /**
-     * Get all canidates
+     * Get all candidates
      */
-    async getAll(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>> {
-        const response = await this.getAllRaw(initOverrides);
+    async getAll(requestParameters: GetAllRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>> {
+        const response = await this.getAllRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
     /**
      * Get participants
      */
-    async getAllParticipantsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>> {
+    async getAllParticipantsRaw(requestParameters: GetAllParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<CandidateDto>>> {
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling getAllParticipants.');
+        }
+
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/participants`,
@@ -273,8 +328,8 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     /**
      * Get participants
      */
-    async getAllParticipants(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>> {
-        const response = await this.getAllParticipantsRaw(initOverrides);
+    async getAllParticipants(requestParameters: GetAllParticipantsRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<CandidateDto>> {
+        const response = await this.getAllParticipantsRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -286,9 +341,17 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling getCandidate.');
         }
 
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling getCandidate.');
+        }
+
         const queryParameters: any = {};
 
-        const headerParameters: runtime.HTTPHeaders = {"tenantId" : "xyz"};
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/candidate/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),
@@ -311,10 +374,18 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     /**
      * Get candidate count
      */
-    async getCountRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+    async getCountRaw(requestParameters: GetCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<number>> {
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling getCount.');
+        }
+
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/candidates/count`,
@@ -333,8 +404,8 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
     /**
      * Get candidate count
      */
-    async getCount(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<number> {
-        const response = await this.getCountRaw(initOverrides);
+    async getCount(requestParameters: GetCountRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<number> {
+        const response = await this.getCountRaw(requestParameters, initOverrides);
         return await response.value();
     }
 
@@ -346,6 +417,10 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
             throw new runtime.RequiredError('id','Required parameter requestParameters.id was null or undefined when calling updateCandidate.');
         }
 
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling updateCandidate.');
+        }
+
         if (requestParameters.candidate === null || requestParameters.candidate === undefined) {
             throw new runtime.RequiredError('candidate','Required parameter requestParameters.candidate was null or undefined when calling updateCandidate.');
         }
@@ -355,6 +430,10 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
         const headerParameters: runtime.HTTPHeaders = {};
 
         headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
 
         const response = await this.request({
             path: `/api/candidate/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(requestParameters.id))),

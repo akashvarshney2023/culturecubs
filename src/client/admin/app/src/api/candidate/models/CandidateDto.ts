@@ -55,6 +55,12 @@ export interface CandidateDto {
      * @memberof CandidateDto
      */
     dob?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof CandidateDto
+     */
+    attachment?: string;
 }
 
 /**
@@ -82,6 +88,7 @@ export function CandidateDtoFromJSONTyped(json: any, ignoreDiscriminator: boolea
         'phone': !exists(json, 'phone') ? undefined : json['phone'],
         'gender': !exists(json, 'gender') ? undefined : json['gender'],
         'dob': !exists(json, 'dob') ? undefined : json['dob'],
+        'attachment': !exists(json, 'attachment') ? undefined : json['attachment'],
     };
 }
 
@@ -100,6 +107,7 @@ export function CandidateDtoToJSON(value?: CandidateDto | null): any {
         'phone': value.phone,
         'gender': value.gender,
         'dob': value.dob,
+        'attachment': value.attachment,
     };
 }
 

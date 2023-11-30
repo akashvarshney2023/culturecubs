@@ -16,7 +16,7 @@
   </template>
   
   <script lang="ts" setup>
-  import { CandidateControllerApi, type CandidateDto } from '@/api/candidate';
+  import { CandidateControllerApi, type CandidateDto, type GetAllRequest } from '@/api/candidate';
   import { onMounted, ref } from 'vue'
   import { useRouter } from 'vue-router'
   const canidateDetails = ref<CandidateDto[]>([]);
@@ -36,8 +36,10 @@
   
   const getAllCandidatesByTenantId = async () => {
     try {
-      const data: CandidateDto[] = await candidateApi.getAll();
-      console.log(data)
+      const request : GetAllRequest ={
+      tenantId:'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
+    }
+      const data: CandidateDto[] = await candidateApi.getAll(request);
       canidateDetails.value = data
     } catch (error) {
       console.log(error);
