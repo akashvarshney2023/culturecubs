@@ -13,19 +13,20 @@ env:
   AZURE_FUNCTIONAPP_PACKAGE_PATH: './src/apis/microsite/'
   DOTNET_VERSION: '6.0.x'
   AZURE_APP_WORKING_DIR: './src/apis/microsite/'
+  VITE_STRG_ACCOUNT_KEY: ${{ secrets.VITE_STRG_ACCOUNT_KEY }}
 
 jobs:
   api-microsite-dev:
     if: github.ref == 'refs/heads/main'
-    runs-on: windows-latest  # Corrected the runner type
+    runs-on: windows-latest  
     environment: Development
 
     steps:
       - name: Checkout GitHub Action
-        uses: actions/checkout@v2  # Updated to v2
+        uses: actions/checkout@v2  
 
       - name: Setup .NET ${{ env.DOTNET_VERSION }} Environment
-        uses: actions/setup-dotnet@v2  # Updated to v2
+        uses: actions/setup-dotnet@v2  
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 

@@ -18,7 +18,7 @@ export default {
   },
   data() {
     return {
-      completeUrl:'',
+      completeUrl: '',
       selectedFile: null,
       attachment: null,
       successDialog: false,
@@ -35,15 +35,13 @@ export default {
       }
     },
     async uploadFile() {
-      const accountName = process.env.VITE_STRG_ACCOUNT_NAME;
-      const storageAccountString = process.env.VITE_STRG_CONNECTION_STRING;
-      const containerName = process.env.VITE_STRG_CONTAINER_NAME;
+      const accountName ="saccdev001";
+      const storageAccountString = process.env.VITE_STRG_ACCOUNT_KEY;
       const blobName = this.selectedFile.name;
-      const sasToken = process.env.VITE_STRG_SAS_TOKEN;
-console.log(storageAccountString)
+      console.log(storageAccountString)
       // Construct the BlobServiceClient URL with the SAS token
-      const blobServiceClient = new BlobServiceClient("DefaultEndpointsProtocol=https;AccountName=saccdev001;AccountKey=jJ1NZt6Mp8Bzr3iFsgQE1iyUpnuWYiwtrYtDAdSc+evT17JLGQOGuOtDmywTyeFmWyDwlNJG6wjb+AStXV8Skw==;EndpointSuffix=core.windows.net");
-      const containerClient = blobServiceClient.getContainerClient(containerName);
+      const blobServiceClient = new BlobServiceClient(storageAccountString);
+      const containerClient = blobServiceClient.getContainerClient("candidateresumes");
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
       try {
