@@ -10,27 +10,27 @@
           <v-card>
             <v-card-title class="text-center">Register</v-card-title>
             <v-card-text>
-              <v-form>
-                <v-text-field label="Full Name" type="text" v-model="fullName" prepend-icon="mdi-account"
-                  required></v-text-field>
-                <v-text-field label="Email" type="email" v-model="email" prepend-icon="mdi-email" required></v-text-field>
-                <v-text-field label="Phone" type="tel" v-model="phoneNumber" prepend-icon="mdi-phone"
-                  required></v-text-field>
-                <v-text-field label="Company" type="text" v-model="currentCompany" prepend-icon="mdi-domain"
-                  required></v-text-field>
-                <FileUpload :loading="loading" @file-uploaded="handleFileUploaded" />
-                <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
-                  v-model="agree"></v-checkbox>
-                <v-row class="d-flex justify-center">
-                  <v-col cols="auto">
-                    <v-btn color="primary" type="submit" @click="submitForm" block :disabled="!agree">Submit</v-btn>
-                  </v-col>
-                  <v-col cols="auto">
-                    <v-spacer></v-spacer>
-                    <v-btn color="secondary" block>Cancel</v-btn>
-                  </v-col>
-                </v-row>
-              </v-form>
+
+              <v-text-field label="Full Name" type="text" v-model="fullName" prepend-icon="mdi-account"
+                required></v-text-field>
+              <v-text-field label="Email" type="email" v-model="email" prepend-icon="mdi-email" required></v-text-field>
+              <v-text-field label="Phone" type="tel" v-model="phoneNumber" prepend-icon="mdi-phone"
+                required></v-text-field>
+              <v-text-field label="Company" type="text" v-model="currentCompany" prepend-icon="mdi-domain"
+                required></v-text-field>
+              <FileUpload :loading="loading" @file-uploaded="handleFileUploaded" />
+              <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
+                v-model="agree"></v-checkbox>
+              <v-row class="d-flex justify-center">
+                <v-col cols="auto">
+                  <v-btn color="primary" type="submit" @click="submitForm" block :disabled="!agree">Submit</v-btn>
+                </v-col>
+                <v-col cols="auto">
+                  <v-spacer></v-spacer>
+                  <v-btn color="secondary" block>Cancel</v-btn>
+                </v-col>
+              </v-row>
+
             </v-card-text>
           </v-card>
         </v-col>
@@ -39,7 +39,7 @@
     <v-dialog v-model="successDialog" max-width="400">
       <v-card>
         <v-card-title>Candiate Registration</v-card-title>
-        <v-card-text>
+        <v-card-text color="green">
           Thanks for participating for the contest. Your details are saved with us and soon you will be notified with
           details. Happy Learing !!
         </v-card-text>
@@ -55,7 +55,7 @@
 import { ref, type Ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { CandidateControllerApi, type AddCandidateRequest } from '@/apis/candidate/apis';
-import type { Candidate, PersonalInformation } from '@/apis/candidate/models';
+import type { Candidate } from '@/apis/candidate/models';
 import FileUpload from "@/component/FileUpload.vue";
 
 const router = useRouter();
@@ -103,8 +103,19 @@ const submitForm = async () => {
 
   try {
     const result: Candidate = await candidateApi.addCandidate(request);
-    loading.value = false;
     //Show success Message
+    successDialog.value = true;
+    //set to defaults
+    agree.value = false;
+    loading.value = false;
+    fullName.value = '';
+    email.value = '';
+    phoneNumber.value = '';
+    currentCompany.value = '';
+    successDialog.value = false;
+    filepathOfBlobAttachment.value = '';
+
+
   }
   catch (error) {
     loading.value = false;

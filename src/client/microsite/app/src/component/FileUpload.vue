@@ -36,12 +36,13 @@ export default {
     },
     async uploadFile() {
       const accountName ="saccdev001";
+      const containerName ="candidateresumes"
       const storageAccountString = process.env.VITE_STRG_ACCOUNT_KEY;
       const blobName = this.selectedFile.name;
       console.log(storageAccountString)
       // Construct the BlobServiceClient URL with the SAS token
       const blobServiceClient = new BlobServiceClient(storageAccountString);
-      const containerClient = blobServiceClient.getContainerClient("candidateresumes");
+      const containerClient = blobServiceClient.getContainerClient(containerName);
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
       try {
