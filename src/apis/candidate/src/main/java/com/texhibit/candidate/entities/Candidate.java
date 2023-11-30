@@ -38,6 +38,7 @@ public class Candidate{
     private Integer totalApps;
     private boolean isParticipant;
     private String tenantId;
+    private Integer contestId;
 }
 
 
