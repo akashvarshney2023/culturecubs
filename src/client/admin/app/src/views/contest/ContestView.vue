@@ -1,36 +1,32 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title>Contests</v-card-title>
-    
-     <v-data-table-server v-model:items-per-page="itemsPerPage" :headers="headers" :items-length="totalItems"
-        :items="serverItems" :loading="loading" :search="search" item-value="name"
-        @update:options="loadItems"></v-data-table-server>
+      <v-card-title class="d-flex align-center pe-2">
+        <v-icon icon="mdi-trophy"></v-icon> &nbsp;
+        Contest Details
+        <v-spacer></v-spacer>
+        <v-text-field v-model="search" prepend-inner-icon="mdi-magnify" density="compact" label="Search" single-line flat
+          hide-details variant="solo-filled"></v-text-field>
+      </v-card-title>
+      <v-divider></v-divider>
+      <v-data-table v-model:search="search" :items="serverItems" :headers="headers" >        
+        <template v-slot:item.title="{ item }">
+          <div class="text-start">
+            <v-chip :color="item.title ? 'green' : 'red'" :text="item.title" class="text-uppercase" label 
+              size="small"></v-chip>
+          </div>
+        </template>
+        <template v-slot:item.isActive="{ item }">
+          <v-icon :color="item.raw.isActive ? 'green' : 'red'"> {{ item.raw.isActive ? 'mdi-check-circle' : 'mdi-close-circle' }}
+          </v-icon>
+        </template>
+        <template v-slot:item.edit="{ item }">
+          <v-icon @click="editContest(item)" color="primary">
+            mdi-pencil
+          </v-icon>
+        </template>
+      </v-data-table>
     </v-card>
-    <!-- <v-container>
-      <v-label style="font-size: x-large;">Setup your page and workflow.</v-label>
-      <v-card></v-card>
-      <v-btn color="primary" @click="navigate('contestnew')">Add New Contest</v-btn>
-    </v-container>
-    <v-container class="grey lighten-5">
-     
-      <v-row no-gutters class="align-items-center" v-for="(contest, index) in contests" :key="index">
-        <v-col cols="12" sm="6">
-          <v-card class="pa-2" outlined tile>
-            {{ contest.name }}
-          </v-card>
-        </v-col>
-        <v-col cols="12" sm="2" class="d-flex justify-center">
-          <v-switch v-model="contest.isActive" color="green" label="Active" hide-details></v-switch>
-        </v-col>
-        <v-col cols="12" sm="2" class="d-flex justify-center">
-          <v-icon color="primary" @click="editContest(index)">mdi-pencil</v-icon>
-        </v-col>
-        <v-col cols="12" sm="2" class="d-flex justify-center">
-          <v-icon color="error" @click="deleteContest(index)">mdi-delete</v-icon>
-        </v-col>
-      </v-row>
-    </v-container> -->
   </v-main>
 </template>
 
@@ -48,11 +44,13 @@ const totalItems = ref(0);
 const itemsPerPage = ref(5);
 const headers = [
   { title: 'Title', align: 'start', sortable: false, key: 'title' },
-  { title: 'Category', key: 'category', align: 'end' },
-  { title: 'Location', key: 'location', align: 'end' },
-  { title: 'Experience Level (g)', key: 'experience', align: 'end' },
-  { title: 'RegistrationEndDate', key: 'registrationEndDate', align: 'end'  },
-  { title: 'Summary', key: 'summary', align: 'end' },
+  { title: 'Category', key: 'category', align: 'start' },
+  { title: 'Location', key: 'location', align: 'start' },
+  { title: 'Experience Level (g)', key: 'experience', align: 'start' },
+  { title: 'RegistrationEndDate', key: 'registrationEndDate', align: 'start' },
+  { title: 'Summary', key: 'summary', align: 'start' },
+  { title: 'IsActive', key: 'isActive', align: 'start' },
+  { title: 'Edit', key: 'edit', align: 'start' },
 ];
 
 const navigate = (name: string) => {
@@ -61,9 +59,10 @@ const navigate = (name: string) => {
   });
 };
 
-const editContest = (index: number) => {
-  // implement edit contest logic
-}
+const editContest = (item: Contest) => {
+  // Implement edit contest logic using the item data
+  console.log(item);
+};
 
 const deleteContest = (index: number) => {
   //contests.value.splice(index, 1)
@@ -78,10 +77,6 @@ const loadItems = async () => {
   try {
     const result: Contest[] = await contestApi.getcontestsbytenantid(request);
 
-    result.forEach(item => {
-    item.registrationEndDate = item.registrationEndDate?.getDate(); // Adjust accordingly based on your date format
-  });
-    console.log(result)
     serverItems.value = result;
     totalItems.value = result.length;
     loading.value = false;
@@ -90,6 +85,10 @@ const loadItems = async () => {
     loading.value = false;
   }
 }
+onMounted(async () => {
+  console.log("Component is mounted."); // Debugging check
+  await loadItems();
+});
 
 
 </script>

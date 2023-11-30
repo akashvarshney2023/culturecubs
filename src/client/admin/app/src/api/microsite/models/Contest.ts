@@ -88,6 +88,12 @@ export interface Contest {
     summary?: string;
     /**
      * 
+     * @type {boolean}
+     * @memberof Contest
+     */
+    isActive?: boolean;
+    /**
+     * 
      * @type {Array<ContestTab>}
      * @memberof Contest
      */
@@ -123,6 +129,7 @@ export function ContestFromJSONTyped(json: any, ignoreDiscriminator: boolean): C
         'image': !exists(json, 'image') ? undefined : json['image'],
         'registrationEndDate': !exists(json, 'registrationEndDate') ? undefined : (new Date(json['registrationEndDate'])),
         'summary': !exists(json, 'summary') ? undefined : json['summary'],
+        'isActive': !exists(json, 'isActive') ? undefined : json['isActive'],
         'tabs': !exists(json, 'tabs') ? undefined : ((json['tabs'] as Array<any>).map(ContestTabFromJSON)),
     };
 }
@@ -146,6 +153,7 @@ export function ContestToJSON(value?: Contest | null): any {
         'image': value.image,
         'registrationEndDate': value.registrationEndDate === undefined ? undefined : (value.registrationEndDate.toISOString()),
         'summary': value.summary,
+        'isActive': value.isActive,
         'tabs': value.tabs === undefined ? undefined : ((value.tabs as Array<any>).map(ContestTabToJSON)),
     };
 }
