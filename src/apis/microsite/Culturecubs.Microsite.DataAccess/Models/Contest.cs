@@ -23,6 +23,7 @@ namespace Culturecubs.Microsite.DataAccess.Models
         public virtual string? Image { get; set; }
         public virtual DateTime RegistrationEndDate { get; set; }
         public virtual string? Summary { get; set; }
+        public virtual bool? IsActive { get; set; }
         public ICollection<ContestTab>? Tabs { get; set; }
     }
 }
