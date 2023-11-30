@@ -10,25 +10,20 @@
           <v-card>
             <v-card-title class="text-center">Register</v-card-title>
             <v-card-text>
-              <v-form @submit.prevent="submitForm">
-                <v-text-field label="Full Name" type="text" v-model="user" prepend-icon="mdi-account"
+              <v-form>
+                <v-text-field label="Full Name" type="text" v-model="fullName" prepend-icon="mdi-account"
                   required></v-text-field>
                 <v-text-field label="Email" type="email" v-model="email" prepend-icon="mdi-email" required></v-text-field>
-                <v-text-field label="Phone" type="tel" v-model="phone" prepend-icon="mdi-phone" required></v-text-field>
-                <v-text-field label="Company" type="text" v-model="company" prepend-icon="mdi-domain"
+                <v-text-field label="Phone" type="tel" v-model="phoneNumber" prepend-icon="mdi-phone"
                   required></v-text-field>
-                <FileUpload :loading="loading" /> 
-
-                <!-- Loading spinner for the entire page -->
-                <v-overlay :value="loading">
-                  <v-progress-circular indeterminate color="primary"></v-progress-circular>
-                </v-overlay>
-
+                <v-text-field label="Company" type="text" v-model="currentCompany" prepend-icon="mdi-domain"
+                  required></v-text-field>
+                <FileUpload :loading="loading" @file-uploaded="handleFileUploaded" />
                 <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
                   v-model="agree"></v-checkbox>
                 <v-row class="d-flex justify-center">
                   <v-col cols="auto">
-                    <v-btn color="primary" type="submit" @click="submitForm" block>Submit</v-btn>
+                    <v-btn color="primary" type="submit" @click="submitForm" block :disabled="!agree">Submit</v-btn>
                   </v-col>
                   <v-col cols="auto">
                     <v-spacer></v-spacer>
@@ -41,46 +36,86 @@
         </v-col>
       </v-row>
     </v-container>
+    <v-dialog v-model="successDialog" max-width="400">
+      <v-card>
+        <v-card-title>Candiate Registration</v-card-title>
+        <v-card-text>
+          Thanks for participating for the contest. Your details are saved with us and soon you will be notified with
+          details. Happy Learing !!
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="closeSuccessDialog">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-main>
 </template>
 
 <script lang="ts" setup>
-import { defineComponent, ref, type Ref } from 'vue';
-import { useRouter } from 'vue-router';
-import { CandidateApi } from '@/apis/microsite/apis';
-import type { CandidateregistrationRequest } from '@/apis/microsite/apis';
-import type { CandidateRegistration } from '@/apis/microsite/models';
-import type { AddCandidateRequest } from '@/apis/candidate/apis';
-import type { Candidate } from '@/apis/candidate/models';
+import { ref, type Ref } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
+import { CandidateControllerApi, type AddCandidateRequest } from '@/apis/candidate/apis';
+import type { Candidate, PersonalInformation } from '@/apis/candidate/models';
 import FileUpload from "@/component/FileUpload.vue";
 
 const router = useRouter();
-const candidateApi = new CandidateApi();
-
-const user = ref('');
-const email = ref('');
-const phone = ref('');
-const company = ref('');
+const route = useRoute()
+const candidateApi = new CandidateControllerApi();
 const attachment: Ref<File | null> = ref(null);
 const agree = ref(false);
-const loading =ref(false);
-
+const loading = ref(false);
+const fullName = ref('');
+const email = ref('');
+const phoneNumber = ref('');
+const currentCompany = ref('');
+const successDialog = ref(false);
+const filepathOfBlobAttachment = ref('');
+const handleFileUploaded = (data: any) => {
+  const [success, filepath] = data;
+  if (success) {
+    console.log(filepath)
+    filepathOfBlobAttachment.value = filepath;
+  } else {
+    // Handle failure if needed
+  }
+};
 
 const submitForm = async () => {
-  if (attachment.value) {
-    this.loading = true;
-  }
+  const candidateDetails: Candidate = {
+    personalInformation: {
+      name: fullName.value,
+      contactInformation: {
+        email: email.value,
+        phoneNumber: phoneNumber.value
+      }
 
+    },
+    resumePath: filepathOfBlobAttachment.value,
+    currentCompany: currentCompany.value,
+    contestId: Number(route.params.contestId),
+    participant: true
+  }
   // Create a new candidate registration object
-  const candidateRegistration: CandidateregistrationRequest = {
-    company: company.value,
-    user: user.value,
-    email: email.value,
-    phone: phone.value,
+  const request: AddCandidateRequest = {
+    tenantId: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068',
+    candidate: candidateDetails
   };
+
+  try {
+    const result: Candidate = await candidateApi.addCandidate(request);
+    loading.value = false;
+    //Show success Message
+  }
+  catch (error) {
+    loading.value = false;
+  }
 };
 const navigate = (name: string) => {
   router.push({ name });
+};
+
+const closeSuccessDialog = () => {
+  successDialog.value = false;
 };
 
 </script>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import NewContest from '../views/contest/NewContest.vue'
+import NewContest from '../views/contest/EditContest.vue'
 import ContestView from '../views/contest/ContestView.vue'
 import ParticipantsView from '../views/participants/ParticipantsView.vue'
 import HomeView from '@/views/footer/HomeView.vue'
