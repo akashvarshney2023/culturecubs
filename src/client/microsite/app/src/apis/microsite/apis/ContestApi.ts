@@ -22,6 +22,11 @@ import {
     ContestToJSON,
 } from '../models';
 
+export interface CreateorupdatecontestRequest {
+    guid: string;
+    body: Contest;
+}
+
 export interface GetcontestsbytenantidRequest {
     guid: string;
 }
@@ -33,6 +38,20 @@ export interface GetcontestsbytenantidRequest {
  * @interface ContestApiInterface
  */
 export interface ContestApiInterface {
+    /**
+     * 
+     * @param {string} guid TenantId.
+     * @param {Contest} body Contest object to create or update.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ContestApiInterface
+     */
+    createorupdatecontestRaw(requestParameters: CreateorupdatecontestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Contest>>;
+
+    /**
+     */
+    createorupdatecontest(requestParameters: CreateorupdatecontestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Contest>;
+
     /**
      * 
      * @param {string} guid TenantId.
@@ -52,6 +71,41 @@ export interface ContestApiInterface {
  * 
  */
 export class ContestApi extends runtime.BaseAPI implements ContestApiInterface {
+
+    /**
+     */
+    async createorupdatecontestRaw(requestParameters: CreateorupdatecontestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Contest>> {
+        if (requestParameters.guid === null || requestParameters.guid === undefined) {
+            throw new runtime.RequiredError('guid','Required parameter requestParameters.guid was null or undefined when calling createorupdatecontest.');
+        }
+
+        if (requestParameters.body === null || requestParameters.body === undefined) {
+            throw new runtime.RequiredError('body','Required parameter requestParameters.body was null or undefined when calling createorupdatecontest.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/contest/{guid}`.replace(`{${"guid"}}`, encodeURIComponent(String(requestParameters.guid))),
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: ContestToJSON(requestParameters.body),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => ContestFromJSON(jsonValue));
+    }
+
+    /**
+     */
+    async createorupdatecontest(requestParameters: CreateorupdatecontestRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Contest> {
+        const response = await this.createorupdatecontestRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
 
     /**
      */

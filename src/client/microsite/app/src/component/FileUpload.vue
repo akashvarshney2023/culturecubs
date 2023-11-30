@@ -51,13 +51,13 @@ export default {
     },
     async uploadFile() {
     
-      const accountName = process.env.VITE_STRG_ACCOUNT_NAME;
+      const storageAccountString:string = process.env.VITE_STRG_CONNECTION_STRING;
       const containerName = process.env.VITE_STRG_CONTAINER_NAME;
       const blobName = this.selectedFile.name;
       const sasToken = process.env.VITE_STRG_SAS_TOKEN;
 
       // Construct the BlobServiceClient URL with the SAS token
-      const blobServiceClient = new BlobServiceClient(`https://saccdev001.blob.core.windows.net/candidateresumes?sp=racwdli&st=2023-11-25T17:04:47Z&se=2024-10-05T00:04:47Z&sv=2022-11-02&sr=c&sig=cYUISWYkVBgIMuRa4X7OrwSo4kC588I7FbtHQzzFw2U%3D`);
+      const blobServiceClient = new BlobServiceClient(storageAccountString);
       const containerClient = blobServiceClient.getContainerClient(containerName);
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
 
