@@ -22,7 +22,8 @@ import { BlobServiceClient } from '@azure/storage-blob';
 export default {
   props: {
     isUploading: Boolean,
-    filePath: Array
+    filePath: Array,
+    phoneNumber:String
   },
   data() {
     return {
@@ -44,13 +45,13 @@ export default {
       }
     },
     async uploadFile() {
+      console.log(this.phoneNumber)
       this.isUploading = true;
       const accountName = "saccdev001";
       const containerName = "candidateresumes"
       const storageAccountString = process.env.VITE_STRG_ACCOUNT_KEY;
-      const blobName = this.selectedFile ? this.selectedFile.name : 'unknow_file';
-      console.log(storageAccountString);
-      // Construct the BlobServiceClient URL with the SAS token
+      const fileExtension = this.selectedFile.name.split('.').pop();
+      const blobName = this.selectedFile ? `${this.phoneNumber}.${fileExtension}`: this.selectedFile.name;
       const blobServiceClient = new BlobServiceClient(storageAccountString);
       const containerClient = blobServiceClient.getContainerClient(containerName);
       const blockBlobClient = containerClient.getBlockBlobClient(blobName);
@@ -61,7 +62,6 @@ export default {
         await blockBlobClient.uploadData(arrayBuffer, {
           blockSize: 4 * 1024 * 1024, // 4MB block size
           concurrency: 20, // 20 concurrency
-          onProgress: (ev) => console.log(ev),
         });
 
         // Emit the event with an array containing confirmation and filepath

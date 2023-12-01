@@ -21,7 +21,7 @@
 
               <v-text-field label="Company" type="text" v-model="currentCompany" prepend-icon="mdi-domain"
                 :rules="companyRules" required></v-text-field>
-              <FileUpload :loading="loading" @file-uploaded="handleFileUploaded" />
+              <FileUpload :phoneNumber="phoneNumber" @file-uploaded="handleFileUploaded" />
               <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
                 v-model="agree"></v-checkbox>
               <v-row class="d-flex justify-center">
@@ -33,24 +33,27 @@
                   <v-btn color="secondary" block>Cancel</v-btn>
                 </v-col>
               </v-row>
-
             </v-card-text>
           </v-card>
         </v-col>
       </v-row>
+      <v-progress-circular color="primary" indeterminate :size="128" v-if="!isSubmitted"></v-progress-circular>
+
+      <div>
+        <v-alert v-model="successDialog" dismissible type="success">
+          Thanks for participating in the contest. Your details are saved with us, and soon you will be notified with
+          details. Happy Learning!!
+        </v-alert>
+
+        <div class="text-xs-center">
+          <v-btn v-if="!successDialog" color="red" dark @click="successDialog = true">
+            Reset
+          </v-btn>
+        </div>
+      </div>
+
+
     </v-container>
-    <v-dialog v-model="successDialog" max-width="400">
-      <v-card>
-        <v-card-title>Candiate Registration</v-card-title>
-        <v-card-text color="green">
-          Thanks for participating for the contest. Your details are saved with us and soon you will be notified with
-          details. Happy Learing !!
-        </v-card-text>
-        <v-card-actions>
-          <v-btn @click="closeSuccessDialog">OK</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
   </v-main>
 </template>
 
@@ -81,13 +84,13 @@ const companyRules = ref([
   (v: string) => (v && v.length <= 50) || 'Company must be less than 50 characters',
 ]);
 
-const isFormValid = computed(() => {
+const isFormValid: any = computed(() => {
   return (
     nameRules.value.every((rule) => rule(fullName.value) === true) &&
     emailRules.value.every((rule) => rule(email.value) === true) &&
     phoneRules.value.every((rule) => rule(phoneNumber.value) === true) &&
     companyRules.value.every((rule) => rule(currentCompany.value) === true &&
-    agree.value ===true)
+      agree.value === true)
   );
 });
 
@@ -102,11 +105,11 @@ const email = ref('');
 const phoneNumber = ref('');
 const currentCompany = ref('');
 const successDialog = ref(false);
+const isSubmitted = ref(true);
 const filepathOfBlobAttachment = ref('');
 const handleFileUploaded = (data: any) => {
   const [success, filepath] = data;
   if (success) {
-    console.log(filepath)
     filepathOfBlobAttachment.value = filepath;
   } else {
     // Handle failure if needed
@@ -114,6 +117,7 @@ const handleFileUploaded = (data: any) => {
 };
 
 const submitForm = async () => {
+  isSubmitted.value = false;
   const candidateDetails: Candidate = {
     personalInformation: {
       name: fullName.value,
@@ -138,18 +142,23 @@ const submitForm = async () => {
     const result: Candidate = await candidateApi.addCandidate(request);
     //Show success Message
     successDialog.value = true;
-    //set to defaults
-    agree.value = false;
-    loading.value = false;
-    fullName.value = '';
-    email.value = '';
-    phoneNumber.value = '';
-    currentCompany.value = '';
-    successDialog.value = false;
-    filepathOfBlobAttachment.value = '';
+    isSubmitted.value = true;
   }
   catch (error) {
-    loading.value = false;
+    console.log(error);
+    successDialog.value = false;
+    isSubmitted.value = true;
+  }
+  finally {
+    isSubmitted.value = true;
+    isFormValid.value = true;
+    // // Reset form fields
+    // agree.value = false;
+    // fullName.value = '';
+    // email.value = '';
+    // phoneNumber.value = '';
+    // currentCompany.value = '';
+    // filepathOfBlobAttachment.value = '';
   }
 };
 const navigate = (name: string) => {

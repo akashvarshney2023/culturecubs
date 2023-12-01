@@ -64,7 +64,7 @@ async function fetchThemeConfig(route: any): Promise<ThemeConfig> {
     var tenantId = 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068' //route.params.id.toString();
     return themApi.getthemebytenantid({ guid: tenantId })
       .then((response) => {
-        console.log(response)
+       
         return mapThemeConfigurationToThemeConfig(response); // Call a function to map the response to the theme configuration
       })
       .catch(error => {
