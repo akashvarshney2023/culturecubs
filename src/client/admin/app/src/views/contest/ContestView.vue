@@ -32,16 +32,10 @@
 
 <script lang="ts" setup>
 import { ContestApi, type GetcontestsbytenantidRequest, type Contest } from '@/api/microsite';
-import { onMounted, ref, watch } from 'vue';
-import { useRouter, useRoute } from 'vue-router';
-
-const router = useRouter()
-const route = useRoute()
-const search = ref('');
+import { onMounted, ref, type Ref } from 'vue';
 const serverItems = ref<Contest[]>([]);
-const loading = ref(true);
+const search = ref('');
 const totalItems = ref(0);
-const itemsPerPage = ref(5);
 const headers = [
   { title: 'Title', align: 'start', sortable: false, key: 'title' },
   { title: 'Category', key: 'category', align: 'start' },
@@ -53,11 +47,7 @@ const headers = [
   { title: 'Edit', key: 'edit', align: 'start' },
 ];
 
-const navigate = (name: string) => {
-  router.push({
-    name: name
-  });
-};
+
 
 const editContest = (item: Contest) => {
   // Implement edit contest logic using the item data
@@ -69,7 +59,7 @@ const deleteContest = (index: number) => {
 }
 
 const loadItems = async () => {
-  loading.value = true;
+
   var contestApi = new ContestApi();
   const request: GetcontestsbytenantidRequest = {
     guid: "B97684C9-7ACD-40DC-80AC-42F1D0E2F068"
@@ -79,14 +69,13 @@ const loadItems = async () => {
 
     serverItems.value = result;
     totalItems.value = result.length;
-    loading.value = false;
+    
   }
   catch (error) {
-    loading.value = false;
+    
   }
 }
 onMounted(async () => {
-  console.log("Component is mounted."); // Debugging check
   await loadItems();
 });
 

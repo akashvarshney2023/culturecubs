@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import RegisterView from '@/views/RegisterView.vue'
-import NewContest from '../views/contest/EditContest.vue'
+import EditContest from '../views/contest/EditContest.vue'
 import ContestView from '../views/contest/ContestView.vue'
 import ParticipantsView from '../views/participants/ParticipantsView.vue'
 import HomeView from '@/views/footer/HomeView.vue'
@@ -12,8 +12,6 @@ import ServicesView from '../views/footer/ServicesView.vue'
 import TeamView from '../views/footer/TeamView.vue'
 import Settings from '@/views/settings/Settings.vue'
 import CandidateView from '@/views/candidate/CandidateView.vue'
-import Layout from '@/views/shared/_Layout.vue'
-import { ref } from 'vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -36,9 +34,9 @@ const router = createRouter({
           meta: { requiresAuth: true }
         },
         {
-          path: '/contestnew',
-          name: 'contestnew',
-          component: NewContest,
+          path: '/contestedit',
+          name: 'contestedit',
+          component: EditContest,
           meta: { requiresAuth: true }
         },
         {

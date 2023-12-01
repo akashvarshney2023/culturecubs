@@ -24,7 +24,7 @@
           <Account v-if="activeComponent === 'account'" />
           <CandidateView v-if="activeComponent === 'candidates'" />
           <Participant v-if="activeComponent === 'participants'" />
-          <ContestView v-if="activeComponent === 'contests'" />
+          <ContestNew v-if="activeComponent === 'contests'" />
         </v-main>
       </v-layout>
     </v-main>
@@ -35,7 +35,7 @@
   import CandidateView from '@/views/settings/options/CandidateView.vue';
   import Account from '@/views/settings/options/Account.vue';
   import Participant from '@/views/settings/options/Participants.vue';
-  import ContestView from '@/views/settings/options/ContestView.vue';
+  import ContestNew from '@/views/settings/options/ContestNew.vue';
   
   const drawer = ref(true);
   const rail = ref(true);

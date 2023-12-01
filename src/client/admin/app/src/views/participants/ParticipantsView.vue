@@ -78,7 +78,6 @@ const viewOrDownloadAttachment = (blobUrl: string) => {
 };
 
 onMounted(async () => {
-  console.log("Component is mounted."); // Debugging check
   await getAllparticipantsByTenantId();
 });
 </script>

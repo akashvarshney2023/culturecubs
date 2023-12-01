@@ -160,7 +160,6 @@ const closeSuccessDialog = () => {
 };
 
 onMounted(async () => {
-  console.log("Component is mounted."); // Debugging check
   await getAllCandidatesByTenantId();
 });
 </script>
