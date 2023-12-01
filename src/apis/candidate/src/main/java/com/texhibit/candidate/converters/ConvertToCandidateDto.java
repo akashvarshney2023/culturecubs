@@ -20,6 +20,7 @@ public class ConvertToCandidateDto {
                         .gender(candidate.getPersonalInformation().getContactInformation().getGender())
                         .phone(candidate.getPersonalInformation().getContactInformation().getPhoneNumber())
                         .attachment(candidate.getResumePath())
+                        .contestId(candidate.getContestId())
                         .build();
                 candidateDtos.add(candidateDto);
             }

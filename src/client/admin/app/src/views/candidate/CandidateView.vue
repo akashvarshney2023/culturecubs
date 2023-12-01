@@ -6,7 +6,11 @@
           <v-card-title>
             <v-text-field v-model="candidates.search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
           </v-card-title>
-          <v-data-table :headers="candidates.headers" :items="candidates.listItems" :search="candidates.search" show-select :dense="candidates.dense"></v-data-table>
+          <v-data-table :headers="candidates.headers" :items="candidates.listItems" :search="candidates.search" show-select :dense="candidates.dense">
+            <template v-slot:item.actions="{ item }" class="end">
+            <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
+          </template>
+          </v-data-table>
         </v-card>
         <v-card v-else>
           Loading...
@@ -30,6 +34,7 @@
       { key: 'phone', title: 'Phone' },
       { key: 'gender', title: 'Gender' },
       { key: 'dob', title: 'DOB' },
+      { key: 'actions', title: 'Download/View Resume' }, 
     ],
     listItems: canidateDetails
   });
@@ -45,6 +50,13 @@
       console.log(error);
     }
   };
+  const viewOrDownloadAttachment = (blobUrl: string) => {
+
+  const sasToken = 'sp=r&st=2023-12-01T00:04:45Z&se=2024-02-03T08:04:45Z&sv=2022-11-02&sr=c&sig=k9%2BrmVYmQseQQ3OhpBAMQc%2BYazwg1eYG9GrjgrxAV%2FU%3D';
+  const urlWithSAS = `${blobUrl}?${sasToken}`;
+  console.log(urlWithSAS)
+  window.open(urlWithSAS, '_blank');
+};
   
   onMounted(async () => {
     console.log("Component is mounted."); // Debugging check

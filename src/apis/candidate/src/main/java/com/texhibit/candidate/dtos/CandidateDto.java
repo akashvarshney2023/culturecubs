@@ -18,4 +18,5 @@ public class CandidateDto {
     private String gender;
     private String dob;
     private String attachment;
+    private Integer contestId;
 }
