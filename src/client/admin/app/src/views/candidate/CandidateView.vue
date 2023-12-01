@@ -12,7 +12,7 @@
           <template v-slot:item.actions="{ item }" style="align-items:end;">
             <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
           </template>
-          <template v-slot:item.tagContest="{ item }" >
+          <template v-slot:item.tagContest="{ item }">
             <v-icon color="success" @click="openDialog()">mdi-tag</v-icon>
             <v-row justify="center">
               <v-dialog v-model="dialog" scrollable width="auto" style="opacity: 0.3; !important">
@@ -47,7 +47,7 @@
       <v-card>
         <v-card-title>Candiate Tagging</v-card-title>
         <v-card-text color="green">
-         Canidate is tag to the contest successfully. 
+          Canidate is tag to the contest successfully.
         </v-card-text>
         <v-card-actions>
           <v-btn @click="closeSuccessDialog">OK</v-btn>
@@ -68,7 +68,7 @@ const contestAPI = new ContestApi();
 const result: Ref<Contest[]> = ref([]);
 const dialog = ref(false)
 const dialogm1 = ref<string>("");
-  const successDialog = ref(false);
+const successDialog = ref(false);
 const candidates = ref({
   dense: "true",
   search: '',
@@ -118,10 +118,26 @@ const viewOrDownloadAttachment = (blobUrl: string) => {
 const closeDialog = () => {
   dialog.value = false;
 };
-const tagCandidateToContest = async (candidateId: string) => {
-  //call Contest APi to view a popup list of contest 
+const tagCandidateToContest = async (candidateId: string) => {  
   try {
-    const candidateDetails: Candidate = {   
+    // get canidate by id
+    const candidateRequest:GetCandidateRequest ={
+      id:candidateId,
+      tenantId:'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
+    }
+    const candidateResponse:Candidate = await candidateApi.getCandidate(candidateRequest);
+  
+     const candidateDetails: Candidate = {
+    personalInformation: {
+      name: candidateResponse.personalInformation?.name,
+      contactInformation: {
+        email: candidateResponse.personalInformation?.contactInformation?.email,
+        phoneNumber: candidateResponse.personalInformation?.contactInformation?.phoneNumber
+      }
+
+    },
+    resumePath: candidateResponse.resumePath,
+    currentCompany: candidateResponse.currentCompany,
     contestId: Number(dialogm1.value),
     participant: true
   }
@@ -130,11 +146,11 @@ const tagCandidateToContest = async (candidateId: string) => {
       tenantId: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068',
       candidate: candidateDetails
     }
-     const updateCandidate = await candidateApi.updateCandidate(request);
-     if(updateCandidate){
+    const updateCandidate = await candidateApi.updateCandidate(request);
+    if (updateCandidate) {
       closeDialog();
       successDialog.value = true;
-     }
+    }
   } catch (error) {
     console.log(error);
   }
