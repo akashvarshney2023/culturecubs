@@ -16,16 +16,32 @@
             <v-card-text>
                 <v-row>
                     <v-col cols="12" md="4">
-                        <v-text-field v-model="contestName" label="Contest Name" outlined></v-text-field>
+                        <v-text-field v-model="contestName" label="Contest Name" outlined density="compact"></v-text-field>
                     </v-col>
                     <v-col cols="12" md="4">
-                        <v-text-field v-model="endDate" label="End Date" outlined type="date"></v-text-field>
+                        <v-text-field v-model="endDate" label="End Date" outlined type="date"
+                            density="compact"></v-text-field>
                     </v-col>
                     <v-col cols="12" md="4">
-                        <v-textarea v-model="contestDescription" label="Contest Description" outlined rows="1"></v-textarea>
+                        <v-textarea v-model="contestDescription" label="Contest Description" outlined rows="1"
+                            density="compact"></v-textarea>
                     </v-col>
                 </v-row>
 
+            </v-card-text>
+            <v-card-text>
+                <v-row>
+                    <v-col cols="12" md="4">
+                        <v-text-field v-model="category" label="Category" outlined density="compact"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                        <v-text-field v-model="location" label="Location" outlined density="compact"></v-text-field>
+                    </v-col>
+                    <v-col cols="12" md="4">
+                        <v-select v-model="experienceLevel" :items="['Beginner', 'Senior', 'Mid-Senior', 'Expert']"
+                            label="Experience Level" outlined density="compact"></v-select>
+                    </v-col>
+                </v-row>
             </v-card-text>
 
             <v-tabs v-model="tab" bg-color="transparent" color="primary" align-tabs="center">
@@ -48,8 +64,8 @@
                         <div style="padding-top: 10px;">
                             <v-row>
                                 <v-col cols="12" md="10" offset-md="1">
-                                    <QuillEditor :options="editorOptions" v-model:content="items[index].content" contentType="html"
-                                        style="height: 350px; border: 1px solid #d1d5db;" />
+                                    <QuillEditor :options="editorOptions" v-model:content="items[index].content"
+                                        contentType="html" style="height: 350px; border: 1px solid #d1d5db;" />
                                 </v-col>
                             </v-row>
                         </div>
@@ -100,6 +116,9 @@ const contestName = ref('');
 const contestDescription = ref('');
 const endDate = ref('');
 const showAddTabDialog = ref(false);
+const category = ref('');
+const location = ref('');
+const experienceLevel = ref('');
 const newTabName = ref('');
 
 const startTitleEditing = (index: number) => {
@@ -154,8 +173,11 @@ async function saveOrUpdateContest() {
         tenantId: tenantId.value,
         title: contestName.value,
         description: contestDescription.value,
-        // Add other properties from Contest class as needed
+        category: category.value,
+        experience: experienceLevel.value,
+        location: location.value,
         registrationEndDate: new Date(endDate.value),
+        isActive: true,
         // ...
         tabs: items.value.map(tab => ({
             id: tab.id || 0,
@@ -219,5 +241,6 @@ async function saveOrUpdateContest() {
     /* Adjust the opacity for the watermark effect */
     color: #000;
     /* Set the text color */
-}</style>
+}
+</style>
   
