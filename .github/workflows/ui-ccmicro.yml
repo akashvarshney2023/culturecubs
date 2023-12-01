@@ -12,7 +12,7 @@ env:
   APP_BASE_DIR: 'src/client/microsite/app'  
   NODE_VERSION: '16'
   APP_OUTPUT_DIR: 'src/client/microsite/app/dist'  
-
+  VITE_STRG_ACCOUNT_KEY: ${{secrets.VITE_STRG_ACCOUNT_KEY}}
 jobs:
   build-dev:
     if: ${{ github.ref == 'refs/heads/main' }}  
