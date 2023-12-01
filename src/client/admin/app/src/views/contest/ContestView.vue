@@ -27,12 +27,20 @@
         </template>
       </v-data-table>
     </v-card>
+     <v-dialog v-model="showContestEditorDialog" max-width="800">
+      
+        <EditContest :contestData="selectedContest" @saveOrUpdateContest="saveOrUpdateContest" />
+      
+    </v-dialog>
   </v-main>
 </template>
 
 <script lang="ts" setup>
 import { ContestApi, type GetcontestsbytenantidRequest, type Contest } from '@/api/microsite';
 import { onMounted, ref, type Ref } from 'vue';
+import EditContest from './EditContest.vue'
+const showContestEditorDialog = ref(false);
+const selectedContest = ref<Contest>({});
 const serverItems = ref<Contest[]>([]);
 const search = ref('');
 const totalItems = ref(0);
@@ -50,13 +58,20 @@ const headers = [
 
 
 const editContest = (item: Contest) => {
-  // Implement edit contest logic using the item data
-  console.log(item);
+  selectedContest.value = item;
+  showContestEditorDialog.value = true;
 };
 
-const deleteContest = (index: number) => {
-  //contests.value.splice(index, 1)
-}
+const saveOrUpdateContest = async () => {
+  // Handle the logic to save or update the contest
+  // You can pass the selectedContest data to your API update function in the ContestEditor component
+  // ...
+
+  // Close the dialog after saving/updating
+  showContestEditorDialog.value = false;
+  // Reload the contest list or update the edited contest in the list
+  await loadItems();
+};
 
 const loadItems = async () => {
 

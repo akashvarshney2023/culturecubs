@@ -4,9 +4,9 @@
       <v-row>
         <v-col cols="12" md="10">
           <v-card-title class="text-center justify-center py-6">
-            <h1 class="font-weight-bold text-h4 " style="padding-left: 215px;">
-              Add New Contest
-            </h1>
+            <h5 class="font-weight-bold text-h4 " style="padding-left: 215px;">
+              Edit Contest
+            </h5>
           </v-card-title>
         </v-col>
         <v-col cols="12" md="2" class="text-center justify-center py-10">
@@ -16,16 +16,31 @@
       <v-card-text>
         <v-row>
           <v-col cols="12" md="4">
-            <v-text-field v-model="contestName" label="Contest Name" outlined></v-text-field>
+            <v-text-field v-model="contestName" label="Contest Name" outlined density="compact"></v-text-field>
           </v-col>
           <v-col cols="12" md="4">
-            <v-text-field v-model="endDate" label="End Date" outlined type="date"></v-text-field>
+            <v-text-field v-model="endDate" label="End Date" outlined type="date" density="compact"></v-text-field>
           </v-col>
           <v-col cols="12" md="4">
-            <v-textarea v-model="contestDescription" label="Contest Description" outlined rows="1"></v-textarea>
+            <v-textarea v-model="contestDescription" label="Contest Description" outlined rows="1"
+              density="compact"></v-textarea>
           </v-col>
         </v-row>
 
+      </v-card-text>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12" md="4">
+            <v-text-field v-model="category" label="Category" outlined density="compact"></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-text-field v-model="location" label="Location" outlined density="compact"></v-text-field>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-select v-model="experienceLevel" :items="['Beginner', 'Senior', 'Mid-Senior', 'Expert']"
+              label="Experience Level" outlined density="compact"></v-select>
+          </v-col>
+        </v-row>
       </v-card-text>
 
       <v-tabs v-model="tab" bg-color="transparent" color="primary" align-tabs="center">
@@ -45,11 +60,11 @@
       <v-window v-model="tab">
         <v-window-item v-for="(item, index) in items" :key="item.value" :value="index">
           <v-card flat min-height="500">
-            <div style="padding-top: 10px;">
+            <div style="padding-top: 5px;">
               <v-row>
                 <v-col cols="12" md="10" offset-md="1">
                   <QuillEditor :options="editorOptions" v-model:content="items[index].content" contentType="html"
-                    style="height: 350px; border: 1px solid #d1d5db;" />
+                    style="height: 300px; border: 1px solid #d1d5db;" />
                 </v-col>
               </v-row>
             </div>
@@ -74,16 +89,17 @@
 </template>
 
 <script lang="ts" setup>
-
-import { ref, type Ref } from 'vue';
+import { ref, type Ref, type PropType } from 'vue';
 import { Quill, QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 import { ContestApi, type Contest, type CreateorupdatecontestRequest } from '@/api/microsite';
+import { onMounted } from 'vue';
 const contestDTO: Ref<Contest | null> = ref(null);
 const tenantId: Ref<string> = ref('511b3e72-1fe2-424f-b0c7-23b0699ad03e');
 const tab = ref(0);
 const items = ref([]);
+const { contestData } = defineProps(['contestData']);
 const editorOptions = {
   placeholder: 'Start typing here...',
   modules: {
@@ -101,6 +117,9 @@ const contestName = ref('');
 const contestDescription = ref('');
 const endDate = ref('');
 const showAddTabDialog = ref(false);
+const category = ref('');
+const location = ref('');
+const experienceLevel = ref('');
 const newTabName = ref('');
 
 const startTitleEditing = (index: number) => {
@@ -155,8 +174,11 @@ async function saveOrUpdateContest() {
     tenantId: tenantId.value,
     title: contestName.value,
     description: contestDescription.value,
-    // Add other properties from Contest class as needed
+    category: category.value,
+    experience: experienceLevel.value,
+    location: location.value,
     registrationEndDate: new Date(endDate.value),
+    isActive: true,
     // ...
     tabs: items.value.map(tab => ({
       id: tab.id || 0,
@@ -167,7 +189,7 @@ async function saveOrUpdateContest() {
   };
 
   // Create the request object
- const request: CreateorupdatecontestRequest = {
+  const request: CreateorupdatecontestRequest = {
     body: contest,
     guid: tenantId.value
   };
@@ -185,6 +207,14 @@ async function saveOrUpdateContest() {
   }
 }
 
+onMounted(() => {
+  contestName.value = contestData.title || '';
+  contestDescription.value = contestData.raw.description || '';
+  endDate.value = contestData.raw.registrationEndDate || '';
+  category.value = contestData.raw.category || '';
+  location.value = contestData.raw.location || '';
+  experienceLevel.value = contestData.raw.experienceLevel || '';
+});
 
 </script>
 

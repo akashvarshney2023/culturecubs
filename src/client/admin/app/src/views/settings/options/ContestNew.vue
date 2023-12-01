@@ -61,11 +61,11 @@
             <v-window v-model="tab">
                 <v-window-item v-for="(item, index) in items" :key="item.value" :value="index">
                     <v-card flat min-height="500">
-                        <div style="padding-top: 10px;">
+                        <div style="padding-top: 5px;">
                             <v-row>
                                 <v-col cols="12" md="10" offset-md="1">
                                     <QuillEditor :options="editorOptions" v-model:content="items[index].content"
-                                        contentType="html" style="height: 350px; border: 1px solid #d1d5db;" />
+                                        contentType="html" style="height: 300px; border: 1px solid #d1d5db;" />
                                 </v-col>
                             </v-row>
                         </div>
