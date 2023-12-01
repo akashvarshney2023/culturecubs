@@ -12,24 +12,24 @@
           <template v-slot:item.actions="{ item }" style="align-items:end;">
             <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
           </template>
-          <template v-slot:item.tagContest="{ item }" style="align-items:end;">
+          <template v-slot:item.tagContest="{ item }" >
             <v-icon color="success" @click="openDialog()">mdi-tag</v-icon>
             <v-row justify="center">
-              <v-dialog v-model="dialog" scrollable width="auto">
+              <v-dialog v-model="dialog" scrollable width="auto" style="opacity: 0.3; !important">
                 <v-card flat>
                   <v-card-title>Select Contest</v-card-title>
                   <v-divider></v-divider>
                   <v-card-text style="height: 400px;">
                     <v-radio-group v-model="dialogm1" column>
-                      <v-radio v-for="item in result" :key="item.id" :label="item.title" :value="item.title"></v-radio>
+                      <v-radio v-for="item in result" :key="item.id" :label="item.title" :value="item.id"></v-radio>
                     </v-radio-group>
                   </v-card-text>
                   <v-divider></v-divider>
                   <v-card-actions>
-                    <v-btn color="blue-darken-1" variant="text" @click="closeDialog">
+                    <v-btn color="primary" variant="text" @click="closeDialog">
                       Close
                     </v-btn>
-                    <v-btn color="blue-darken-1" variant="text" @click="tagCandidateToContest(item)">
+                    <v-btn color="primary" variant="text" @click="tagCandidateToContest(item.value)">
                       Save
                     </v-btn>
                   </v-card-actions>
@@ -43,12 +43,22 @@
         Loading...
       </v-card>
     </v-card>
+    <v-dialog v-model="successDialog" max-width="400">
+      <v-card>
+        <v-card-title>Candiate Tagging</v-card-title>
+        <v-card-text color="green">
+         Canidate is tag to the contest successfully. 
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="closeSuccessDialog">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </v-main>
 </template>
   
 <script lang="ts" setup>
-import CandidateTag from '@/component/CandidateTag.vue'
-import { CandidateControllerApi, type CandidateDto, type GetAllRequest } from '@/api/candidate';
+import { CandidateControllerApi, type AddCandidateRequest, type CandidateDto, type GetAllRequest, type UpdateCandidateRequest, type GetCandidateRequest, type Candidate } from '@/api/candidate';
 import { ContestApi, type Contest, type GetcontestsbytenantidRequest } from '@/api/microsite';
 import { onMounted, ref, type Ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -57,6 +67,8 @@ const candidateApi = new CandidateControllerApi();
 const contestAPI = new ContestApi();
 const result: Ref<Contest[]> = ref([]);
 const dialog = ref(false)
+const dialogm1 = ref<string>("");
+  const successDialog = ref(false);
 const candidates = ref({
   dense: "true",
   search: '',
@@ -106,19 +118,29 @@ const viewOrDownloadAttachment = (blobUrl: string) => {
 const closeDialog = () => {
   dialog.value = false;
 };
-const tagCandidateToContest = async (candidate: CandidateDto) => {
+const tagCandidateToContest = async (candidateId: string) => {
   //call Contest APi to view a popup list of contest 
   try {
-    const request: GetcontestsbytenantidRequest = {
-      guid: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
+    const candidateDetails: Candidate = {   
+    contestId: Number(dialogm1.value),
+    participant: true
+  }
+    const request: UpdateCandidateRequest = {
+      id: candidateId,
+      tenantId: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068',
+      candidate: candidateDetails
     }
-    result.value = await contestAPI.getcontestsbytenantid(request);
+     const updateCandidate = await candidateApi.updateCandidate(request);
+     if(updateCandidate){
+      closeDialog();
+      successDialog.value = true;
+     }
   } catch (error) {
     console.log(error);
   }
-
-  console.log(candidate);
-  console.log(`Tagging candidate ${candidate.name} to the contest`);
+};
+const closeSuccessDialog = () => {
+  successDialog.value = false;
 };
 
 onMounted(async () => {
