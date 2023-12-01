@@ -10,20 +10,23 @@
           <v-card>
             <v-card-title class="text-center">Register</v-card-title>
             <v-card-text>
+              <v-text-field label="Full Name" type="text" v-model="fullName" prepend-icon="mdi-account" :rules="nameRules"
+                required></v-text-field>
 
-              <v-text-field label="Full Name" type="text" v-model="fullName" prepend-icon="mdi-account"
+              <v-text-field label="Email" type="email" v-model="email" prepend-icon="mdi-email" :rules="emailRules"
                 required></v-text-field>
-              <v-text-field label="Email" type="email" v-model="email" prepend-icon="mdi-email" required></v-text-field>
-              <v-text-field label="Phone" type="tel" v-model="phoneNumber" prepend-icon="mdi-phone"
+
+              <v-text-field label="Phone" type="tel" v-model="phoneNumber" prepend-icon="mdi-phone" :rules="phoneRules"
                 required></v-text-field>
+
               <v-text-field label="Company" type="text" v-model="currentCompany" prepend-icon="mdi-domain"
-                required></v-text-field>
+                :rules="companyRules" required></v-text-field>
               <FileUpload :loading="loading" @file-uploaded="handleFileUploaded" />
               <v-checkbox label="I agree to the terms and conditions of Curlture Cubs and am happy to sign this"
                 v-model="agree"></v-checkbox>
               <v-row class="d-flex justify-center">
                 <v-col cols="auto">
-                  <v-btn color="primary" type="submit" @click="submitForm" block :disabled="!agree">Submit</v-btn>
+                  <v-btn color="primary" type="submit" @click="submitForm" block :disabled="!isFormValid">Submit</v-btn>
                 </v-col>
                 <v-col cols="auto">
                   <v-spacer></v-spacer>
@@ -52,11 +55,41 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, type Ref } from 'vue';
+import { computed, ref, type Ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { CandidateControllerApi, type AddCandidateRequest } from '@/apis/candidate/apis';
 import type { Candidate } from '@/apis/candidate/models';
 import FileUpload from "@/component/FileUpload.vue";
+
+const nameRules = ref([
+  (v: string) => !!v || 'Full Name is required',
+  (v: string) => (v && v.length <= 50) || 'Full Name must be less than 50 characters',
+]);
+
+const emailRules = ref([
+  (v: string) => !!v || 'Email is required',
+  (v: string) => /.+@.+\..+/.test(v) || 'Email must be valid',
+]);
+
+const phoneRules = ref([
+  (v: string) => !!v || 'Phone is required',
+  (v: string) => (v && /^\d+$/.test(v)) || 'Phone must contain only numbers',
+]);
+
+const companyRules = ref([
+  (v: string) => !!v || 'Company is required',
+  (v: string) => (v && v.length <= 50) || 'Company must be less than 50 characters',
+]);
+
+const isFormValid = computed(() => {
+  return (
+    nameRules.value.every((rule) => rule(fullName.value) === true) &&
+    emailRules.value.every((rule) => rule(email.value) === true) &&
+    phoneRules.value.every((rule) => rule(phoneNumber.value) === true) &&
+    companyRules.value.every((rule) => rule(currentCompany.value) === true &&
+    agree.value ===true)
+  );
+});
 
 const router = useRouter();
 const route = useRoute()
@@ -114,8 +147,6 @@ const submitForm = async () => {
     currentCompany.value = '';
     successDialog.value = false;
     filepathOfBlobAttachment.value = '';
-
-
   }
   catch (error) {
     loading.value = false;

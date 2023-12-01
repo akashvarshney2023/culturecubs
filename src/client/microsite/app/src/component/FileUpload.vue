@@ -49,6 +49,7 @@ export default {
       const containerName = "candidateresumes"
       const storageAccountString = process.env.VITE_STRG_ACCOUNT_KEY;
       const blobName = this.selectedFile ? this.selectedFile.name : 'unknow_file';
+      console.log(storageAccountString);
       // Construct the BlobServiceClient URL with the SAS token
       const blobServiceClient = new BlobServiceClient(storageAccountString);
       const containerClient = blobServiceClient.getContainerClient(containerName);
