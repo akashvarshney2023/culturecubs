@@ -63,7 +63,7 @@
             <div style="padding-top: 5px;">
               <v-row>
                 <v-col cols="12" md="10" offset-md="1">
-                  <QuillEditor :options="editorOptions" v-model:content="items[index].content" contentType="html"
+                  <QuillEditor :options="editorOptions" v-model:content="items[index].content" 
                     style="height: 300px; border: 1px solid #d1d5db;" />
                 </v-col>
               </v-row>
@@ -93,12 +93,12 @@ import { ref, type Ref, type PropType } from 'vue';
 import { Quill, QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
-import { ContestApi, type Contest, type CreateorupdatecontestRequest } from '@/api/microsite';
+import { ContestApi, type Contest, type CreateorupdatecontestRequest, type ContestTab } from '@/api/microsite';
 import { onMounted } from 'vue';
 const contestDTO: Ref<Contest | null> = ref(null);
 const tenantId: Ref<string> = ref('511b3e72-1fe2-424f-b0c7-23b0699ad03e');
 const tab = ref(0);
-const items = ref([]);
+const items = ref<ContestTab[]>([]);
 const { contestData } = defineProps(['contestData']);
 const editorOptions = {
   placeholder: 'Start typing here...',
@@ -121,7 +121,6 @@ const category = ref('');
 const location = ref('');
 const experienceLevel = ref('');
 const newTabName = ref('');
-
 const startTitleEditing = (index: number) => {
   items.value[index].editingTitle = true;
   showAddTabDialog.value = true;
@@ -179,7 +178,6 @@ async function saveOrUpdateContest() {
     location: location.value,
     registrationEndDate: new Date(endDate.value),
     isActive: true,
-    // ...
     tabs: items.value.map(tab => ({
       id: tab.id || 0,
       key: tab.key,
@@ -214,6 +212,7 @@ onMounted(() => {
   category.value = contestData.raw.category || '';
   location.value = contestData.raw.location || '';
   experienceLevel.value = contestData.raw.experienceLevel || '';
+  items.value = contestData.raw.tabs;
 });
 
 </script>
