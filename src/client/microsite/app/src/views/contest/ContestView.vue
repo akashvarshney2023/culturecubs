@@ -29,7 +29,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-dialog v-model="showContestPopup" style="max-width: 73%; max-height: 80%;">
+      <v-dialog v-model="showContestPopup" style="max-width: 73%;" height="600px">
         <v-card class="elevation-1" max-width="100%" max-height="100%">
           <v-card-title>{{ selectedContest.title }}</v-card-title>
           <v-tabs v-model="activeTab">
@@ -37,7 +37,6 @@
               {{ tab.key }}
             </v-tab>
           </v-tabs>
-
           <v-card-text>
             <v-window v-model="activeTab">
               <v-window-item v-for="(tab, index) in selectedContest.tabs" :key="index" :value="tab.key">
@@ -45,10 +44,10 @@
               </v-window-item>
             </v-window>
           </v-card-text>
-
-          <v-card-actions>
-            <v-btn color="primary" @click="registerForContest(selectedContest)">Register</v-btn>
-            <v-btn color="secondary" @click="closeContestPopup">Close</v-btn>
+          <v-card-actions style="align-self: flex-end;">
+            <v-btn prepend-icon="mdi-account-circle" color="primary"
+              @click="registerForContest(selectedContest)">Register</v-btn>
+            <v-btn prepend-icon="mdi-close-outline" color="secondary" @click="closeContestPopup">Close</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -67,7 +66,7 @@ const route = useRoute();
 var contestApi = new ContestApi();
 const pageLoading = ref(true);
 const selectedContest = ref({
-  id:'',
+  id: '',
   title: '',
   tabs: {},
 })
@@ -91,7 +90,7 @@ const isValidContestId = (contestId: any): boolean => {
 const activeTab = ref('')
 
 const showContestPopup = ref(false)
-const openContestPopup = (contest:any) => {
+const openContestPopup = (contest: any) => {
   selectedContest.value = contest
   showContestPopup.value = true
 }
@@ -99,7 +98,7 @@ const openContestPopup = (contest:any) => {
 const closeContestPopup = () => {
   showContestPopup.value = false
 }
-const formatDate = (date:any) => {
+const formatDate = (date: any) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' }
   return date.toLocaleDateString(undefined, options)
 }
@@ -109,7 +108,7 @@ onMounted(() => {
     var tenantId = 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
     contestApi.getcontestsbytenantid({ guid: tenantId })
       .then((response) => {
-        contestList.value = response as Contest[]; 
+        contestList.value = response as Contest[];
         console.log(contestList.value);
       })
       .catch(error => {
@@ -126,38 +125,45 @@ onMounted(() => {
   transition: transform 0.2s;
   cursor: pointer;
 }
+
 .v-card:hover {
   transform: scale(1.05);
 }
+
 .v-card-title {
   font-size: 20px;
   font-weight: bold;
   padding: 16px;
 }
+
 .v-card-text {
   padding: 0 16px 16px;
 }
+
 .v-dialog {
   max-width: 600px;
 }
+
 .v-dialog .v-card-title {
   font-size: 24px;
   font-weight: bold;
   padding: 16px;
 }
+
 .v-dialog .v-card-text {
   padding: 16px;
 }
+
 .custom-card {
   width: 100%;
   margin-left: auto;
   margin-right: auto;
   max-height: 250px;
 }
+
 .contests-container {
   overflow-x: auto;
   white-space: nowrap;
   max-height: calc(100vh - 200px);
   /* Adjust the height according to your footer height */
-}
-</style>
+}</style>

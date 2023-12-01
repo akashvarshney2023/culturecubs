@@ -2,9 +2,17 @@
   <div class="d-flex align-center">
     <v-file-input label="Resume Attachment (docx, pdf)" v-model="attachment" accept=".docx, .pdf"
       @change="handleFileChange"></v-file-input>
-    <v-btn color="primary" @click="uploadFile" :disabled="!attachment">
+    <v-btn :disabled="isUploading || !attachment" :loading="isUploading" color="primary" @click="uploadFile">
       <v-icon>mdi-upload</v-icon>
     </v-btn>
+    <v-dialog v-model="isUploading" :scrim="true" persistent width="200px">
+      <v-card color="primary">
+        <v-card-text>
+          Please stand by..
+          <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -13,19 +21,20 @@
 import { BlobServiceClient } from '@azure/storage-blob';
 export default {
   props: {
-    loading: Boolean,
+    isUploading: Boolean,
     filePath: Array
   },
   data() {
     return {
+      isUploading: false,
       completeUrl: '',
       selectedFile: null,
-      attachment: null,
+      attachment:null ,
       successDialog: false,
     };
   },
   methods: {
-    handleFileChange(event) {
+    handleFileChange(event:any) {
       this.selectedFile = event.target.files[0];
       if (!this.attachment) {
         this.successDialog = false;
@@ -35,11 +44,11 @@ export default {
       }
     },
     async uploadFile() {
-      const accountName ="saccdev001";
-      const containerName ="candidateresumes"
+      this.isUploading = true;
+      const accountName = "saccdev001";
+      const containerName = "candidateresumes"
       const storageAccountString = process.env.VITE_STRG_ACCOUNT_KEY;
-      const blobName = this.selectedFile.name;
-      console.log(storageAccountString)
+      const blobName = this.selectedFile ? this.selectedFile.name : 'unknow_file';
       // Construct the BlobServiceClient URL with the SAS token
       const blobServiceClient = new BlobServiceClient(storageAccountString);
       const containerClient = blobServiceClient.getContainerClient(containerName);
@@ -47,8 +56,8 @@ export default {
 
       try {
         await new Promise(resolve => setTimeout(resolve, 2000));
-        const arrayBuffer = await this.readFileAsync(this.selectedFile);
-        var result = await blockBlobClient.uploadData(arrayBuffer, {
+        const arrayBuffer: any = await this.readFileAsync(this.selectedFile);
+        await blockBlobClient.uploadData(arrayBuffer, {
           blockSize: 4 * 1024 * 1024, // 4MB block size
           concurrency: 20, // 20 concurrency
           onProgress: (ev) => console.log(ev),
@@ -59,21 +68,20 @@ export default {
         const completeUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
 
         this.$emit('file-uploaded', [true, completeUrl]);
-        console.log(result);
-        console.log('File uploaded successfully');
+        this.isUploading = false;
         this.successDialog = true;
       } catch (error) {
         console.error('Error uploading file:', error);
         // Emit the event with an array containing false and an empty string
         this.$emit('file-uploaded', this.completeUrl);
         this.successDialog = false;
+        this.isUploading = false;
       }
       finally {
-        // Hide loading spinner regardless of success or failure
-        this.loading = false;
+        this.isUploading = false;
       }
     },
-    readFileAsync(file) {
+    readFileAsync(file: any) {
       return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onloadend = () => resolve(reader.result);
