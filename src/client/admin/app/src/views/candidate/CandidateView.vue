@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title>        
+      <v-card-title style="text-align: center; font-size: xx-large;" >        
         <v-icon icon="mdi-account-multiple"></v-icon> &nbsp;
         Candidates</v-card-title>
       <v-card v-if="candidates.listItems.length">
@@ -76,12 +76,12 @@ const candidates = ref({
   search: '',
   headers: [
     { align: 'start', key: 'name', sortable: false, title: 'Name' },
-    { key: 'email', title: 'Email' },
-    { key: 'phone', title: 'Phone' },
-    { key: 'gender', title: 'Gender' },
-    { key: 'dob', title: 'DOB' },
-    { key: 'actions', title: 'Download/View Resume' },
-    { key: 'tagContest', title: 'Tag To Contest' }
+    { align: 'start',key: 'phone', title: 'Phone' },
+    { align: 'start',key: 'email', title: 'Email' },
+    { align: 'start',key: 'gender', title: 'Gender' },
+    { align: 'start',key: 'dob', title: 'DOB' },
+    { align: 'center',key: 'actions', title: 'Download/View Resume',width:100 },
+    { align: 'center',key: 'tagContest', title: 'Tag To Contest',width:180 }
   ],
   listItems: canidateDetails
 });

@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title>
+      <v-card-title style="text-align: center; font-size: xx-large;" >        
         <v-icon icon="mdi-account-star"></v-icon> &nbsp;
         Participants</v-card-title>
       <v-card>
@@ -34,11 +34,11 @@ const participants = ref({
   dense: "true",
   search: '',
   headers: [
-    { align: 'start', key: 'name', sortable: false, title: 'Name' },
-    { key: 'email', title: 'Email' },
-    { key: 'phone', title: 'Phone' },
-    { key: 'contest', title: 'Contest Name' },
-    { key: 'actions', title: 'Download/View Resume' },
+    { align: 'start', key: 'name', sortable: true, title: 'Name' },
+    { key: 'email', title: 'Email',align: 'start' },
+    { key: 'phone', title: 'Phone',align: 'start' },
+    { key: 'contest', title: 'Contest Name',align: 'start' },
+    { key: 'actions', title: 'Download/View Resume',align: 'center',width:200 },
   ],
   listItems: canidateDetails
 });

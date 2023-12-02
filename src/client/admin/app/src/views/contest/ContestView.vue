@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title class="d-flex align-center pe-2">
+      <v-card-title style="text-align: center; font-size: xx-large;" >        
         <v-icon icon="mdi-trophy"></v-icon> &nbsp;
         Contest Details
         <v-spacer></v-spacer>
@@ -56,7 +56,7 @@ const headers = [
   { title: 'Experience Level (g)', key: 'experience', align: 'start' },
   { title: 'Registration End Date', key: 'registrationEndDate', align: 'start' },
   { title: 'Summary', key: 'summary', align: 'start' },
-  { title: 'IsActive', key: 'isActive', align: 'start' },
+  { title: 'IsActive', key: 'isActive', align: 'center' },
   { title: 'Edit', key: 'edit', align: 'start' },
 ];
 
