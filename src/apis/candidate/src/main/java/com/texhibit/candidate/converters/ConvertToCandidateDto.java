@@ -4,6 +4,7 @@ import com.texhibit.candidate.dtos.CandidateDto;
 import com.texhibit.candidate.entities.Candidate;
 
 import java.util.ArrayList;
+import java.util.Collections; 
 import java.util.List;
 
 public class ConvertToCandidateDto {
@@ -24,6 +25,7 @@ public class ConvertToCandidateDto {
                         .build();
                 candidateDtos.add(candidateDto);
             }
+            Collections.reverse(candidateDtos);
         }
         return candidateDtos;
     }
