@@ -42,19 +42,11 @@ const participants = ref({
   ],
   listItems: canidateDetails
 });
-
-
-
-
-
-
-
-
 const getAllContestbyTenantId = async () => {
   const request: GetcontestsbytenantidRequest = {
     guid: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068'
   }
- return contestDetails.value = await contestApi.getcontestsbytenantid(request);
+  return contestDetails.value = await contestApi.getcontestsbytenantid(request);
 }
 
 const getAllparticipantsByTenantId = async () => {
@@ -67,15 +59,16 @@ const getAllparticipantsByTenantId = async () => {
     const data: CandidateDto[] = await candidateApi.getAllParticipants(request);
     canidateDetails.value = translator.translate(data);
 
-    console.log(canidateDetails.value)
+  
   } catch (error) {
     console.log(error);
   }
 };
 const viewOrDownloadAttachment = (blobUrl: string) => {
+
   const sasToken = 'sp=r&st=2023-12-01T00:04:45Z&se=2024-02-03T08:04:45Z&sv=2022-11-02&sr=c&sig=k9%2BrmVYmQseQQ3OhpBAMQc%2BYazwg1eYG9GrjgrxAV%2FU%3D';
   const urlWithSAS = `${blobUrl}?${sasToken}`;
-  console.log(urlWithSAS)
+
   window.open(urlWithSAS, '_blank');
 };
 

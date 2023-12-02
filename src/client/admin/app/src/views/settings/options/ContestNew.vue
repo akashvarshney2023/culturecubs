@@ -198,7 +198,7 @@ async function saveOrUpdateContest() {
         const result = await contestApi.createorupdatecontest(request);
 
         // Handle the result as needed
-        console.log('API call result:', result);
+      
     } catch (error) {
         // Handle errors
         console.error('Error calling API:', error);

@@ -24,6 +24,7 @@ export class CandidateTranslator {
           email: candidate.email,
           phone: candidate.phone,
           contest: this.contestMap[candidate.contestId] || 'Unknown Contest',
+          attachment:candidate.attachment,
           //actions: candidate.actions,
           raw: candidate, // You can include the raw candidate data if needed
         };

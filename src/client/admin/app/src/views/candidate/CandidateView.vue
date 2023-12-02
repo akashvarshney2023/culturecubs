@@ -114,7 +114,7 @@ const viewOrDownloadAttachment = (blobUrl: string) => {
 
   const sasToken = 'sp=r&st=2023-12-01T00:04:45Z&se=2024-02-03T08:04:45Z&sv=2022-11-02&sr=c&sig=k9%2BrmVYmQseQQ3OhpBAMQc%2BYazwg1eYG9GrjgrxAV%2FU%3D';
   const urlWithSAS = `${blobUrl}?${sasToken}`;
-  console.log(urlWithSAS)
+
   window.open(urlWithSAS, '_blank');
 };
 const closeDialog = () => {
