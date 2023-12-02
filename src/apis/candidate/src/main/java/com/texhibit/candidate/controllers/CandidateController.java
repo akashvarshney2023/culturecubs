@@ -40,12 +40,20 @@ public class CandidateController {
         return returnValue;
     }
 
+    @PostMapping("/candidates")
+    @Operation(summary = "Add new Candidates in Bulk")
+    public List<Candidate> addCandidates(@RequestBody List<Candidate> candidates, @RequestHeader(value = "tenantId") String tenantId) throws IOException {
+    candidates.forEach(candidate -> candidate.setTenantId(tenantId));
+    List<Candidate> savedCandidates = candidateService.addCandidates(candidates);    
+        return savedCandidates;
+    }
+
     @PutMapping("/candidate/{id}")
     @Operation(summary = "Update existing Candidate")
     public Candidate updateCandidate(@PathVariable String id, @RequestBody Candidate candidate, @RequestHeader(value = "tenantId") String tenantId) {
         candidate.setTenantId(tenantId);
         return candidateService.updateCandidate(id, candidate,tenantId);
-    }
+    }    
 
     @GetMapping("/candidate/{id}")
     @Operation(summary = "Get candidate by id")
@@ -74,4 +82,5 @@ public class CandidateController {
         List<CandidateDto> candidates = candidateService.getAllParticipants(tenantId);
         return candidates;
     }
+    
 }
