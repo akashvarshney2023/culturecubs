@@ -1,7 +1,9 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title>Participants</v-card-title>
+      <v-card-title>
+        <v-icon icon="mdi-account-star"></v-icon> &nbsp;
+        Participants</v-card-title>
       <v-card>
         <v-card-title>
           <v-text-field v-model="participants.search" append-icon="mdi-magnify" label="Search" single-line

@@ -9,15 +9,19 @@
           hide-details variant="solo-filled"></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
-      <v-data-table v-model:search="search" :items="serverItems" :headers="headers" >        
+      <v-data-table v-model:search="search" :items="serverItems" :headers="headers">
+        <template v-slot:item.registrationEndDate="{ item }">
+          {{ formatDate(item.raw.registrationEndDate) }}
+        </template>
         <template v-slot:item.title="{ item }">
           <div class="text-start">
-            <v-chip :color="item.title ? 'green' : 'red'" :text="item.title" class="text-uppercase" label 
+            <v-chip :color="item.title ? 'green' : 'red'" :text="item.title" class="text-uppercase" label
               size="small"></v-chip>
           </div>
         </template>
         <template v-slot:item.isActive="{ item }">
-          <v-icon :color="item.raw.isActive ? 'green' : 'red'"> {{ item.raw.isActive ? 'mdi-check-circle' : 'mdi-close-circle' }}
+          <v-icon :color="item.raw.isActive ? 'green' : 'red'"> {{ item.raw.isActive ? 'mdi-check-circle' :
+            'mdi-close-circle' }}
           </v-icon>
         </template>
         <template v-slot:item.edit="{ item }">
@@ -27,15 +31,16 @@
         </template>
       </v-data-table>
     </v-card>
-     <v-dialog v-model="showContestEditorDialog" max-width="800">
-      
-        <EditContest :contestData="selectedContest" @saveOrUpdateContest="saveOrUpdateContest" />
-      
+    <v-dialog v-model="showContestEditorDialog" max-width="800">
+
+      <EditContest :contestData="selectedContest" @saveOrUpdateContest="saveOrUpdateContest" />
+
     </v-dialog>
   </v-main>
 </template>
 
 <script lang="ts" setup>
+import moment from "moment";
 import { ContestApi, type GetcontestsbytenantidRequest, type Contest } from '@/api/microsite';
 import { onMounted, ref, type Ref } from 'vue';
 import EditContest from './EditContest.vue'
@@ -49,7 +54,7 @@ const headers = [
   { title: 'Category', key: 'category', align: 'start' },
   { title: 'Location', key: 'location', align: 'start' },
   { title: 'Experience Level (g)', key: 'experience', align: 'start' },
-  { title: 'RegistrationEndDate', key: 'registrationEndDate', align: 'start' },
+  { title: 'Registration End Date', key: 'registrationEndDate', align: 'start' },
   { title: 'Summary', key: 'summary', align: 'start' },
   { title: 'IsActive', key: 'isActive', align: 'start' },
   { title: 'Edit', key: 'edit', align: 'start' },
@@ -81,15 +86,17 @@ const loadItems = async () => {
   }
   try {
     const result: Contest[] = await contestApi.getcontestsbytenantid(request);
-
     serverItems.value = result;
     totalItems.value = result.length;
-    
+
   }
   catch (error) {
-    
+
   }
 }
+ const formatDate=(value:any) =>{
+      return moment(value).format("MMMM DD YYYY");
+    }
 onMounted(async () => {
   await loadItems();
 });

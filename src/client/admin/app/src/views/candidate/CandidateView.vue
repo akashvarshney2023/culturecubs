@@ -1,7 +1,9 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title>Candidates</v-card-title>
+      <v-card-title>        
+        <v-icon icon="mdi-account-multiple"></v-icon> &nbsp;
+        Candidates</v-card-title>
       <v-card v-if="candidates.listItems.length">
         <v-card-title>
           <v-text-field v-model="candidates.search" append-icon="mdi-magnify" label="Search" single-line
