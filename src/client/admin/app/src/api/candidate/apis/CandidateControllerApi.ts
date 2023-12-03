@@ -30,6 +30,11 @@ export interface AddCandidateRequest {
     candidate: Candidate;
 }
 
+export interface AddCandidatesRequest {
+    tenantId: string;
+    candidate: Array<Candidate>;
+}
+
 export interface DeleteCandidateRequest {
     id: string;
     tenantId: string;
@@ -80,6 +85,22 @@ export interface CandidateControllerApiInterface {
      * Add new Candidate
      */
     addCandidate(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Candidate>;
+
+    /**
+     * 
+     * @summary Add new Candidates in Bulk
+     * @param {string} tenantId 
+     * @param {Array<Candidate>} candidate 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CandidateControllerApiInterface
+     */
+    addCandidatesRaw(requestParameters: AddCandidatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Candidate>>>;
+
+    /**
+     * Add new Candidates in Bulk
+     */
+    addCandidates(requestParameters: AddCandidatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Candidate>>;
 
     /**
      * 
@@ -220,6 +241,47 @@ export class CandidateControllerApi extends runtime.BaseAPI implements Candidate
      */
     async addCandidate(requestParameters: AddCandidateRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Candidate> {
         const response = await this.addCandidateRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
+     * Add new Candidates in Bulk
+     */
+    async addCandidatesRaw(requestParameters: AddCandidatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<Candidate>>> {
+        if (requestParameters.tenantId === null || requestParameters.tenantId === undefined) {
+            throw new runtime.RequiredError('tenantId','Required parameter requestParameters.tenantId was null or undefined when calling addCandidates.');
+        }
+
+        if (requestParameters.candidate === null || requestParameters.candidate === undefined) {
+            throw new runtime.RequiredError('candidate','Required parameter requestParameters.candidate was null or undefined when calling addCandidates.');
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        if (requestParameters.tenantId !== undefined && requestParameters.tenantId !== null) {
+            headerParameters['tenantId'] = String(requestParameters.tenantId);
+        }
+
+        const response = await this.request({
+            path: `/api/candidates`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters.candidate.map(CandidateToJSON),
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(CandidateFromJSON));
+    }
+
+    /**
+     * Add new Candidates in Bulk
+     */
+    async addCandidates(requestParameters: AddCandidatesRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<Candidate>> {
+        const response = await this.addCandidatesRaw(requestParameters, initOverrides);
         return await response.value();
     }
 

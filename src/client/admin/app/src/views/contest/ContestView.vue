@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title style="text-align: center; font-size: xx-large;" >        
+      <v-card-title style="font-size: xx-large;" >        
         <v-icon icon="mdi-trophy"></v-icon> &nbsp;
         Contest Details
         <v-spacer></v-spacer>

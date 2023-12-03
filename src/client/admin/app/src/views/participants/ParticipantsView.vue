@@ -1,7 +1,7 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title style="text-align: center; font-size: xx-large;" >        
+      <v-card-title style=" font-size: xx-large;" >        
         <v-icon icon="mdi-account-star"></v-icon> &nbsp;
         Participants</v-card-title>
       <v-card>
