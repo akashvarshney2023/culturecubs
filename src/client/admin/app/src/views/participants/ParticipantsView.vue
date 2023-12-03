@@ -11,8 +11,13 @@
         </v-card-title>
         <v-data-table :headers="participants.headers" :items="participants.listItems" :search="participants.search"
           show-select :dense="participants.dense">
-          <template v-slot:item.actions="{ item }">
-            <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
+          <template v-slot:item.actions="{ item }" style="align-items:end;">
+            <div v-if="item.raw.attachment == null || item.raw.attachment === ''">
+              <v-icon color="error">mdi-close-circle</v-icon>
+            </div>
+            <div v-if="item.raw.attachment">
+              <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
+            </div>
           </template>
         </v-data-table>
       </v-card>
