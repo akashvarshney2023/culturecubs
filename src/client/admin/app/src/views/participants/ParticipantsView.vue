@@ -1,10 +1,10 @@
 <template>
   <v-main>
     <v-card flat>
-      <v-card-title style=" font-size: xx-large;" >        
+      <v-card-title style=" font-size: xx-large;">
         <v-icon icon="mdi-account-star"></v-icon> &nbsp;
         Participants</v-card-title>
-      <v-card>
+      <v-card v-if="participants.listItems.length">
         <v-card-title>
           <v-text-field v-model="participants.search" append-icon="mdi-magnify" label="Search" single-line
             hide-details></v-text-field>
@@ -15,6 +15,10 @@
             <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
           </template>
         </v-data-table>
+      </v-card>
+      <v-card v-else>
+        <v-skeleton-loader class="mx-auto border" min-width="2000"
+          type="table-thead,table-tbody,table-row-divider,table-row"></v-skeleton-loader>
       </v-card>
     </v-card>
   </v-main>
@@ -35,10 +39,10 @@ const participants = ref({
   search: '',
   headers: [
     { align: 'start', key: 'name', sortable: true, title: 'Name' },
-    { key: 'email', title: 'Email',align: 'start' },
-    { key: 'phone', title: 'Phone',align: 'start' },
-    { key: 'contest', title: 'Contest Name',align: 'start' },
-    { key: 'actions', title: 'Download/View Resume',align: 'center',width:200 },
+    { key: 'email', title: 'Email', align: 'start' },
+    { key: 'phone', title: 'Phone', align: 'start' },
+    { key: 'contest', title: 'Contest Name', align: 'start' },
+    { key: 'actions', title: 'Download/View Resume', align: 'center', width: 200 },
   ],
   listItems: canidateDetails
 });
@@ -59,7 +63,7 @@ const getAllparticipantsByTenantId = async () => {
     const data: CandidateDto[] = await candidateApi.getAllParticipants(request);
     canidateDetails.value = translator.translate(data);
 
-  
+
   } catch (error) {
     console.log(error);
   }

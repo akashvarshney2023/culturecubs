@@ -9,7 +9,8 @@
           hide-details variant="solo-filled"></v-text-field>
       </v-card-title>
       <v-divider></v-divider>
-      <v-data-table v-model:search="search" :items="serverItems" :headers="headers">
+      <v-card v-if="serverItems.length">
+        <v-data-table v-model:search="search" :items="serverItems" :headers="headers">
         <template v-slot:item.registrationEndDate="{ item }">
           {{ formatDate(item.raw.registrationEndDate) }}
         </template>
@@ -30,6 +31,12 @@
           </v-icon>
         </template>
       </v-data-table>
+      </v-card>
+      <v-card v-else>
+        <v-skeleton-loader class="mx-auto border" min-width="2000"
+          type="table-thead,table-tbody,table-row-divider,table-row"></v-skeleton-loader>
+      </v-card>
+      
     </v-card>
     <v-dialog v-model="showContestEditorDialog" max-width="800">
 

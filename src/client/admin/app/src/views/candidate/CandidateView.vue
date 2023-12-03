@@ -18,7 +18,12 @@
         <v-data-table :headers="candidates.headers" :items="candidates.listItems" :search="candidates.search" show-select
           :dense="candidates.dense">
           <template v-slot:item.actions="{ item }" style="align-items:end;">
-            <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
+            <div v-if="item.raw.attachment == null || item.raw.attachment === ''">
+              <v-icon color="error">mdi-close-circle</v-icon>
+            </div>
+            <div v-if="item.raw.attachment">
+              <v-icon color="primary" @click="viewOrDownloadAttachment(item.raw.attachment)">mdi-download</v-icon>
+            </div>
           </template>
           <template v-slot:item.tagContest="{ item }">
             <v-icon color="success" @click="openDialog()">mdi-tag</v-icon>
@@ -48,7 +53,8 @@
         </v-data-table>
       </v-card>
       <v-card v-else>
-        Loading...
+        <v-skeleton-loader class="mx-auto border" min-width="2000"
+          type="table-thead,table-tbody,table-row-divider,table-row"></v-skeleton-loader>
       </v-card>
     </v-card>
     <v-dialog v-model="successDialog" max-width="400">
@@ -80,7 +86,8 @@
 
         </v-card-title>
         <v-card-text>
-          <v-file-input v-model="uploadExcelSelectFile" label="Choose only excel file" accept=".xls,.xlsx"  @change="handleFileChange"></v-file-input>
+          <v-file-input v-model="uploadExcelSelectFile" label="Choose only excel file" accept=".xls,.xlsx"
+            @change="handleFileChange"></v-file-input>
         </v-card-text>
         <v-card-actions>
           <v-btn prepend-icon="mdi-close-circle" @click="closeExcelFileUploadDialog">Cancel</v-btn>
@@ -88,8 +95,12 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <div v-if="showProgress">
+
+    </div>
   </v-main>
-  <v-progress-circular :size="100" :width="7" color="green" indeterminate class="progress-overlay" v-if="showProgress"></v-progress-circular>
+  <v-progress-circular :size="100" :width="7" color="green" indeterminate class="progress-overlay"
+    v-if="showProgress"></v-progress-circular>
 </template>
   
 <script lang="ts" setup>
@@ -107,7 +118,7 @@ const dialogm1 = ref<string>("");
 const successDialog = ref(false);
 const uploadExcelSelectFile: Ref<File[]> = ref([]);
 const excelFileUploadDialog = ref(false);
-const candidateUploadList:Ref<Candidate[]> = ref([]);
+const candidateUploadList: Ref<Candidate[]> = ref([]);
 const showProgress = ref(false);
 const candidates = ref({
   dense: "true",
@@ -214,28 +225,28 @@ const downloadBulkCandidateUploadTemplate = () => {
 }
 
 const bulkUploadCandidate = async () => {
- //close upload dialog
- closeExcelFileUploadDialog();
+  //close upload dialog
+  closeExcelFileUploadDialog();
   //show loading
   showProgress.value = true;
   try {
     const request: AddCandidatesRequest = {
       tenantId: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068',
-      candidate:candidateUploadList.value
+      candidate: candidateUploadList.value
     }
     const data: CandidateDto[] = await candidateApi.addCandidates(request);
-    if(data.length>0){
-     
+    if (data.length > 0) {
+
       //close loading
       showProgress.value = false;
       //success message
       alert("Candiate Uploaded succuessfully");
     }
-    
+
   } catch (error) {
     console.log(error);
   }
-  
+
 
 }
 
@@ -249,7 +260,7 @@ const handleFileChange = (event: Event) => {
 
 const readExcelFile = (file: File) => {
   const reader = new FileReader();
-  reader.readAsBinaryString(file); 
+  reader.readAsBinaryString(file);
   reader.onload = (e) => {
     const data = (e.target as FileReader).result;
     const workbook = XLSX.read(data, { type: 'binary' });
@@ -257,9 +268,9 @@ const readExcelFile = (file: File) => {
     // Assuming the sheet name is 'Sheet1'
     const sheetName = workbook.SheetNames[0];
     const sheet = workbook.Sheets[sheetName];
- 
+
     // Parse rows and create a collection of Candidate objects
-    const candidateCollection:Candidate[] = XLSX.utils.sheet_to_json(sheet)
+    const candidateCollection: Candidate[] = XLSX.utils.sheet_to_json(sheet)
       .map((row: any) => ({
         personalInformation: {
           name: row.FullName,
@@ -271,7 +282,7 @@ const readExcelFile = (file: File) => {
         currentCompany: row.CurrentCompany,
         contestId: Number(row.ContestId),
         participant: true
-      }));      
+      }));
 
     candidateUploadList.value = candidateCollection;
   };
