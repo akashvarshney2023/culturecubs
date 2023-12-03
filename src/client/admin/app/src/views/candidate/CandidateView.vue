@@ -95,16 +95,23 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
-    <div v-if="showProgress">
-
-    </div>
+    <v-dialog v-model="isbulkCandidateUploading" :scrim="true" persistent width="400px">
+      <v-card color="primary">
+        <v-card-text>
+          Candidates uploading in progress.Please stand by..
+          <v-progress-circular indeterminate color="white" class="mb-0"></v-progress-circular>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="bulkCandidateAlert" :scrim="true" width="600px">
+      <v-alert :border="'top'" border-color="success" elevation="2" icon="mdi-account-check" title="Alert title"
+        text="Candidates detials uploaded successfully."></v-alert>
+    </v-dialog>
   </v-main>
-  <v-progress-circular :size="100" :width="7" color="green" indeterminate class="progress-overlay"
-    v-if="showProgress"></v-progress-circular>
 </template>
   
 <script lang="ts" setup>
-import { CandidateControllerApi, type AddCandidateRequest, type CandidateDto, type GetAllRequest, type UpdateCandidateRequest, type GetCandidateRequest, type Candidate, type AddCandidatesRequest } from '@/api/candidate';
+import { CandidateControllerApi, type CandidateDto, type GetAllRequest, type UpdateCandidateRequest, type GetCandidateRequest, type Candidate, type AddCandidatesRequest } from '@/api/candidate';
 import { ContestApi, type Contest, type GetcontestsbytenantidRequest } from '@/api/microsite';
 import { onMounted, ref, type Ref } from 'vue'
 import * as XLSX from 'xlsx';
@@ -119,7 +126,8 @@ const successDialog = ref(false);
 const uploadExcelSelectFile: Ref<File[]> = ref([]);
 const excelFileUploadDialog = ref(false);
 const candidateUploadList: Ref<Candidate[]> = ref([]);
-const showProgress = ref(false);
+const bulkCandidateAlert = ref(false);
+const isbulkCandidateUploading = ref(false);
 const candidates = ref({
   dense: "true",
   search: '',
@@ -134,6 +142,7 @@ const candidates = ref({
   ],
   listItems: canidateDetails
 });
+
 const openDialog = async () => {
   dialog.value = true;
   try {
@@ -159,6 +168,7 @@ const getAllCandidatesByTenantId = async () => {
     console.log(error);
   }
 };
+
 const viewOrDownloadAttachment = (blobUrl: string) => {
 
   const sasToken = 'sp=r&st=2023-12-01T00:04:45Z&se=2024-02-03T08:04:45Z&sv=2022-11-02&sr=c&sig=k9%2BrmVYmQseQQ3OhpBAMQc%2BYazwg1eYG9GrjgrxAV%2FU%3D';
@@ -166,9 +176,11 @@ const viewOrDownloadAttachment = (blobUrl: string) => {
 
   window.open(urlWithSAS, '_blank');
 };
+
 const closeDialog = () => {
   dialog.value = false;
 };
+
 const tagCandidateToContest = async (candidateId: string) => {
   try {
     // get canidate by id
@@ -206,11 +218,10 @@ const tagCandidateToContest = async (candidateId: string) => {
     console.log(error);
   }
 };
+
 const closeSuccessDialog = () => {
   successDialog.value = false;
 };
-
-
 
 const openbulkUploadFileDialog = () => {
   excelFileUploadDialog.value = true;
@@ -219,16 +230,18 @@ const openbulkUploadFileDialog = () => {
 const closeExcelFileUploadDialog = () => {
   excelFileUploadDialog.value = false;
 }
+
 const downloadBulkCandidateUploadTemplate = () => {
   const templateUrl = './docs/bulk-candidate-upload.xlsx';
   window.location.href = templateUrl;
 }
 
 const bulkUploadCandidate = async () => {
+  isbulkCandidateUploading.value = true;
   //close upload dialog
   closeExcelFileUploadDialog();
   //show loading
-  showProgress.value = true;
+
   try {
     const request: AddCandidatesRequest = {
       tenantId: 'B97684C9-7ACD-40DC-80AC-42F1D0E2F068',
@@ -236,11 +249,10 @@ const bulkUploadCandidate = async () => {
     }
     const data: CandidateDto[] = await candidateApi.addCandidates(request);
     if (data.length > 0) {
-
+      isbulkCandidateUploading.value = false;
       //close loading
-      showProgress.value = false;
-      //success message
-      alert("Candiate Uploaded succuessfully");
+      bulkCandidateAlert.value = true;
+      getAllCandidatesByTenantId();
     }
 
   } catch (error) {
@@ -281,7 +293,7 @@ const readExcelFile = (file: File) => {
         },
         currentCompany: row.CurrentCompany,
         contestId: Number(row.ContestId),
-        participant: true
+        participant: false
       }));
 
     candidateUploadList.value = candidateCollection;
