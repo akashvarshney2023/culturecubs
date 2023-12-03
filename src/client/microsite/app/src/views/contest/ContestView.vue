@@ -29,7 +29,7 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-dialog v-model="showContestPopup" style="max-width: 73%;" height="600px">
+      <v-dialog v-model="showContestPopup" style="max-width:100cap;" height="600px">
         <v-card class="elevation-1" max-width="100%" max-height="100%">
           <v-card-title>{{ selectedContest.title }}</v-card-title>
           <v-tabs v-model="activeTab">
