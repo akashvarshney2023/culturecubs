@@ -37,22 +37,19 @@
           </v-card>
         </v-col>
       </v-row>
-      <v-progress-circular color="primary" indeterminate :size="128" v-if="!isSubmitted"></v-progress-circular>
 
-      <div>
-        <v-alert v-model="successDialog" dismissible type="success">
-          Thanks for participating in the contest. Your details are saved with us, and soon you will be notified with
-          details. Happy Learning!!
-        </v-alert>
-
-        <div class="text-xs-center">
-          <v-btn v-if="!successDialog" color="red" dark @click="successDialog = true">
-            Reset
-          </v-btn>
-        </div>
-      </div>
-
-
+      <v-dialog v-model="isSubmitting" :scrim="true" persistent width="400px">
+        <v-card color="primary">
+          <v-card-text>
+            Your Registration in progress.Please stand by..
+            <v-progress-circular indeterminate color="white" class="mb-0"></v-progress-circular>
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+      <v-dialog v-model="successDialog" :scrim="true" width="600px">
+        <v-alert :border="'top'" border-color="success" elevation="2" icon="mdi-account-check" title="Alert title"
+          text="Thank you for registering for the contest! We will be in touch shortly with further details."></v-alert>
+      </v-dialog>
     </v-container>
   </v-main>
 </template>
@@ -105,7 +102,7 @@ const email = ref('');
 const phoneNumber = ref('');
 const currentCompany = ref('');
 const successDialog = ref(false);
-const isSubmitted = ref(true);
+const isSubmitting = ref(false);
 const filepathOfBlobAttachment = ref('');
 const handleFileUploaded = (data: any) => {
   const [success, filepath] = data;
@@ -117,7 +114,7 @@ const handleFileUploaded = (data: any) => {
 };
 
 const submitForm = async () => {
-  isSubmitted.value = false;
+  isSubmitting.value = true;
   const candidateDetails: Candidate = {
     personalInformation: {
       name: fullName.value,
@@ -142,23 +139,23 @@ const submitForm = async () => {
     const result: Candidate = await candidateApi.addCandidate(request);
     //Show success Message
     successDialog.value = true;
-    isSubmitted.value = true;
+    isSubmitting.value = false;
   }
   catch (error) {
     console.log(error);
     successDialog.value = false;
-    isSubmitted.value = true;
+    isSubmitting.value = false;
   }
   finally {
-    isSubmitted.value = true;
+    isSubmitting.value = false;
     isFormValid.value = true;
-    // // Reset form fields
-    // agree.value = false;
-    // fullName.value = '';
-    // email.value = '';
-    // phoneNumber.value = '';
-    // currentCompany.value = '';
-    // filepathOfBlobAttachment.value = '';
+    // Reset form fields
+    agree.value = false;
+    fullName.value = '';
+    email.value = '';
+    phoneNumber.value = '';
+    currentCompany.value = '';
+    filepathOfBlobAttachment.value = '';
   }
 };
 const navigate = (name: string) => {
