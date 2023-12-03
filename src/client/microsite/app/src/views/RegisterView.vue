@@ -105,9 +105,9 @@ const successDialog = ref(false);
 const isSubmitting = ref(false);
 const filepathOfBlobAttachment = ref('');
 const handleFileUploaded = (data: any) => {
-  const [success, filepath] = data;
+  const [success, completeUrl] = data;
   if (success) {
-    filepathOfBlobAttachment.value = filepath;
+    filepathOfBlobAttachment.value = completeUrl;
   } else {
     // Handle failure if needed
   }

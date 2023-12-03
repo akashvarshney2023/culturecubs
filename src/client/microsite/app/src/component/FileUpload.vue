@@ -66,7 +66,7 @@ export default {
 
         // Emit the event with an array containing confirmation and filepath
         // Construct the complete URL
-        const completeUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${blobName}`;
+        const completeUrl = `https://${accountName}.blob.core.windows.net/${containerName}/${containerName}/${blobName}`;
 
         this.$emit('file-uploaded', [true, completeUrl]);
         this.isUploading = false;
