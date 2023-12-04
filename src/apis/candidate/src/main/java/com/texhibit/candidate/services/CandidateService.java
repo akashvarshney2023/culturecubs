@@ -7,7 +7,6 @@ import com.texhibit.candidate.repositories.CandidateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +16,6 @@ public class CandidateService {
     @Autowired
     private CandidateRepository candidateRepository;
 
-
     public List<CandidateDto> getAll(String tenantId) {
         List<Candidate> candidates = candidateRepository.findAllCandidates(tenantId);
         List<CandidateDto> candidateDtos = ConvertToCandidateDto.convert(candidates);
@@ -25,7 +23,7 @@ public class CandidateService {
     }
 
     public Candidate addCandidate(Candidate candidate) throws IOException {
-        // String parseResume =  Parser.parse(candidate.getResumePath());
+        // String parseResume = Parser.parse(candidate.getResumePath());
         // candidate.setResumeOrCV(parseResume);
 
         Candidate temp = candidateRepository.save(candidate);
@@ -35,38 +33,55 @@ public class CandidateService {
 
     public List<Candidate> addCandidates(List<Candidate> candidates) throws IOException {
         List<Candidate> savedCandidates = new ArrayList<>();
-        for (Candidate candidate : candidates) {           
+        for (Candidate candidate : candidates) {
             savedCandidates.add(addCandidate(candidate));
         }
         return savedCandidates;
     }
 
-    public Candidate updateCandidate(String id, Candidate candidate,String tenantId) {
+    public Candidate updateCandidate(String id, Candidate candidate, String tenantId) {
         candidate.setId(id);
         candidate.setTenantId(tenantId);
         return candidateRepository.save(candidate);
     }
 
-    public String deleteCandidate(String id,String tenantId) {
+    public String deleteCandidate(String id, String tenantId) {
         candidateRepository.deleteById(id);
-        return "Candidate with id "+ id +" deleted successfully..";
+        return "Candidate with id " + id + " deleted successfully..";
     }
 
-    public Candidate getCandidate(String id,String tenantId) {
-        Candidate candidate = candidateRepository.findCandidateById(id,tenantId);
-        return  candidate;
+    public Candidate getCandidate(String id, String tenantId) {
+        Candidate candidate = candidateRepository.findCandidateById(id, tenantId);
+        return candidate;
     }
 
     public Integer getCount(String tenantId) {
         return Math.toIntExact(candidateRepository.count(tenantId));
     }
 
-
     public List<CandidateDto> getAllParticipants(String tenantId) {
 
-        List<Candidate> publishedCandidates = candidateRepository.findAllParticipants(true,tenantId);
+        List<Candidate> publishedCandidates = candidateRepository.findAllParticipants(true, tenantId);
         List<CandidateDto> candidateDtos = ConvertToCandidateDto.convert(publishedCandidates);
         return candidateDtos;
+
+    }
+
+    public List<CandidateDto> getAllCandidatesByContestId(String tenantId, Integer contestId) {
+
+        List<Candidate> candidates = candidateRepository.findAllCandidates(tenantId);
+
+        List<CandidateDto> candidateDtos = ConvertToCandidateDto.convert(candidates);
+
+        List<CandidateDto> filteredCandidates = new ArrayList<>();
+
+        for (CandidateDto candidateDto : candidateDtos) {
+            if (candidateDto.getContestId().equals(contestId)) {
+                filteredCandidates.add(candidateDto);
+            }
+        }
+
+        return filteredCandidates;
 
     }
 

@@ -32,6 +32,18 @@ public class CandidateController {
         return candidates;
     }
 
+    @GetMapping(value = "/candidates")
+    @CrossOrigin 
+    @Operation(summary = "Get all candidates by contest Id")
+    public List<CandidateDto> getAllCandidateByContestId(
+      @RequestHeader(value = "tenantId") String tenantId, 
+      @RequestParam(value = "contestId") Integer contestId) {    
+      List<CandidateDto> candidates = candidateService.getAllCandidatesByContestId(tenantId, contestId);    
+      return candidates;
+    
+    }
+    
+
     @PostMapping("/candidate")
     @Operation(summary = "Add new Candidate")
     public Candidate addCandidate(@RequestBody Candidate candidate, @RequestHeader(value = "tenantId") String tenantId) throws IOException {
