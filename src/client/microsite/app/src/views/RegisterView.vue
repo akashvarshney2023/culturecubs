@@ -2,12 +2,12 @@
   <v-main>
     <v-container fluid>
       <v-row>
-        <v-col cols="9">
+        <v-col cols="6">
           <div class="green-base-image">
           </div>
         </v-col>
-        <v-col cols="3">
-          <v-card>
+        <v-col cols="6" >
+          <v-card style="padding: 200px;" rounded="0">
             <v-card-title class="text-center">Register</v-card-title>
             <v-card-text>
               <v-text-field label="Full Name" type="text" v-model="fullName" prepend-icon="mdi-account" :rules="nameRules"
@@ -170,12 +170,12 @@ const closeSuccessDialog = () => {
 
 <style>
 .green-base-image {
-  background-image: url('./../../assets/images/login_left.jpg');
+  background-image: url('./../../assets/images/5.jpeg');
   background-size: cover;
   background-position: center center;
-  height: 100vh;
-  width: 100%;
-  background-color: green;
+  height: 90dvh;
+  width: 105%;
+  background-color: rgb(47, 58, 77);
 }
 
 .width-50 {
