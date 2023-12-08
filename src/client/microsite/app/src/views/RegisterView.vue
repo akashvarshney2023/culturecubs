@@ -30,7 +30,7 @@
                 </v-col>
                 <v-col cols="auto">
                   <v-spacer></v-spacer>
-                  <v-btn color="secondary" block>Cancel</v-btn>
+                  <v-btn color="secondary" block @click="navigate()">Cancel</v-btn>
                 </v-col>
               </v-row>
             </v-card-text>
