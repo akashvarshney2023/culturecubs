@@ -47,7 +47,7 @@
         </v-card>
       </v-dialog>
       <v-dialog v-model="successDialog" :scrim="true" width="600px">
-        <v-alert :border="'top'" border-color="success" elevation="2" icon="mdi-account-check" title="Alert title"
+        <v-alert :border="'top'" border-color="success" elevation="2" icon="mdi-account-check" title="Alert title" closable @click:close="navigate()"
           text="Thank you for registering for the contest! We will be in touch shortly with further details."></v-alert>
       </v-dialog>
     </v-container>
@@ -148,19 +148,13 @@ const submitForm = async () => {
   }
   finally {
     isSubmitting.value = false;
-    isFormValid.value = true;
-    // Reset form fields
-    agree.value = false;
-    fullName.value = '';
-    email.value = '';
-    phoneNumber.value = '';
-    currentCompany.value = '';
-    filepathOfBlobAttachment.value = '';
+    isFormValid.value = true;    
   }
 };
-const navigate = (name: string) => {
-  router.push({ name });
+const navigate = () => {
+    router.push('/contest');
 };
+
 
 const closeSuccessDialog = () => {
   successDialog.value = false;

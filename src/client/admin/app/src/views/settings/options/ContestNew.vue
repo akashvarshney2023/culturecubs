@@ -73,6 +73,18 @@
                 </v-window-item>
             </v-window>
         </v-card>
+        <v-dialog v-model="isSubmitting" :scrim="true" persistent width="400px">
+            <v-card color="primary">
+                <v-card-text>
+                    Please wait while your contest is creating..
+                    <v-progress-circular indeterminate color="white" class="mb-0"></v-progress-circular>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+        <v-dialog v-model="successDialog" :scrim="true" width="600px">
+            <v-alert :border="'top'" border-color="success" elevation="2" icon="mdi-account-check" title="Alert title"  closable 
+                text="Contest is created successfully." @click:close="navigate()"></v-alert>
+        </v-dialog>
 
         <v-dialog v-model="showAddTabDialog" max-width="300">
             <v-card>
@@ -95,6 +107,7 @@ import { Quill, QuillEditor } from '@vueup/vue-quill';
 import '@vueup/vue-quill/dist/vue-quill.snow.css';
 import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 import { ContestApi, type Contest, type CreateorupdatecontestRequest } from '@/api/microsite';
+import router from '@/router';
 const contestDTO: Ref<Contest | null> = ref(null);
 const tenantId: Ref<string> = ref('B97684C9-7ACD-40DC-80AC-42F1D0E2F068');
 const tab = ref(0);
@@ -120,7 +133,8 @@ const category = ref('');
 const location = ref('');
 const experienceLevel = ref('');
 const newTabName = ref('');
-
+const isSubmitting = ref(false);
+const successDialog = ref(false);
 const startTitleEditing = (index: number) => {
     items.value[index].editingTitle = true;
     showAddTabDialog.value = true;
@@ -163,8 +177,13 @@ const removeTab = (index: number) => {
         tab.value = items.value.length - 1;
     }
 };
+const navigate = () => {
+    router.push('/contest');
+};
+
 
 async function saveOrUpdateContest() {
+    isSubmitting.value = true;
     const contestApi = new ContestApi();
 
     // Create the Contest object
@@ -197,12 +216,14 @@ async function saveOrUpdateContest() {
         // Call the API using async/await
         const result = await contestApi.createorupdatecontest(request);
 
-        // Handle the result as needed
-      
+        successDialog.value = true;
+        isSubmitting.value = false;
+       
+
     } catch (error) {
-        // Handle errors
         console.error('Error calling API:', error);
-        // You might want to throw or handle the error appropriately
+        successDialog.value = false;
+        isSubmitting.value = false;
     }
 }
 

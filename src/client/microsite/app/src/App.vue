@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-layout class="background">
-      <AppLayout></AppLayout>
+      <AppLayout ></AppLayout>
       <router-view />
     </v-layout>
   </v-app>
@@ -22,8 +22,3 @@ export default defineComponent({
   },
 })
 </script>
-<style>
-html {
-  overflow: hidden !important;
-}
-</style>

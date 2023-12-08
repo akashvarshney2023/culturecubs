@@ -1,6 +1,6 @@
-<template>
-  <v-main>
-    <v-container class="grey lighten-10 contests-container">
+<template >
+  <v-main >
+    <v-container clas="overflow-y-visible">
       <v-row>
         <v-col cols="5" v-for="(contest, index) in contestList" :key="index">
           <v-card class="mx-auto my-1 custom-card" @click="openContestPopup(contest)">
@@ -161,9 +161,4 @@ onMounted(() => {
   max-height: 250px;
 }
 
-.contests-container {
-  overflow-x: auto;
-  white-space: nowrap;
-  max-height: calc(100vh - 200px);
-  /* Adjust the height according to your footer height */
-}</style>
+</style>
