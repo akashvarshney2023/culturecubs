@@ -7,7 +7,7 @@
       </v-app-bar-title>
       <v-tabs color="primary" v-model="activetab">
         <v-tab value="home" @click="navigate('home')">Home</v-tab>
-        <v-tab value="contest" @click="navigate('contest')">Contests</v-tab>
+        <v-tab value="contest" @click="navigate('contest')">Contest</v-tab>
       </v-tabs>
     </v-app-bar>     
   </header>

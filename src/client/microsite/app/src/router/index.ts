@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from "@/views/main/HomeView.vue"
 import ContestView from '../views/contest/ContestView.vue'
 import RegistrationView from '@/views/RegisterView.vue'
-import NewContestView from '@/views/contest/NewContestView.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,13 +10,7 @@ const router = createRouter({
       name: 'contest',
       component: ContestView,
       meta: { auth: true }
-    },
-    {
-      path: '/contest1',
-      name: 'contest1',
-      component: NewContestView,
-      meta: { auth: true }
-    },
+    },   
     {
       path: '/:contestId/registration',
       name: 'Registration',
