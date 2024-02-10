@@ -2,16 +2,16 @@ name: candidate-api-003 build and deploy
 on:
   push:
     branches:
-      - develop
+      - master
     paths:     
-      - ".github/workflows/api-candidate-003.yml"
+      - ".github/workflows/api-candidate-prd-001.yml"
       - "src/apis/candidate/**"
   workflow_dispatch:
 
 env:
   AZURE_WEBAPP_PACKAGE_PATH: "./src/apis/candidate/target"
   JAVA_VERSION: "11"
-  AZURE_WEBAPP_NAME: "api-candidate-dev-003"
+  AZURE_WEBAPP_NAME: "api-candidate-prd-001"
   AZURE_FUNCTIONAPP_PACKAGE_PATH: "./src/apis/candidate"
 
 jobs:
