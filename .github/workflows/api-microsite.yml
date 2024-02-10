@@ -3,7 +3,8 @@ name: microsite-api-build and deploy
 on:
   push:
     branches:
-      - main
+      - develop
+      - master
     paths:
       - 'src/apis/microsite/**'
       - '.github/workflows/api-microsite.yml'
@@ -17,7 +18,7 @@ env:
 
 jobs:
   api-microsite-dev:
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/develop'
     runs-on: windows-latest  
     environment: Development
 
@@ -45,3 +46,34 @@ jobs:
           app-name: 'api-ccmicrosite-dev-001'
           package: ${{ env.AZURE_APP_WORKING_DIR }}output
           publish-profile: ${{ secrets.API_MICROSITE_PUBLISH_PROFILE }}
+  
+  api-microsite-prd:
+    if: github.ref == 'refs/heads/master'
+    runs-on: windows-latest  
+    environment: Production
+
+    steps:
+      - name: Checkout GitHub Action
+        uses: actions/checkout@v2  
+
+      - name: Setup .NET ${{ env.DOTNET_VERSION }} Environment
+        uses: actions/setup-dotnet@v2  
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build Using .NET
+        run: dotnet publish -c Release --output ./output -r win-x86 -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: Test with the dotnet CLI
+        run: dotnet test
+        working-directory: ${{ env.AZURE_APP_WORKING_DIR }}
+
+      - name: Run Azure Functions Action
+        id: fa
+        uses: Azure/functions-action@v1
+        with:
+          app-name: 'api-ccmicrosite-prd-001'
+          package: ${{ env.AZURE_APP_WORKING_DIR }}output
+          publish-profile: ${{ secrets.API_PRD_MICROSITE_PUBLISH_PROFILE }}
+  
