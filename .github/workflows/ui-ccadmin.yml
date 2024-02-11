@@ -1,4 +1,4 @@
-name: ccadmin-ui-build and deploy 
+name: ccadmin-ui-build and deploy  
 
 on:
   push:

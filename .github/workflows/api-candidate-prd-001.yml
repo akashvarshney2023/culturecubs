@@ -1,4 +1,4 @@
-name: candidate-api-003 build and deploy
+name: candidate-prd build and deploy
 on:
   push:
     branches:

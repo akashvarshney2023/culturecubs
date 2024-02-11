@@ -1,4 +1,4 @@
-name: tenant-api-build and deploy
+name: tenant-api-build and deploy 
 
 on:
   push:
