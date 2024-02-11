@@ -52,7 +52,7 @@ jobs:
           routes_location: ${{ env.APP_BASE_DIR }}
   build-prd:
     if: ${{ github.ref == 'refs/heads/master' }}  
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     environment: Production
     env:
       VITE_APP_HOST: ''
