@@ -54,5 +54,5 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           slot-name: "Production"
-          publish-profile: ${{ secrets.API_003_CANDIDATE_PUBLISH_PROFILE }}
+          publish-profile: ${{ secrets.API_PRD_CANDIDATE_AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: "*.jar"
