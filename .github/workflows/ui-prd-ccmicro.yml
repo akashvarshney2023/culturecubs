@@ -1,4 +1,4 @@
-name: ccmicro-ui-build and deploy  
+name: prd-ccmicro-ui-build and deploy  
 
 on:
   push:
@@ -12,7 +12,7 @@ env:
   APP_BASE_DIR: 'src/client/microsite/app'  
   NODE_VERSION: '16'
   APP_OUTPUT_DIR: 'src/client/microsite/app/dist'  
-  VITE_STRG_ACCOUNT_KEY: ${{secrets.VITE_STRG_ACCOUNT_KEY}}
+  VITE_STRG_ACCOUNT_KEY: ${{secrets.PRD_STRG_ACCOUNT_KEY}}
   VITE_APP_API_TENANT_URL: https://api-tenant-prd-001.azurewebsites.net/api
   VITE_APP_API_MICROSITE_URL: https://api-ccmicrosite-prd-001.azurewebsites.net/api
   VITE_APP_API_CANDIDATE_URL: https://api-candidate-prd-001.azurewebsites.net
