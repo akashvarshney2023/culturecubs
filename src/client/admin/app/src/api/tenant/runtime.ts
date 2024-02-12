@@ -12,8 +12,7 @@
  * Do not edit the class manually.
  */
 
-
-export const BASE_PATH = "https://api-tenant-dev-001.azurewebsites.net/api".replace(/\/+$/, "");
+export const BASE_PATH = process.env.VITE_APP_API_TENANT_URL;
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
