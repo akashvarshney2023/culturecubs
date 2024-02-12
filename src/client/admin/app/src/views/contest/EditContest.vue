@@ -96,7 +96,7 @@ import '@vueup/vue-quill/dist/vue-quill.bubble.css';
 import { ContestApi, type Contest, type CreateorupdatecontestRequest, type ContestTab } from '@/api/microsite';
 import { onMounted } from 'vue';
 const contestDTO: Ref<Contest | null> = ref(null);
-const tenantId: Ref<string> = ref('511b3e72-1fe2-424f-b0c7-23b0699ad03e');
+const tenantId: Ref<string> = ref('B97684C9-7ACD-40DC-80AC-42F1D0E2F068');
 const tab = ref(0);
 const items = ref<ContestTab[]>([]);
 const { contestData } = defineProps(['contestData']);
