@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://api-ccmicrosite-dev-001.azurewebsites.net/api".replace(/\/+$/, "");
+export const BASE_PATH = process.env.VITE_APP_API_MICROSITE_URL;
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
