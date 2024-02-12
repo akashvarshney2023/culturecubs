@@ -53,8 +53,9 @@ onMounted(() => {
         contestApi.getcontestsbytenantid({ guid: tenantId })
             .then((response) => {
                 contestList.value = response as Contest[];
-                const contest = response.find(contest => contest.id === 15) as Contest;
-                currentContest.value = contest;
+                // Find the contest with the highest ID
+                const latestContest = response.reduce((prev, current) => (prev.id > current.id) ? prev : current);
+                currentContest.value = latestContest;
             })
             .catch(error => {
                 console.log(error);
@@ -63,6 +64,7 @@ onMounted(() => {
         pageLoading.value = false;
     }
 });
+
 </script>
 
 <style scoped> .v-container {
