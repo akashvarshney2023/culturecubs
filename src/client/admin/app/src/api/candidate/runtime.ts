@@ -13,7 +13,7 @@
  */
 
 
-export const BASE_PATH = "https://api-candidate-dev-002.azurewebsites.net".replace(/\/+$/, "");
+export const BASE_PATH = process.env.VITE_APP_API_CANDIDATE_URL;
 
 export interface ConfigurationParameters {
     basePath?: string; // override base path
