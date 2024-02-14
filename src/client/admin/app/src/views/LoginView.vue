@@ -34,7 +34,7 @@
     <v-footer class="bg-green-lighten-1" style="position: fixed; bottom: 0; width: 100%;" >
     <v-row justify="center" no-gutters>     
       <v-col class="text-center mt-4" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Powered by Cultre Cubs</strong>
+        {{ new Date().getFullYear() }} — <strong>Powered by Cultre-Mast</strong>
       </v-col>
     </v-row>
   </v-footer>
