@@ -8,7 +8,7 @@
       <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('blog')">Blog</v-btn>
       <v-btn color="white" variant="text" class="mx-3 rounded-xl" @click="navigate('contactus')">Contact Us</v-btn>
       <v-col class="text-center mt-4" cols="12">
-        {{ new Date().getFullYear() }} — <strong>Cultre Cubs</strong>
+        {{ new Date().getFullYear() }}  <strong>Culture-Mast</strong>
       </v-col>
     </v-row>
   </v-footer>
