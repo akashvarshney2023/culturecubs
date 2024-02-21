@@ -65,3 +65,12 @@ src/apis/ContentManagement/Properties/serviceDependencies.json
 src/apis/ContentManagement/Properties/ServiceDependencies/api-contentmgt-dev-001/apis1.arm.json
 src/apis/ContentManagement/Properties/ServiceDependencies/api-contentmgt-dev-0011/apis1.arm.json
 src/client/microsite/.vscode/launch.json
+src/apis/.vs/apis/v17/.wsuo
+src/apis/.vs/apis/v17/workspaceFileList.bin
+src/apis/.vs/slnx.sqlite
+src/apis/.vs/VSWorkspaceState.json
+src/apis/microsite/.vs/microsite/v17/.wsuo
+src/apis/microsite/.vs/slnx.sqlite
+src/apis/microsite/.vs/VSWorkspaceState.json
+src/apis/tenant_user/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.metadata.v7.bin
+src/apis/tenant_user/.vs/ProjectEvaluation/culturecubs.tenantanduser.functions.projects.v7.bin
