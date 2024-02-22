@@ -3,7 +3,7 @@
     <v-container>
       <v-row style="justify-content:flex-end;padding:0% 8%;">
         <v-col class="pt-0">
-          <v-card>
+          <v-card elevation="0">
             <v-img src="../../assets/images/landingpageluksup1.png" style="height:350px;" cover>
               <div style="color:white;display:grid;position:absolute;bottom:0;padding:10px;">
                 <span class="text-h1" style="font-weight:450;">Bring Fun Life To</span>
@@ -16,8 +16,8 @@
       </v-row>
       <v-row style="justify-content:flex-end;padding:0% 8% ;">
         <v-col cols="12" sm="6" class="pt-0" style="text-align:center;">
-          <v-card elevation="0">
-            <div style="font-family: monospace; font-size: 22px; color: black;" >
+          <v-card elevation="0"  color="#B2B2B2" >
+            <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; font-size: 22px; color: white;" >
               <b>LukzUp</b> is a unique and upcoming (yet to be released) webstore designed to cater to the needs of
               growing
               children. The kids' category is estimated to reach a market size of <b>USD 35B by 2025</b> in India, and we
